@@ -19,7 +19,7 @@
 */
 
 #include "debug.h"
-
+#include "board_config.h"
 
 /* Global typedef */
 
@@ -40,14 +40,15 @@ int main(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	SystemCoreClockUpdate();
 	Delay_Init();
+	LED_GPIO_Init();
 	USART_Printf_Init(115200);	
 	printf("SystemClk:%d\r\n",SystemCoreClock);
 	printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 	printf("This is printf example\r\n");
 
-	while(1)
+    while(1)
     {
-
-	}
+        LED_GPIO_Sample();
+    }
 }
 
