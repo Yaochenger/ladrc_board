@@ -20,6 +20,7 @@
 
 #include "debug.h"
 #include "board_config.h"
+#include "user_peripheral_driver.h"
 
 /* Global typedef */
 

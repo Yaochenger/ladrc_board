@@ -7,6 +7,7 @@
 
 #ifndef USER_DRIVERS_BOARD_CONFIG_H_
 #define USER_DRIVERS_BOARD_CONFIG_H_
+#include "spi3.h"
 #include "uart2.h"
 #include <uart6.h>
 #include <uart7.h>
