@@ -41,14 +41,20 @@ int main(void)
 	SystemCoreClockUpdate();
 	Delay_Init();
 	LED_GPIO_Init();
+	UART2_GPIO_Init();
 	USART_Printf_Init(115200);	
 	printf("SystemClk:%d\r\n",SystemCoreClock);
 	printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 	printf("This is printf example\r\n");
-
+    uint16_t data = 0;
     while(1)
     {
-        LED_GPIO_Sample();
+        while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == 1)
+        {
+            data = USART_ReceiveData(USART2);
+            USART_SendData(USART2,data);
+            printf("%s \r\n", &data);
+        }
     }
 }
 
