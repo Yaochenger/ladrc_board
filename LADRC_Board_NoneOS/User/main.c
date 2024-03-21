@@ -43,7 +43,7 @@ int main(void)
 	Delay_Init();
 	LED_GPIO_Init();
 	UART2_GPIO_Init();
-	USART_Printf_Init(115200);	
+	USART_Printf_Init(115200);
 	printf("SystemClk:%d\r\n",SystemCoreClock);
 	printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 	printf("This is printf example\r\n");
