@@ -50,7 +50,7 @@ int main(void)
     uint16_t data = 0;
     while(1)
     {
-        QDTFT_Test_Demo();
+//        QDTFT_Test_Demo();
         while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == 1)
         {
             data = USART_ReceiveData(USART2);

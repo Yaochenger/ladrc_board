@@ -8,6 +8,10 @@
 #ifndef USER_DRIVERS_BOARD_CONFIG_H_
 #define USER_DRIVERS_BOARD_CONFIG_H_
 
+#include "timer3.h"
+#include "timer4.h"
+#include "timer5.h"
+#include "timer8.h"
 #include "timer9.h"
 #include "spi2.h"
 #include "spi3.h"
