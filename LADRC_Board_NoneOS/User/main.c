@@ -44,10 +44,30 @@ int main(void)
 	LED_GPIO_Init();
 	UART2_GPIO_Init();
 	USART_Printf_Init(115200);
+	TIMER6_GPIO_Init(10000, 96);
 	printf("SystemClk:%d\r\n",SystemCoreClock);
 	printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 	printf("This is printf example\r\n");
     uint16_t data = 0;
+    TIMER3_ENCODER_GPIO_Init();
+    TIMER4_ENCODER_GPIO_Init();
+    TIMER5_ENCODER_GPIO_Init();
+    TIMER9_PWM_GPIO_Init( 100, 4800-1, 20 );
+
+    GPIO_SetBits(GPIOE, GPIO_Pin_8);
+    GPIO_SetBits(GPIOE, GPIO_Pin_9);
+
+    GPIO_SetBits(GPIOE, GPIO_Pin_0);
+    GPIO_ResetBits(GPIOE, GPIO_Pin_1);
+
+    GPIO_SetBits(GPIOE, GPIO_Pin_2);
+    GPIO_ResetBits(GPIOE, GPIO_Pin_3);
+
+    GPIO_SetBits(GPIOE, GPIO_Pin_4);
+    GPIO_ResetBits(GPIOE, GPIO_Pin_5);
+
+    GPIO_SetBits(GPIOE, GPIO_Pin_6);
+    GPIO_ResetBits(GPIOE, GPIO_Pin_7);
     while(1)
     {
 //        QDTFT_Test_Demo();

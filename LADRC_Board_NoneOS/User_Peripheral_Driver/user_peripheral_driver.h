@@ -7,6 +7,7 @@
 
 #ifndef USER_PERIPHERAL_DRIVER_USER_PERIPHERAL_DRIVER_H_
 #define USER_PERIPHERAL_DRIVER_USER_PERIPHERAL_DRIVER_H_
+#include "encoder_speed.h"
 #include "flash_w25q16.h"
 #include "tft_st7735s.h"
 #include "oled_spi.h"

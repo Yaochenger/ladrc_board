@@ -6,7 +6,6 @@
  */
 
 #include "timer6.h"
-void TIM6_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
 void TIMER6_GPIO_Init(u16 arr,u16 psc)
 {
@@ -30,19 +29,4 @@ void TIMER6_GPIO_Init(u16 arr,u16 psc)
     NVIC_Init(&NVIC_InitStructure);                             //初始化NVIC
 
     TIM_Cmd(TIM6, ENABLE);                                      //TIM6使能
-}
-
-static u16 i = 0;
-void TIM6_IRQHandler(void)
-{
-    i++;
-    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
-    {
-        TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
-        if (i==100)
-        {
-            i=0;
-            printf("Enter TIM6 interrupt\r\n");
-        }
-    }
 }
