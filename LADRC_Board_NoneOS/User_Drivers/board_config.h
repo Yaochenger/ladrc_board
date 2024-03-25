@@ -11,6 +11,8 @@
 #include "timer3.h"
 #include "timer4.h"
 #include "timer5.h"
+#include "timer6.h"
+#include "timer7.h"
 #include "timer8.h"
 #include "timer9.h"
 #include "spi2.h"
