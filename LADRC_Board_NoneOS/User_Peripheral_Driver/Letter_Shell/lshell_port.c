@@ -21,7 +21,7 @@ short userShellWrite(char *data, unsigned short len)
         while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
     }
 
-    return 0;
+    return len;
 }
 
 void USART1_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
