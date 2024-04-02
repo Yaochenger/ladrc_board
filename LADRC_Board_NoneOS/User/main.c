@@ -22,6 +22,8 @@
 #include "board_config.h"
 #include "user_peripheral_driver.h"
 #include "QDTFT_demo.h"
+#include "LL_Gui.h"
+#include "ui_ladrcLogic.h"
 /* Global typedef */
 
 /* Global define */
@@ -44,39 +46,46 @@ int main(void)
 	LED_GPIO_Init();
 	UART2_GPIO_Init();
 	USART_Printf_Init(115200);
-	TIMER6_GPIO_Init(10000, 96);
+//	TIMER6_GPIO_Init(10000, 96);
+
 	printf("SystemClk:%d\r\n",SystemCoreClock);
 	printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 	printf("This is printf example\r\n");
-    uint16_t data = 0;
-    TIMER3_ENCODER_GPIO_Init();
-    TIMER4_ENCODER_GPIO_Init();
-    TIMER5_ENCODER_GPIO_Init();
-    TIMER9_PWM_GPIO_Init( 100, 4800-1, 20 );
 
-    GPIO_SetBits(GPIOE, GPIO_Pin_8);
-    GPIO_SetBits(GPIOE, GPIO_Pin_9);
-
-    GPIO_SetBits(GPIOE, GPIO_Pin_0);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_1);
-
-    GPIO_SetBits(GPIOE, GPIO_Pin_2);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_3);
-
-    GPIO_SetBits(GPIOE, GPIO_Pin_4);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_5);
-
-    GPIO_SetBits(GPIOE, GPIO_Pin_6);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_7);
+//    TIMER3_ENCODER_GPIO_Init();
+//    TIMER4_ENCODER_GPIO_Init();
+//    TIMER5_ENCODER_GPIO_Init();
+//    TIMER9_PWM_GPIO_Init( 100, 4800-1, 20 );
+//
+//    GPIO_SetBits(GPIOE, GPIO_Pin_8);
+//    GPIO_SetBits(GPIOE, GPIO_Pin_9);
+//
+//    GPIO_SetBits(GPIOE, GPIO_Pin_0);
+//    GPIO_ResetBits(GPIOE, GPIO_Pin_1);
+//
+//    GPIO_SetBits(GPIOE, GPIO_Pin_2);
+//    GPIO_ResetBits(GPIOE, GPIO_Pin_3);
+//
+//    GPIO_SetBits(GPIOE, GPIO_Pin_4);
+//    GPIO_ResetBits(GPIOE, GPIO_Pin_5);
+//
+//    GPIO_SetBits(GPIOE, GPIO_Pin_6);
+//    GPIO_ResetBits(GPIOE, GPIO_Pin_7);
+    Lcd_Init();
+    Lcd_Clear(WHITE); //«Â∆¡
+    llGuiInit();
+    TIMER7_GPIO_Init(10000, 96);
     while(1)
     {
-//        QDTFT_Test_Demo();
-        while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == 1)
-        {
-            data = USART_ReceiveData(USART2);
-            USART_SendData(USART2,data);
-            printf("%s \r\n", &data);
-        }
+         nButtonClick(ID_BUTTON_0);
+         Delay_Ms(500);
+
+//        while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == 1)
+//        {
+//            data = USART_ReceiveData(USART2);
+//            USART_SendData(USART2,data);
+//            printf("%s \r\n", &data);
+//        }
     }
 }
 

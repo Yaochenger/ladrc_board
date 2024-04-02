@@ -86,14 +86,19 @@ void showimage(const unsigned char *p) //显示40*40 QQ图片
         }
     }
 }
-void QDTFT_Test_Demo(void) {
+
+void QDTFT_Test_Demo(void)
+{
     Lcd_Init();
-    LCD_LED_SET;	//通过IO控制背光亮
-    Redraw_Mainmenu();	//绘制主菜单(部分内容由于分辨率超出物理值可能无法显示)
-    Color_Test();	//简单纯色填充测试
-    Num_Test();	//数码管字体测试
-    Font_Test();	//中英文显示测试
-    showimage(gImage_qq);	//图片显示示例
-    Delay_Ms(1200);
-    LCD_LED_CLR;	//IO控制背光灭
+//    while (1)
+//    {
+//        LCD_LED_SET;	      //通过IO控制背光亮
+//        Redraw_Mainmenu();    //绘制主菜单(部分内容由于分辨率超出物理值可能无法显示)
+//        Color_Test();         //简单纯色填充测试
+//        Num_Test();           //数码管字体测试
+//        Font_Test();          //中英文显示测试
+//        showimage(gImage_qq); //图片显示示例
+//        Delay_Ms(1200);
+//        LCD_LED_CLR;          //IO控制背光灭
+//    }
 }

@@ -230,6 +230,28 @@ void Gui_DrawPoint(u16 x, u16 y, u16 Data) {
 
 }
 
+void Gui_FillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u16 color)
+{
+    // 确保x1 <= x2 和 y1 <= y2
+    if (x1 > x2) {
+        u16 temp = x1;
+        x1 = x2;
+        x2 = temp;
+    }
+    if (y1 > y2) {
+        u16 temp = y1;
+        y1 = y2;
+        y2 = temp;
+    }
+
+    // 遍历矩形内的所有点
+    for (u16 x = x1; x <= x2; x++) {
+        for (u16 y = y1; y <= y2; y++) {
+            Gui_DrawPoint(x, y, color);
+        }
+    }
+}
+
 /*****************************************
  函数功能：读TFT某一点的颜色
  出口参数：color  点颜色值

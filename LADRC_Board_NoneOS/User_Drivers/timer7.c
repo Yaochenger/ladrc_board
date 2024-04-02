@@ -5,7 +5,6 @@
  *      Author: MCU
  */
 #include "timer7.h"
-void TIM7_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
 void TIMER7_GPIO_Init(u16 arr,u16 psc)
 {
@@ -23,27 +22,10 @@ void TIMER7_GPIO_Init(u16 arr,u16 psc)
     TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);                  //使能TIM7中断，允许更新中断
 
     NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;             //TIM7中断
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;   //设置抢占优先级0
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;   //设置抢占优先级0
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;          //设置响应优先级3
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;             //使能通道1中断
     NVIC_Init(&NVIC_InitStructure);                             //初始化NVIC
 
     TIM_Cmd(TIM7, ENABLE);                                      //TIM7使能
 }
-
-static u16 i = 0;
-void TIM7_IRQHandler(void)
-{
-    i++;
-    if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET)
-    {
-        TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
-        if (i==100)
-        {
-            i=0;
-            printf("Enter TIM7 interrupt\r\n");
-        }
-    }
-}
-
-
