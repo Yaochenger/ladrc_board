@@ -94,6 +94,7 @@ void USART_Printf_Init(uint32_t baudrate)
 {
     GPIO_InitTypeDef  GPIO_InitStructure;
     USART_InitTypeDef USART_InitStructure;
+    NVIC_InitTypeDef NVIC_InitStructure;
 
 #if(DEBUG == DEBUG_UART1)
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_GPIOA, ENABLE);
@@ -128,7 +129,15 @@ void USART_Printf_Init(uint32_t baudrate)
     USART_InitStructure.USART_StopBits = USART_StopBits_1;
     USART_InitStructure.USART_Parity = USART_Parity_No;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-    USART_InitStructure.USART_Mode = USART_Mode_Tx;
+    USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+
+    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+
+    NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;             //TIM7中断
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;   //设置抢占优先级0
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;          //设置响应优先级3
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;             //使能通道1中断
+    NVIC_Init(&NVIC_InitStructure);                             //初始化NVIC
 
 #if(DEBUG == DEBUG_UART1)
     USART_Init(USART1, &USART_InitStructure);

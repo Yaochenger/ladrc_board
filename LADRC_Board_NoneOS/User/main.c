@@ -24,6 +24,8 @@
 #include "QDTFT_demo.h"
 #include "LL_Gui.h"
 #include "ui_ladrcLogic.h"
+#include "lshell_port.h"
+#include "shell.h"
 /* Global typedef */
 
 /* Global define */
@@ -48,9 +50,9 @@ int main(void)
 	USART_Printf_Init(115200);
 //	TIMER6_GPIO_Init(10000, 96);
 
-	printf("SystemClk:%d\r\n",SystemCoreClock);
-	printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
-	printf("This is printf example\r\n");
+//	printf("SystemClk:%d\r\n",SystemCoreClock);
+//	printf( "ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
+//	printf("This is printf example\r\n");
 
 //    TIMER3_ENCODER_GPIO_Init();
 //    TIMER4_ENCODER_GPIO_Init();
@@ -75,6 +77,7 @@ int main(void)
     Lcd_Clear(WHITE); //«Â∆¡
     llGuiInit();
     TIMER7_GPIO_Init(10000, 96);
+    userShellInit();
     while(1)
     {
          nButtonClick(ID_BUTTON_0);
