@@ -22,8 +22,6 @@
 #include "board_config.h"
 #include "user_peripheral_driver.h"
 #include "QDTFT_demo.h"
-#include "LL_Gui.h"
-#include "ui_ladrcLogic.h"
 #include "lshell_port.h"
 #include "shell.h"
 /* Global typedef */
@@ -78,17 +76,16 @@ int main(void)
     llGuiInit();
     TIMER7_GPIO_Init(10000, 96);
     userShellInit();
+    EXTI0_GPIO_Init();
+    int data =0;
     while(1)
     {
-         nButtonClick(ID_BUTTON_0);
-         Delay_Ms(500);
-
-//        while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == 1)
-//        {
-//            data = USART_ReceiveData(USART2);
-//            USART_SendData(USART2,data);
-//            printf("%s \r\n", &data);
-//        }
+        while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == 1)
+        {
+            data = USART_ReceiveData(USART2);
+            USART_SendData(USART2,data);
+            printf("%s \r\n", &data);
+        }
     }
 }
 
