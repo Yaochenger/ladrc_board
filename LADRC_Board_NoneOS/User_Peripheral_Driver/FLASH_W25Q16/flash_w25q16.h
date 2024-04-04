@@ -44,6 +44,7 @@ void SPI_Flash_Wait_Busy(void);
 void SPI_FLASH_Write_Enable(void);
 void SPI_FLASH_Write_Disable(void);
 u16 SPI_Flash_ReadID(void);
+u32 SPI_Flash_Read_JEDEC_ID(void);
 void SPI_Flash_Erase_Sector(u32 Dst_Addr);
 void SPI_Flash_Read(u8 *pBuffer, u32 ReadAddr, u16 size);
 void SPI_Flash_Write_Page(u8 *pBuffer, u32 WriteAddr, u16 size);

@@ -49,8 +49,8 @@ void llCfgDoubleBufferEnd(bool isRefreshNow)
 bool llCfgClickGetPoint(int16_t *x,int16_t *y)
 {
     bool touchState=false;
-    int16_t rx;
-    int16_t ry;
+    int16_t rx = 0;
+    int16_t ry = 0;
 
     //添加触摸函数
     //touchState=touch_scan(&rx,&ry);
@@ -172,17 +172,12 @@ void llSetRtc(uint8_t *writeBuf)
 {
 }
 
-#include "timer7.h"
-
 void TIM7_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void TIM7_IRQHandler(void)
 {
     llGuiTick(10);
-    if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET)
-    {
+    if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET) {
         TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
         llGuiLoop();
     }
 }
-
-

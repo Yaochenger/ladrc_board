@@ -75,7 +75,7 @@ void llCharShowChar(llGeneral* widget,int16_t x, int16_t y,llChar* charInfo,uint
     uint8_t passwordStr='*';
     uint8_t *str;
     
-    void * pColorBuf;
+    void * pColorBuf = NULL;
     uint16_t bolckWidth=0;
 
     uint32_t charAddr;

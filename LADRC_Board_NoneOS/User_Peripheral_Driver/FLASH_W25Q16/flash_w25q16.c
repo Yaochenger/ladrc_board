@@ -133,6 +133,27 @@ u16 SPI_Flash_ReadID(void)
 }
 
 /*********************************************************************
+ * @fn      SPI_Flash_Read_JEDEC_ID
+ *
+ * @brief   Read flash JEDEC ID.
+ *
+ * @return  Temp - FLASH JEDEC ID.
+ */
+u32 SPI_Flash_Read_JEDEC_ID(void)
+{
+    u32 Temp = 0;
+
+    GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
+    SPI2_ReadWriteByte(W25X_JedecDeviceID);
+    Temp |= SPI2_ReadWriteByte(0xFF) << 16;
+    Temp |= SPI2_ReadWriteByte(0xFF) << 8;
+    Temp |= SPI2_ReadWriteByte(0xFF);
+    GPIO_WriteBit(GPIOB, GPIO_Pin_12, 1);
+
+    return Temp;
+}
+
+/*********************************************************************
  * @fn      SPI_Flash_Erase_Sector
  *
  * @brief   Erase one sector(4Kbyte).

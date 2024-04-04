@@ -901,8 +901,11 @@ int tlsf_check(tlsf_t tlsf)
 
 static void default_walker(void* ptr, size_t size, int used, void* user)
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
 	(void)user;
 	LLPRINT("\t%p %s size: %x (%p)\n", ptr, used ? "used" : "free", (unsigned int)size, block_from_ptr(ptr));
+#pragma GCC diagnostic pop
 }
 
 void tlsf_walk_pool(pool_t pool, tlsf_walker walker, void* user)
@@ -991,8 +994,11 @@ pool_t tlsf_add_pool(tlsf_t tlsf, void* mem, size_t bytes)
 
 	if (((ptrdiff_t)mem % ALIGN_SIZE) != 0)
 	{
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
 		LLPRINT("tlsf_add_pool: Memory must be aligned by %u bytes.\n",
 			(unsigned int)ALIGN_SIZE);
+#pragma GCC diagnostic pop
 		return 0;
 	}
 
@@ -1003,9 +1009,12 @@ pool_t tlsf_add_pool(tlsf_t tlsf, void* mem, size_t bytes)
 			(unsigned int)(pool_overhead + block_size_min),
 			(unsigned int)((pool_overhead + block_size_max) / 256));
 #else
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
 		LLPRINT("tlsf_add_pool: Memory size must be between %u and %u bytes.\n", 
 			(unsigned int)(pool_overhead + block_size_min),
 			(unsigned int)(pool_overhead + block_size_max));
+#pragma GCC diagnostic pop
 #endif
 		return 0;
 	}
@@ -1088,8 +1097,11 @@ tlsf_t tlsf_create(void* mem)
 
 	if (((tlsfptr_t)mem % ALIGN_SIZE) != 0)
 	{
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
 		LLPRINT("tlsf_create: Memory must be aligned to %u bytes.\n",
 			(unsigned int)ALIGN_SIZE);
+#pragma GCC diagnostic pop
 		return 0;
 	}
 
