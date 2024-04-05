@@ -136,8 +136,8 @@ sfud_err sfud_spi_port_init(sfud_flash *flash) {
      *    flash->retry.times = 10000; //Required
      */
 
-    switch (flash->index) {
-    case SFUD_W25Q16_DEVICE_INDEX: {
+//    switch (flash->index) {
+//    case SFUD_W25Q16_DEVICE_INDEX: {
         /* SPI 外设初始化 */
         SPI2_GPIO_Init();
         /* 同步 Flash 移植所需的接口及数据 */
@@ -150,9 +150,9 @@ sfud_err sfud_spi_port_init(sfud_flash *flash) {
         /* adout 60 seconds timeout */
         flash->retry.times = 60 * 10000;
 
-        break;
-    }
-    }
+//        break;
+//    }
+//    }
 
     return result;
 }
