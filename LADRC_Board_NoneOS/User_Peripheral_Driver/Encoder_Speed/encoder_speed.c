@@ -7,7 +7,6 @@
 
 #include "encoder_speed.h"
 
-void TIM6_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
 EncoderTypeDef TIM3_Encoder_SPEED;
 EncoderTypeDef TIM4_Encoder_SPEED;
@@ -46,19 +45,35 @@ void TIM8_EnCoder_CNT(void)
     printf("TIM8 Encoder Direct=%d, Counter= %d \r\n",TIM8_Encoder_SPEED.Dir, TIM8_Encoder_SPEED.Cnt);
 }
 
-static u16 i = 0;
-void TIM6_IRQHandler(void)
-{
-    i++;
-    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
-    {
+//static u16 i = 0;
+//void TIM6_IRQHandler(void)
+//{
+//    i++;
+//    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
+//    {
+//        TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+//        if (i==100)
+//        {
+//            i=0;
+//            TIM3_EnCoder_CNT();
+//            TIM4_EnCoder_CNT();
+//            TIM5_EnCoder_CNT();
+//        }
+//    }
+//}
+
+#include "mpu6050_soft.h"
+
+short aacx,aacy,aacz;       //加速度传感器原始数据
+short gyrox,gyroy,gyroz;    //陀螺仪原始数据
+void TIM6_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void TIM6_IRQHandler(void) {
+    MPU_Get_Accelerometer(&aacx,&aacy,&aacz);   //得到加速度传感器数据
+    MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);    //得到陀螺仪数据
+    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) {
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
-        if (i==100)
-        {
-            i=0;
-            TIM3_EnCoder_CNT();
-            TIM4_EnCoder_CNT();
-            TIM5_EnCoder_CNT();
-        }
+//        MPU_Get_Accelerometer(&aacx,&aacy,&aacz);   //得到加速度传感器数据
+//        MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);    //得到陀螺仪数据
     }
 }
+
