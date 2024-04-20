@@ -15,7 +15,6 @@
 */
 
 #include "debug.h"
-#include "iic.h"
 #include "user_peripheral_driver.h"
 /*******************************************************************************
 * Function Name  : main
@@ -34,11 +33,12 @@ mpu6050_attitude mpu6050 = {0};
 //extern short aacx,aacy,aacz;       //加速度传感器原始数据
 //extern short gyrox,gyroy,gyroz;    //陀螺仪原始数据
 
+IMU_data USER_IMU_data;
 int main(void)
 {
     short aacx,aacy,aacz;       //加速度传感器原始数据
     short gyrox,gyroy,gyroz;    //陀螺仪原始数据
-    short temp;                 //温度
+    float temp;                 //温度
     float anglex = 0;
     float angley = 0;
     float anglez = 0;
@@ -53,13 +53,19 @@ int main(void)
     while(1)
     {
         temp=MPU_Get_Temperature(); //得到温度值
-        MPU_Get_Accelerometer(&aacx,&aacy,&aacz);   //得到加速度传感器数据
-        MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);    //得到陀螺仪数据
-        printf("Temperature:%d\r\n",temp);
+//        MPU_Get_Accelerometer(&aacx,&aacy,&aacz);   //得到加速度传感器数据
+//        MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);    //得到陀螺仪数据
+//        printf("Temperature:%.1f\r\n",temp);
+//
+//        printf("%.1f, " , First_Order_Filter_Calc(aacy, aacz, gyrox, &anglex));
+//        printf("%.1f, " , First_Order_Filter_Calc(aacx, aacz, gyroy, &angley));
+//        printf("%.1f\r\n",First_Order_Filter_Calc(aacx, aacy, gyroz, &anglez));
 
-        printf("%f, " , First_Order_Filter_Calc(aacy, aacz, gyrox, &anglex));
-        printf("%f, " , First_Order_Filter_Calc(aacx, aacz, gyroy, &angley));
-        printf("%f\r\n",First_Order_Filter_Calc(aacx, aacy, gyroz, &anglez));
+        USER_GET_MPU6050_DATA(&USER_IMU_data);
+        printf("Pitch %.1f, " , USER_IMU_data.Pitch);
+        printf("Roll  %.1f, " , USER_IMU_data.Roll);
+        printf("Yaw   %.1f, " , USER_IMU_data.Yaw);
+        printf("Temperature:%.1f \r\n",temp);
         Delay_Ms(50);
     }
 }

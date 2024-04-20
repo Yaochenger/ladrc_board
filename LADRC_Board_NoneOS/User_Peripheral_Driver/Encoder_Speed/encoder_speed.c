@@ -62,7 +62,7 @@ void TIM8_EnCoder_CNT(void)
 //    }
 //}
 
-#include "mpu6050_soft.h"
+#include <mpu6050_soft.h>
 
 short aacx,aacy,aacz;       //加速度传感器原始数据
 short gyrox,gyroy,gyroz;    //陀螺仪原始数据

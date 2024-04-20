@@ -8,18 +8,16 @@
 #ifndef USER_PERIPHERAL_DRIVER_MPU6050_MPU6050_SOFT_MPU6050_SOFT_H_
 #define USER_PERIPHERAL_DRIVER_MPU6050_MPU6050_SOFT_MPU6050_SOFT_H_
 
-#include "iic.h"
+#include "i2c2.h"
 #include "mpu6050_filter.h"
-//MPU6050 AD0潩�?�
-#define MPU_AD0_H               GPIO_SetBits(GPIOA,GPIO_Pin_15)    //潩潩SDA�???�?
-#define MPU_AD0_L               GPIO_ResetBits(GPIOA,GPIO_Pin_15)  //潩潩SDA�???�?
 
-//#define MPU_ACCEL_OFFS_REG        0X06    //accel_offs�?潩�,�?�?�?潩,�?潩潩?�?�?
-//#define MPU_PROD_ID_REG           0X0C    //prod id�?潩�,�??潩潩?�?�?
-#define MPU_SELF_TESTX_REG      0X0D    //�?�?潩漍
-#define MPU_SELF_TESTY_REG      0X0E    //�?�?潩漎
-#define MPU_SELF_TESTZ_REG      0X0F    //�?�?潩漐
-#define MPU_SELF_TESTA_REG      0X10    //�?�?潩滱
+#define MPU_AD0_H               GPIO_SetBits(GPIOA,GPIO_Pin_15)
+#define MPU_AD0_L               GPIO_ResetBits(GPIOA,GPIO_Pin_15)
+
+#define MPU_SELF_TESTX_REG      0X0D
+#define MPU_SELF_TESTY_REG      0X0E
+#define MPU_SELF_TESTZ_REG      0X0F
+#define MPU_SELF_TESTA_REG      0X10
 #define MPU_SAMPLE_RATE_REG     0X19    //潩潩?�?�?潩
 #define MPU_CFG_REG             0X1A    //潩濣?潩�
 #define MPU_GYRO_CFG_REG        0X1B    //潩潩潩潩濣?潩�
@@ -83,13 +81,26 @@
 #define MPU_FIFO_RW_REG         0X74    //FIFO潩?�?潩�
 #define MPU_DEVICE_ID_REG       0X75    //潩潩ID�?潩�
 
-//潩滱D0潩(9潩)�?�,IIC潩??0X68(潩潩潩潩�?).
-//潩潩漋3.3,潩IIC潩??0X69(潩潩潩潩�?).
-#define MPU_ADDR                0X68
+#define MPU_ADDR                (0x68<<1)
 
-////潩??潩AD0?�?滸ND,潩潩??潩?潩?潩,?0XD1潩0XD0(潩潩漋CC,潩?0XD3潩0XD2)
-//#define MPU_READ    0XD1
-//#define MPU_WRITE   0XD0
+typedef struct MPU6050_DATA {
+    short gx;
+    short gy;
+    short gz;
+    short ax;
+    short ay;
+    short az;
+} mpu6050_data;
+
+typedef struct IMU_DATA {
+    float Roll;
+    float Pitch;
+    float Yaw;
+} IMU_data;
+
+typedef IMU_data* IMU_data_t;
+
+typedef mpu6050_data * mpu6050_data_t;
 
 u8 MPU_Init(void);                              //潩?潩MPU6050
 u8 MPU_Write_Len(u8 addr,u8 reg,u8 len,u8 *buf);//IIC潩潩?
@@ -103,8 +114,9 @@ u8 MPU_Set_LPF(u16 lpf);
 u8 MPU_Set_Rate(u16 rate);
 u8 MPU_Set_Fifo(u8 sens);
 
-short MPU_Get_Temperature(void);
+float MPU_Get_Temperature(void);
 u8 MPU_Get_Gyroscope(short *gx,short *gy,short *gz);
 u8 MPU_Get_Accelerometer(short *ax,short *ay,short *az);
 
+void USER_GET_MPU6050_DATA(IMU_data_t USER_IMU_data);
 #endif /* USER_PERIPHERAL_DRIVER_MPU6050_MPU6050_SOFT_MPU6050_SOFT_H_ */
