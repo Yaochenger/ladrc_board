@@ -13,4 +13,5 @@
 #include "flash_w25q16.h"
 #include "tft_st7735s.h"
 #include "oled_spi.h"
+#include "lshell_port.h"
 #endif /* USER_PERIPHERAL_DRIVER_USER_PERIPHERAL_DRIVER_H_ */

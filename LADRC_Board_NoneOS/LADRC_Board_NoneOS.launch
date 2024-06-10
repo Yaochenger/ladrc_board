@@ -49,7 +49,7 @@
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="obj\LADRC_Board_NoneOS.elf"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="LADRC_Board_NoneOS"/>
 <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="true"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="ilg.gnumcueclipse.managedbuild.cross.riscv.config.elf.release.1008047074"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="com.mounriver.managedbuild.cross.riscv.config.elf.release.1008047074"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/LADRC_Board_NoneOS"/>
 </listAttribute>

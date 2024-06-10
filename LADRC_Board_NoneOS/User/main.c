@@ -15,6 +15,7 @@
 */
 
 #include "debug.h"
+#include "board_config.h"
 #include "user_peripheral_driver.h"
 /*******************************************************************************
 * Function Name  : main
@@ -36,37 +37,37 @@ mpu6050_attitude mpu6050 = {0};
 IMU_data USER_IMU_data;
 int main(void)
 {
-    short aacx,aacy,aacz;       //加速度传感器原始数据
-    short gyrox,gyroy,gyroz;    //陀螺仪原始数据
-    float temp;                 //温度
-    float anglex = 0;
-    float angley = 0;
-    float anglez = 0;
+//    short aacx,aacy,aacz;       //加速度传感器原始数据
+//    short gyrox,gyroy,gyroz;    //陀螺仪原始数据
+//    float temp;                 //温度
+//    float anglex = 0;
+//    float angley = 0;
+//    float anglez = 0;
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     Delay_Init();
     USART_Printf_Init(115200);
-    MPU_Init();                //初始化MPU6050
-
     printf("SystemClk:%d\r\n",SystemCoreClock);
-    printf("MPU6050 TEST\r\n");
-    MPU6050_Filter_Init(50);
+    userShellInit();  // Init Shell
+
+//    MPU_Init();                //初始化MPU6050
+//    MPU6050_Filter_Init(50);
     while(1)
     {
-        temp=MPU_Get_Temperature(); //得到温度值
-//        MPU_Get_Accelerometer(&aacx,&aacy,&aacz);   //得到加速度传感器数据
-//        MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);    //得到陀螺仪数据
-//        printf("Temperature:%.1f\r\n",temp);
+//        temp=MPU_Get_Temperature(); //得到温度值
+////        MPU_Get_Accelerometer(&aacx,&aacy,&aacz);   //得到加速度传感器数据
+////        MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);    //得到陀螺仪数据
+////        printf("Temperature:%.1f\r\n",temp);
+////
+////        printf("%.1f, " , First_Order_Filter_Calc(aacy, aacz, gyrox, &anglex));
+////        printf("%.1f, " , First_Order_Filter_Calc(aacx, aacz, gyroy, &angley));
+////        printf("%.1f\r\n",First_Order_Filter_Calc(aacx, aacy, gyroz, &anglez));
 //
-//        printf("%.1f, " , First_Order_Filter_Calc(aacy, aacz, gyrox, &anglex));
-//        printf("%.1f, " , First_Order_Filter_Calc(aacx, aacz, gyroy, &angley));
-//        printf("%.1f\r\n",First_Order_Filter_Calc(aacx, aacy, gyroz, &anglez));
-
-        USER_GET_MPU6050_DATA(&USER_IMU_data);
-        printf("Pitch %.1f, " , USER_IMU_data.Pitch);
-        printf("Roll  %.1f, " , USER_IMU_data.Roll);
-        printf("Yaw   %.1f, " , USER_IMU_data.Yaw);
-        printf("Temperature:%.1f \r\n",temp);
-        Delay_Ms(50);
+//        USER_GET_MPU6050_DATA(&USER_IMU_data);
+//        printf("Pitch %.1f, " , USER_IMU_data.Pitch);
+//        printf("Roll  %.1f, " , USER_IMU_data.Roll);
+//        printf("Yaw   %.1f, " , USER_IMU_data.Yaw);
+//        printf("Temperature:%.1f \r\n",temp);
+//        Delay_Ms(50);
     }
 }
 
