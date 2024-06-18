@@ -63,7 +63,7 @@
 
 #### 2.2 函数详解
 
-##### (1) u16 SPI_Flash_ReadID(void);
+- u16 SPI_Flash_ReadID(void);
 
 函数功能：获取其制造商ID和设备ID。
 
@@ -85,7 +85,7 @@
 
 <img src="figures/flash1.png" style="zoom:80%;" />
 
-##### (2) void SPI_Flash_Erase_Sector(u32 Dst_Addr)；
+-  void SPI_Flash_Erase_Sector(u32 Dst_Addr)；
 
 函数功能：
 
@@ -131,7 +131,7 @@ void SPI_Flash_Erase_Sector(u32 Dst_Addr)
 
 SPI_Flash_Wait_Busy();用于通过读寄存的方式查看当前的Flash的“忙”状态，判断其是否在忙。
 
-##### (3) void SPI_Flash_Read(u8 *pBuffer, u32 ReadAddr, u16 size)
+-  void SPI_Flash_Read(u8 *pBuffer, u32 ReadAddr, u16 size)
 
 ```c
 void SPI_Flash_Read(u8 *pBuffer, u32 ReadAddr, u16 size)
@@ -181,7 +181,7 @@ void SPI_Flash_Read(u8 *pBuffer, u32 ReadAddr, u16 size)
 4. **指令忽略条件**：
    - 如果在擦除、编程或写入周期过程中（BUSY=1）发出读取数据指令，则指令将被忽略，不会对当前周期产生任何影响。
 
-##### (4) void SPI_Flash_Write(u8 *pBuffer, u32 WriteAddr, u16 size)
+- void SPI_Flash_Write(u8 *pBuffer, u32 WriteAddr, u16 size)
 
 ```c
 void SPI_Flash_Write(u8 *pBuffer, u32 WriteAddr, u16 size)
@@ -261,3 +261,66 @@ void SPI_Flash_Write(u8 *pBuffer, u32 WriteAddr, u16 size)
 }
 ```
 
+### 3.uart2_ble_sample.c
+
+#### 3.1 测试说明
+
+1. 测试目标
+
+   测试板载蓝牙模组是否正常工作，蓝牙模组采用SPP透传方式，以及uart2外设是否正常，同时提供使用示例。
+
+2. 测试接口
+
+   | BLE  | PIN(UART2) |
+   | :--: | :--------: |
+   |  TX  |    PD5     |
+   |  RX  |    PD6     |
+
+3. 命令说明
+
+   |       命令       |   参数1   |         示例         |
+   | :--------------: | :-------: | :------------------: |
+   | uart2_ble_sample | int型整数 | uart2_ble_sample 100 |
+
+   > 注：参数1：接收的字符的个数，当接收到传入参数的个数的字符后，退出当前的测试用例。
+
+4. 测试方法
+
+   1. 启动两个串口终端
+   2. 串口终端1与板载串口shell相连，波特率115200
+   3. 串口终端2与蓝牙虚拟串口相连
+   4. 使用串口终端2发送字符，在串口终端1输出发送的字符，同时串口终端2回显字符
+
+   <img src="figures/uart2_ble_sample.png" style="zoom:80%;" />
+
+### 4.uart6_rs485_sample.c
+
+#### 3.1 测试说明
+
+1. 测试目标
+
+   测试板载RS485是否正常工作，以及uart6外设是否正常，同时提供使用示例。
+
+2. 测试接口
+
+   | RS485 | PIN(UART6) |
+   | :---: | :--------: |
+   |  TX   |    PC0     |
+   |  RX   |    PC1     |
+
+3. 命令说明
+
+   |        命令        |   参数1   |         示例          |
+   | :----------------: | :-------: | :-------------------: |
+   | uart6_rs485_sample | int型整数 | uart6_rs485_sample100 |
+
+   > 注：参数1：接收的字符的个数，当接收到传入参数的个数的字符后，退出当前的测试用例。
+
+4. 测试方法
+
+   1. 启动两个串口终端
+   2. 串口终端1与板载串口shell相连，波特率4800
+   3. 串口终端2与蓝牙虚拟串口相连
+   4. 使用串口终端2发送字符，在串口终端1输出发送的字符，同时串口终端2回显字符
+
+<img src="figures/uart6_rs485_sample.png" style="zoom:80%;" />
