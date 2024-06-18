@@ -8,6 +8,7 @@
 #ifndef USER_DRIVERS_BOARD_CONFIG_H_
 #define USER_DRIVERS_BOARD_CONFIG_H_
 
+#include "adc.h"
 #include "i2c2.h"
 #include "key.h"
 #include "timer3.h"
