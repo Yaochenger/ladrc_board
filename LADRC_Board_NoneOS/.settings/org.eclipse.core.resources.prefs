@@ -15,6 +15,7 @@ encoding//User_Peripheral_Driver/Letter_Shell/shell.h=UTF-8
 encoding//User_Peripheral_Driver/Letter_Shell/shell_cfg.h=UTF-8
 encoding//User_Peripheral_Driver/Letter_Shell/shell_cmd_list.c=UTF-8
 encoding//User_Peripheral_Driver/Letter_Shell/shell_ext.h=UTF-8
+encoding//User_Peripheral_Driver/MPU6050/MPU6050_SOFT/mpu6050_soft.c=UTF-8
 encoding//User_Peripheral_Driver/MPU6050/MPU6050_SOFT/mpu6050_soft.h=UTF-8
 encoding//User_Peripheral_Driver/sfud/README.md=UTF-8
 encoding//User_Peripheral_Driver/sfud/src/sfud_sfdp.c=UTF-8
