@@ -7,7 +7,7 @@
 float Delta_t = 1;
 float GYRO_K = 1;
 
-#define First_Order_Filter_Tau 0.075
+#define First_Order_Filter_Tau 0.1
 float First_Order_k = 1;
 
 void MPU6050_Filter_Init(float loop_ms)
