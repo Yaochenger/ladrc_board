@@ -7,6 +7,7 @@
 
 #include "shell.h"
 #include "mpu6050_soft.h"
+#include "mpu6050_dmp.h"
 
 float MPU6050_Temp;
 IMU_data USER_IMU_data;
