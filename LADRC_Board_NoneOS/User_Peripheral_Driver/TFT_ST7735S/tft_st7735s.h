@@ -37,6 +37,8 @@
 
 
 void LCD_GPIO_Init(void);
+void LCD_ON(void);
+void LCD_OFF(void);
 void Lcd_WriteIndex(u8 Index);
 void Lcd_WriteData(u8 Data);
 void Lcd_WriteReg(u8 Index, u8 Data);
