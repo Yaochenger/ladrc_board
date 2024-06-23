@@ -22,6 +22,7 @@ typedef struct EncoderType
 void TIM3_EnCoder_CNT(void);
 void TIM4_EnCoder_CNT(void);
 void TIM5_EnCoder_CNT(void);
-void TIM6_EnCoder_CNT(void);
+void TIM8_EnCoder_CNT(void);
+
 
 #endif /* USER_PERIPHERAL_DRIVER_ENCODER_SPEED_ENCODER_SPEED_H_ */
