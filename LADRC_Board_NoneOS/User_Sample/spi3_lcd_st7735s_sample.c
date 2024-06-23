@@ -6,7 +6,7 @@
  */
 #include "shell.h"
 #include "tft_st7735s.h"
-
+#include "debug.h"
 void Gui_Circle(u16 X, u16 Y, u16 R, u16 fc);
 void Gui_DrawFont_GBK16(u16 x, u16 y, u16 fc, u16 bc, u8 *s);
 
@@ -49,8 +49,16 @@ int spi3_lcd_func(int mode)
             Gui_Circle(50, 50, 20, RED);
             break;
         case 5:
-            Lcd_Clear(WHITE);
-            Gui_DrawFont_GBK16(0, 56, RED, WHITE, "LADRC BOARD V1.0");
+            {
+                Lcd_Clear(WHITE);
+                uint8_t s[2] = { 0 };
+                for (char c = '0'; c <= 'Z'; c++) {
+                    s[0] = c;
+                    Lcd_Clear(WHITE);
+                    Gui_DrawFont_GBK16(56, 56, RED, GREEN, s);
+                    Delay_Ms(500);
+                }
+            }
             break;
         default:
             break;
@@ -132,8 +140,7 @@ void Gui_DrawFont_GBK16(u16 x, u16 y, u16 fc, u16 bc, u8 *s) {
     }
 }
 
-
-#define USE_ONCHIP_FLASH_FONT 0
+#define USE_ONCHIP_FLASH_FONT 1
 const unsigned char asc16[]={
 #if USE_ONCHIP_FLASH_FONT
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, //" "

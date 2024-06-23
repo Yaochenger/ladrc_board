@@ -9,12 +9,12 @@ extern "C" {
 
 #define FONT_LIB_TOTAL_NUM        1
 #define PAGE_MAX                 1
-#define LL_LCD_ANGLE         0
+#define LL_LCD_ANGLE         1
 
 
 #define FONT_LIB_C_ARIAL_9         &userFontLibList[0]
 
-#define PAGE_UI_LADRC          0
+#define PAGE_UI_GUI          0
 
 extern uint8_t userPageMax;
 extern uint8_t userFontLibTotalNum;

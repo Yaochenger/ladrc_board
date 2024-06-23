@@ -32,9 +32,11 @@ void llSetPoint(int16_t x,int16_t y,llColor color);
 void llFillSingleColor(int16_t x0,int16_t y0,int16_t x1,int16_t y1,llColor color);
 void llFillMultipleColors(int16_t x0,int16_t y0,int16_t x1,int16_t y1,llColor *color);
 
+#if USE_USER_MEM == 0
 void *llMalloc(uint32_t size);
 void llFree(void *p);
 void *llRealloc(void *ptr,uint32_t newSize);
+#endif
 
 void llDrawLine(int16_t x0,int16_t y0,int16_t x1,int16_t y1,llColor color);
 void llDrawLineD(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t d, llColor color);

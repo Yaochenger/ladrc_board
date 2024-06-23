@@ -23,7 +23,10 @@ int main(void)
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n",SystemCoreClock);
     userShellInit(); //letter Shell
-
+    Lcd_Init();
+    Lcd_Clear(WHITE);//clear LCD
+    llGuiInit();     //Init LLGUI
+    TIMER7_GPIO_Init(10000, 96); //Flush GUI
     while(1);
 }
 

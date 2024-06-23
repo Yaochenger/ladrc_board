@@ -1,5 +1,5 @@
-#ifndef _UI_LADRC_LOGIC_H_
-#define _UI_LADRC_LOGIC_H_
+#ifndef _UI_GUI_LOGIC_H_
+#define _UI_GUI_LOGIC_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,20 +27,14 @@ extern "C" {
 
 #define ID_BACKGROUND          0x400
 #define ID_BUTTON_0          0x401
-#define ID_TEXT_0          0x402
-#define ID_CHECKBOX_0          0x403
-#define ID_LINEEDIT_0          0x404
-#define ID_SLIDER_0          0x405
-#define ID_PROGRESSBAR_0          0x406
 
-bool ui_ladrcAction_Button_0_pressed_LineEdit_0(llConnectInfo info);
 
-void ui_ladrcLogicInit(void);
-void ui_ladrcLogicLoop(void);
-void ui_ladrcLogicQuit(void);
+void ui_guiLogicInit(void);
+void ui_guiLogicLoop(void);
+void ui_guiLogicQuit(void);
 #ifdef __cplusplus
 }
 #endif
 
-#endif //_UI_LADRC_LOGIC_H_
+#endif //_UI_GUI_LOGIC_H_
 

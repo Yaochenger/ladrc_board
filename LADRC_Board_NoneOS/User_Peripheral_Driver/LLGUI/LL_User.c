@@ -1,5 +1,5 @@
 #include "LL_User.h"
-#include "ui_ladrc.h"
+#include "ui_gui.h"
 #include "Arial_9.h"
 #ifdef USE_LLGUI_EX
 #include "LL_GuiEx.h"
@@ -18,11 +18,11 @@ void (*pageQuitFunc[PAGE_MAX])(void);
 
 void llUserInit(void)
 {
-    pageInitFunc[0]=ui_ladrcInit;
+    pageInitFunc[0]=ui_guiInit;
 
-    pageLoopFunc[0]=ui_ladrcLoop;
+    pageLoopFunc[0]=ui_guiLoop;
 
-    pageQuitFunc[0]=ui_ladrcQuit;
+    pageQuitFunc[0]=ui_guiQuit;
 
 };
 
