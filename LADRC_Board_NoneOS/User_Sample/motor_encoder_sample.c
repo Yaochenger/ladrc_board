@@ -14,43 +14,150 @@
 #include "encoder_speed.h"
 
 void TIMERX_MOTOR_Dir_GPIO_Init(void);
+extern EncoderTypeDef TIM3_Encoder_SPEED;
+extern EncoderTypeDef TIM4_Encoder_SPEED;
+extern EncoderTypeDef TIM5_Encoder_SPEED;
+extern EncoderTypeDef TIM8_Encoder_SPEED;
 
-int motor_encoder_func(int cnt)
+int motor_encoder_func(int mode, int num)
 {
-    TIMER3_ENCODER_GPIO_Init();
-    TIMER4_ENCODER_GPIO_Init();
-    TIMER5_ENCODER_GPIO_Init();
-    TIMER8_ENCODER_GPIO_Init();
-
     TIMERX_MOTOR_Dir_GPIO_Init();
-
     TIMER9_PWM_GPIO_Init( 100, 4800-1, 20 );
 
     GPIO_SetBits(GPIOE, GPIO_Pin_8);
     GPIO_SetBits(GPIOE, GPIO_Pin_9);
 
-    GPIO_SetBits(GPIOE, GPIO_Pin_0);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_1);
+    int mode_handle = mode;
+    int num_handle = num;
+    switch (mode_handle) {
+        case 1:
+            {
+                TIMER5_ENCODER_GPIO_Init();
+                GPIO_SetBits(GPIOE, GPIO_Pin_0);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_1);
+                for (int i = 0; i < num_handle; i++)
+                {
+                    TIM5_EnCoder_CNT();
+                    Delay_Ms(500);
+                }
+                GPIO_ResetBits(GPIOE, GPIO_Pin_0);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_1);
+                printf("\r\n\r\n");
+                return 0;
+            }
+        case 2:
+            {
+                TIMER8_ENCODER_GPIO_Init();
+                GPIO_ResetBits(GPIOE, GPIO_Pin_2);
+                GPIO_SetBits(GPIOE, GPIO_Pin_3);
+                for (int i = 0; i < num_handle; i++)
+                {
+                    TIM8_EnCoder_CNT();
+                    Delay_Ms(500);
+                }
+                GPIO_ResetBits(GPIOE, GPIO_Pin_2);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_3);
+                printf("\r\n\r\n");
+                return 0;
+            }
+        case 3:
+            {
+                TIMER3_ENCODER_GPIO_Init();
+                GPIO_SetBits(GPIOE, GPIO_Pin_4);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_5);
+                for (int i = 0; i < num_handle; i++)
+                {
+                    TIM3_EnCoder_CNT();
+                    Delay_Ms(500);
+                }
+                GPIO_ResetBits(GPIOE, GPIO_Pin_4);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_5);
+                printf("\r\n\r\n");
+                return 0;
+            }
+        case 4:
+            {
+                TIMER4_ENCODER_GPIO_Init();
+                GPIO_ResetBits(GPIOE, GPIO_Pin_6);
+                GPIO_SetBits(GPIOE, GPIO_Pin_7);
+                for (int i = 0; i < num_handle; i++)
+                {
+                    TIM4_EnCoder_CNT();
+                    Delay_Ms(500);
+                }
+                GPIO_ResetBits(GPIOE, GPIO_Pin_6);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_7);
+                printf("\r\n\r\n");
+                return 0;
+            }
+        case 5:
+            {
+                GPIO_SetBits(GPIOE, GPIO_Pin_0);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_1);
 
-    GPIO_SetBits(GPIOE, GPIO_Pin_2);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_3);
+                GPIO_SetBits(GPIOE, GPIO_Pin_2);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_3);
 
-    GPIO_SetBits(GPIOE, GPIO_Pin_4);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_5);
+                GPIO_SetBits(GPIOE, GPIO_Pin_4);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_5);
 
-    GPIO_SetBits(GPIOE, GPIO_Pin_6);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_7);
+                GPIO_SetBits(GPIOE, GPIO_Pin_6);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_7);
 
-    for (int i = 0; i < cnt; i++)
-    {
-        printf("#### Motor Encoder Start #### \r\n");
-        TIM3_EnCoder_CNT();
-        TIM4_EnCoder_CNT();
-        TIM5_EnCoder_CNT();
-        TIM8_EnCoder_CNT();
-        printf("#### Motor Encoder End   #### \r\n");
-        Delay_Ms(500);
+                TIMER3_ENCODER_GPIO_Init();
+                TIMER4_ENCODER_GPIO_Init();
+                TIMER5_ENCODER_GPIO_Init();
+                TIMER8_ENCODER_GPIO_Init();
+
+                for (int i = 0; i < num_handle; i++)
+                {
+                    TIM3_Encoder_SPEED.Dir = TIMER3_ENCODER_COUNTING_DIR();
+                    TIM3_Encoder_SPEED.Cnt = TIM_GetCounter(TIM3);
+                    TIM_SetCounter(TIM3, 0);
+                    TIM4_Encoder_SPEED.Dir = TIMER4_ENCODER_COUNTING_DIR();
+                    TIM4_Encoder_SPEED.Cnt = TIM_GetCounter(TIM4);
+                    TIM_SetCounter(TIM4, 0);
+                    TIM5_Encoder_SPEED.Dir = TIMER5_ENCODER_COUNTING_DIR();
+                    TIM5_Encoder_SPEED.Cnt = TIM_GetCounter(TIM5);
+                    TIM_SetCounter(TIM5, 0);
+                    TIM8_Encoder_SPEED.Dir = TIMER8_ENCODER_COUNTING_DIR();
+                    TIM8_Encoder_SPEED.Cnt = TIM_GetCounter(TIM8);
+                    TIM_SetCounter(TIM8, 0);
+                    printf("TIM3 Encoder Direct=%d, Counter=\033[1m\033[40;31m %d\033[0m \r\n",TIM3_Encoder_SPEED.Dir, TIM3_Encoder_SPEED.Cnt);
+                    printf("TIM4 Encoder Direct=%d, Counter=\033[1m\033[40;31m %d\033[0m \r\n",TIM4_Encoder_SPEED.Dir, TIM4_Encoder_SPEED.Cnt);
+                    printf("TIM5 Encoder Direct=%d, Counter=\033[1m\033[40;31m %d\033[0m \r\n",TIM5_Encoder_SPEED.Dir, TIM5_Encoder_SPEED.Cnt);
+                    printf("TIM8 Encoder Direct=%d, Counter=\033[1m\033[40;31m %d\033[0m \033[3A\r",TIM8_Encoder_SPEED.Dir, TIM8_Encoder_SPEED.Cnt);
+                    Delay_Ms(500);
+                }
+
+                GPIO_ResetBits(GPIOE, GPIO_Pin_0);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_1);
+
+                GPIO_ResetBits(GPIOE, GPIO_Pin_2);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_3);
+
+                GPIO_ResetBits(GPIOE, GPIO_Pin_4);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_5);
+
+                GPIO_ResetBits(GPIOE, GPIO_Pin_6);
+                GPIO_ResetBits(GPIOE, GPIO_Pin_7);
+                printf("\r\n\r\n");
+                return 0;
+            }
+        default:
+            break;
     }
+
+//    for (int i = 0; i < cnt; i++)
+//    {
+//        printf("#### Motor Encoder Start #### \r\n");
+//        TIM3_EnCoder_CNT();
+//        TIM4_EnCoder_CNT();
+//        TIM5_EnCoder_CNT();
+//        TIM8_EnCoder_CNT();
+//        printf("#### Motor Encoder End   #### \r\n");
+//        Delay_Ms(500);
+//    }
 
     return 0;
 
