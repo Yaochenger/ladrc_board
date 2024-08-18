@@ -1,5 +1,6 @@
 #include "LL_User.h"
 #include "ui_gui.h"
+#include "Arial_10.h"
 #include "Arial_9.h"
 #ifdef USE_LLGUI_EX
 #include "LL_GuiEx.h"
@@ -9,6 +10,7 @@ uint8_t userPageMax=PAGE_MAX;
 uint8_t userFontLibTotalNum=FONT_LIB_TOTAL_NUM;
 
 llFontLib userFontLibList[FONT_LIB_TOTAL_NUM]={
+    {typeCFile,"Arial_10",10,&Arial_10_Lib},
     {typeCFile,"Arial_9",9,&Arial_9_Lib}
 };
 

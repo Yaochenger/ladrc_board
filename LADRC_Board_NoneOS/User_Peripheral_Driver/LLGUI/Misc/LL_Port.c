@@ -169,7 +169,6 @@ void llFillMultipleColors(int16_t x0,int16_t y0,int16_t x1,int16_t y1,llColor *c
 #endif
 }
 
-#if USE_USER_MEM == 0
 static void * pTlsfMem=NULL;
 __attribute__((aligned(4))) static uint8_t tlsfMemBuf[MEM_SIZE];
 
@@ -191,7 +190,6 @@ void *llRealloc(void *ptr,uint32_t newSize)
 {
     return tlsf_realloc(pTlsfMem, ptr, newSize);
 }
-#endif
 
 void llDrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, llColor color)
 {

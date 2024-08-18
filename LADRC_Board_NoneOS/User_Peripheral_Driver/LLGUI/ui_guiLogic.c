@@ -13,6 +13,52 @@
 
 /*user action code,don't delete this line*/
 
+
+
+
+
+
+
+bool ui_guiAction_Button_0_released_Text_0(llConnectInfo info)
+{
+    //sender Button_0
+    //receiver Text 0
+    //return true -> stop signal transmission
+    
+
+
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bool ui_guiAction_Button_0_pressed_Text_0(llConnectInfo info)
+{
+    //sender Button_0
+    //receiver Text 0
+    //return true -> stop signal transmission
+    
+
+
+    return false;
+}
+
+
+
+
+
 void ui_guiLogicInit(void)
 {
     

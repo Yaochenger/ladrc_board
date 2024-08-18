@@ -298,7 +298,7 @@ void llGuiConnectProcess(void)
     llConnectRelation relationInfo;
     llConnectInfo connectInfo;
     bool ignoreSignal=false;//忽略相同信号的其他操作
-    while(llQueueGetLength(emitQueue)>0)
+    if(llQueueGetLength(emitQueue)>0)
     {
         if(llQueueDequeue(emitQueue,&emitInfo,sizeof (emitInfo)))
         {

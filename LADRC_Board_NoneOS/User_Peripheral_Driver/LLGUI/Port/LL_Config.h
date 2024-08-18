@@ -37,7 +37,7 @@
 //屏幕高度像素
 #define LL_MONITOR_HEIGHT                           128
 //gui内存大小
-#define MEM_SIZE                                    (8*1024)
+#define MEM_SIZE                                    (16*1024)
 //双缓冲
 #define USE_DOUBLE_BUFFERING                        0
 //图片显示的缓冲大小
@@ -47,7 +47,7 @@
 //使用自定义单色填充函数
 #define USE_USER_FILL_COLOR                         1
 //使用自定义彩色填充函数
-#define USE_USER_FILL_MULTIPLE_COLORS               1
+#define USE_USER_FILL_MULTIPLE_COLORS               0
 
 
 /***********************************控件内存占用定义*********************************************/

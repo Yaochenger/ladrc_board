@@ -26,7 +26,9 @@ extern "C" {
 #include "LL_User.h"
 
 #define ID_BACKGROUND          0x400
-#define ID_BUTTON_0          0x401
+#define ID_TEXT_0          0x403
+#define ID_TEXT_1          0x401
+#define ID_TEXT_2          0x402
 
 
 void ui_guiLogicInit(void);

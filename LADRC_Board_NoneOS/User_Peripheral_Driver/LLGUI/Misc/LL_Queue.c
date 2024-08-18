@@ -19,24 +19,9 @@
  * license.
 */
 
-/**
- * @file    LL_Queue.c
- * @author  Ou Jianbo(59935554@qq.com)
- * @brief   队列库
- *          支持16位、32位、64位芯片
- */
 #include "LL_Queue.h"
 #include <string.h>
 
-#if SIZE_MAX == 18446744073709551615ull
-#define MCU_BITS 64
-#elif SIZE_MAX == 4294967295
-#define MCU_BITS 32
-#elif SIZE_MAX == 65535
-#define MCU_BITS 16
-#else
-#error "unknown"
-#endif
 
 llQueue* llQueueCreate(uint32_t length, uint32_t itemSize)
 {
@@ -55,16 +40,8 @@ llQueue* llQueueCreate(uint32_t length, uint32_t itemSize)
         pNewQueue->head=0;
         pNewQueue->tail=0;
         pNewQueue->maxsize=length;
-
-#if MCU_BITS == 16
-        pNewQueue->pDataBase=(void *)( (uint16_t)pNewQueue + (uint16_t)sizeof( llQueue ));
-#endif
-#if MCU_BITS == 32
-        pNewQueue->pDataBase=(void *)( (uint32_t)pNewQueue + sizeof( llQueue ));
-#endif
-#if MCU_BITS == 64
-        pNewQueue->pDataBase=(void *)( (uint64_t)pNewQueue + sizeof( llQueue ));
-#endif
+//        pNewQueue->pDataBase=(void *)( (uint16_t)pNewQueue + (uint16_t)sizeof( llQueue )); //s12
+        pNewQueue->pDataBase=(void *)( (uint32_t)pNewQueue + sizeof( llQueue )); //M3
     }
     return pNewQueue;
 }
