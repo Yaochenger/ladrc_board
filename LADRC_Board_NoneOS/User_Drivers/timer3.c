@@ -6,6 +6,11 @@
  */
 
 #include "timer3.h"
+#include "drv_def.h"
+
+void TIM3_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+
+LDRC_Encoder_Handler TIMER3_MOTOR;
 
 void TIMER3_ENCODER_GPIO_Init(void)
 {
@@ -21,8 +26,8 @@ void TIMER3_ENCODER_GPIO_Init(void)
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
-    TIM_TimeBaseStructure.TIM_Period = 0xFFFF;                  //计数器自动重装载值
-    TIM_TimeBaseStructure.TIM_Prescaler = 1;                    //预分频器值
+    TIM_TimeBaseStructure.TIM_Period = ENC_INIT_NUM;            //计数器自动重装载值
+    TIM_TimeBaseStructure.TIM_Prescaler = 0;                    //预分频器值
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;     //时钟分频
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; //向上计数模式
     TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;            //重复计数器值
@@ -42,7 +47,17 @@ void TIMER3_ENCODER_GPIO_Init(void)
     TIM_ClearFlag(TIM3, TIM_FLAG_Update);        //清除TIM更新标志位
     TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);   //使能开启TIM中断
 
-    TIM_SetCounter(TIM3, 65000);
+    TIM_SetCounter(TIM3, 0x7FFF);
     TIM_Cmd(TIM3, ENABLE);
 
+    Encoder_TCB_Init(&TIMER3_MOTOR);
+}
+
+void TIM3_IRQHandler(void)
+{
+    TIMER3_MOTOR.overflow_cnt ++;
+    if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET)    //是否产生更新（溢出）中断
+    {
+        TIM_ClearITPendingBit(TIM3,TIM_IT_Update);  //清空TIM5中断标志位
+    }
 }

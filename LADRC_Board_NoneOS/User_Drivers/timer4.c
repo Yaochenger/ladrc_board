@@ -6,6 +6,11 @@
  */
 
 #include "timer4.h"
+#include "drv_def.h"
+
+void TIM4_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+
+LDRC_Encoder_Handler TIMER4_MOTOR;
 
 void TIMER4_ENCODER_GPIO_Init(void)
 {
@@ -42,7 +47,19 @@ void TIMER4_ENCODER_GPIO_Init(void)
     TIM_ClearFlag(TIM4, TIM_FLAG_Update);        //清除TIM更新标志位
     TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE);   //使能开启TIM中断
 
-    TIM_SetCounter(TIM4, 65000);
+    TIM_SetCounter(TIM4, 0);
 
     TIM_Cmd(TIM4, ENABLE);
+
+    Encoder_TCB_Init(&TIMER4_MOTOR);
 }
+
+void TIM4_IRQHandler(void)
+{
+    TIMER4_MOTOR.overflow_cnt ++;
+    if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET)    //是否产生更新（溢出）中断
+    {
+        TIM_ClearITPendingBit(TIM4,TIM_IT_Update);  //清空TIM5中断标志位
+    }
+}
+

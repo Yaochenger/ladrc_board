@@ -12,17 +12,10 @@
 */
 
 /*user action code,don't delete this line*/
-
-
-
-
-
-
-
-bool ui_guiAction_Button_0_released_Text_0(llConnectInfo info)
+bool ui_guiAction_Button_1_pressed_Text_2(llConnectInfo info)
 {
-    //sender Button_0
-    //receiver Text 0
+    //sender Button 1
+    //receiver Text 2
     //return true -> stop signal transmission
     
 
@@ -30,23 +23,21 @@ bool ui_guiAction_Button_0_released_Text_0(llConnectInfo info)
     return false;
 }
 
+bool ui_guiAction_Button_0_pressed_Text_1(llConnectInfo info)
+{
+    //sender Button 0
+    //receiver Text 1
+    //return true -> stop signal transmission
+    
 
 
-
-
-
-
-
-
-
-
-
-
+    return false;
+}
 
 
 bool ui_guiAction_Button_0_pressed_Text_0(llConnectInfo info)
 {
-    //sender Button_0
+    //sender Button 0
     //receiver Text 0
     //return true -> stop signal transmission
     
@@ -54,11 +45,6 @@ bool ui_guiAction_Button_0_pressed_Text_0(llConnectInfo info)
 
     return false;
 }
-
-
-
-
-
 void ui_guiLogicInit(void)
 {
     

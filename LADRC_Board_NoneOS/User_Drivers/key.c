@@ -94,7 +94,7 @@ void EXTI3_IRQHandler(void)
     Delay_Ms(40);
     if (GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3))
     {
-        nButtonClick(ID_BUTTON_0);
+        nButtonClick(ID_BUTTON_1);
         printf("Run at EXTI_3\r\n");
     }
     EXTI_ClearITPendingBit(EXTI_Line3);  //清除中断标志位
@@ -108,7 +108,7 @@ void EXTI4_IRQHandler(void)
     Delay_Ms(40);
     if (GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_4))
     {
-        nButtonClick(ID_BUTTON_0);
+        nButtonClick(ID_BUTTON_1);
         printf("Run at EXTI_4\r\n");
     }
     EXTI_ClearITPendingBit(EXTI_Line4);  //清除中断标志位

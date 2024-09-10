@@ -29,7 +29,15 @@ extern "C" {
 #define ID_TEXT_0          0x403
 #define ID_TEXT_1          0x401
 #define ID_TEXT_2          0x402
+#define ID_BUTTON_0          0x404
+#define ID_BUTTON_1          0x409
+#define ID_WINDOW_0          0x405
+#define ID_TEXT_3          0x406
+#define ID_WINDOW_1          0x407
+#define ID_TEXT_4          0x408
 
+bool ui_guiAction_Button_0_pressed_Text_1(llConnectInfo info);
+bool ui_guiAction_Button_1_pressed_Text_2(llConnectInfo info);
 
 void ui_guiLogicInit(void);
 void ui_guiLogicLoop(void);
