@@ -11,6 +11,7 @@
 #include "adc.h"
 #include "i2c2.h"
 #include "key.h"
+#include "timer2.h"
 #include "timer3.h"
 #include "timer4.h"
 #include "timer5.h"
