@@ -22,19 +22,19 @@ int main(void)
     Delay_Init();
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n",SystemCoreClock);
-//    EXTI0_GPIO_Init();
+    EXTI0_GPIO_Init();
     userShellInit(); //letter Shell
-//    Lcd_Init();
-//    Lcd_Clear(WHITE);//clear LCD
-//    llGuiInit();     //Init LLGUI
-//    TIMER7_GPIO_Init(10000 - 1,96 - 1); //Flush GUI
-    TIMER8_ENCODER_GPIO_Init();
+    Lcd_Init();
+    Lcd_Clear(WHITE);//clear LCD
     TIMER2_GPIO_Init(10000 - 1,96 - 1);
-    printf("cnt=%d dir=%d\r\n",cnt, dir);
+    TIMER8_ENCODER_GPIO_Init();
+    TIMER3_ENCODER_GPIO_Init();
+    TIMER4_ENCODER_GPIO_Init();
+    TIMER5_ENCODER_GPIO_Init();
     while(1)
     {
-        cnt = TIM_GetCounter(TIM8);
-        dir = TIMER8_ENCODER_COUNTING_DIR();
+        cnt = TIM_GetCounter(TIM3);
+        dir = TIMER3_ENCODER_COUNTING_DIR();
         printf("cnt=%d dir=%d\r\n",cnt, dir);
         Delay_Ms(1000);
     }
