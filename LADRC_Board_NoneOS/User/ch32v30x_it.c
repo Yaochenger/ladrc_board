@@ -51,4 +51,22 @@ void TIM6_IRQHandler(void) {
     }
 }
 
+void TIM7_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void TIM7_IRQHandler(void)
+{
+#if 0
+    llGuiTick(10);
+    if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET) {
+        TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
+        llGuiLoop();
+    }
+#endif
+#if 1
+    if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET) {
+        TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
+        lv_tick_inc(1);
+    }
+#endif
+}
+
 

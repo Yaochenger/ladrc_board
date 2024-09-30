@@ -23,7 +23,7 @@ void EXTI0_GPIO_Init(void)
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_3 | GPIO_Pin_4;                  //配置GPIO引脚
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;              //配置GPIO上拉输入模式
   GPIO_Init(GPIOD, &GPIO_InitStructure);                     //初始化GPIOA
-
+#if 0
   GPIO_EXTILineConfig(GPIO_PortSourceGPIOD,GPIO_PinSource0); //指定中断/事件线的输入源，实际上是设定外部中断配置寄存器AFIO_EXTICRx的值，此处为PA0
   EXTI_InitStructure.EXTI_Line=EXTI_Line0;                   //EXTI中断/事件线选择，此处选择EXTI_Line0
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;        //EXTI模式选择，此处选择为产生中断模式
@@ -57,6 +57,7 @@ void EXTI0_GPIO_Init(void)
 
   NVIC_InitStructure.NVIC_IRQChannel = EXTI4_IRQn ;           //使能EXTI0中断通道
   NVIC_Init(&NVIC_InitStructure);                            //中断优先级分组初始化
+#endif
 }
 
 void EXTI0_IRQHandler(void)

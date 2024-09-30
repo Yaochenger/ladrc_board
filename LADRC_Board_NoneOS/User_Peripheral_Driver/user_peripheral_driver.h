@@ -14,4 +14,7 @@
 #include "tft_st7735s.h"
 #include "oled_spi.h"
 #include "lshell_port.h"
+#include "lvgl.h"
+#include "lv_port_disp.h"
+#include "lv_port_indev.h"
 #endif /* USER_PERIPHERAL_DRIVER_USER_PERIPHERAL_DRIVER_H_ */
