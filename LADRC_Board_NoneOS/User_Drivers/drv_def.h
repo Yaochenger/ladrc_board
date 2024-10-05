@@ -15,9 +15,7 @@
 // USR STRUCT
 typedef struct LDRC_Encoder
 {
-    int32_t last_cnt;
     int32_t current_cnt;
-    int32_t overflow_cnt;
     float speed;
     uint8_t dir;
 

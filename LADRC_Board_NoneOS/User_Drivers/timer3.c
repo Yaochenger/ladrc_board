@@ -8,8 +8,6 @@
 #include "timer3.h"
 #include "drv_def.h"
 
-void TIM3_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
-
 LDRC_Encoder_Handler TIMER3_MOTOR;
 
 void TIMER3_ENCODER_GPIO_Init(void)
@@ -17,17 +15,16 @@ void TIMER3_ENCODER_GPIO_Init(void)
     GPIO_InitTypeDef GPIO_InitStructure;
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
     TIM_ICInitTypeDef TIM_ICInitStructure;
-    NVIC_InitTypeDef NVIC_InitStructure;
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; //浮空输入
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; //浮空输入
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
-    TIM_TimeBaseStructure.TIM_Period = 10 - 1;                  //计数器自动重装载值
+    TIM_TimeBaseStructure.TIM_Period = 0XFFFF - 1;                  //计数器自动重装载值
     TIM_TimeBaseStructure.TIM_Prescaler = 0;                    //预分频器值
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;     //时钟分频
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; //向上计数模式
@@ -45,28 +42,8 @@ void TIMER3_ENCODER_GPIO_Init(void)
     TIM_ICInitStructure.TIM_ICFilter = 10;                           //输入捕获滤波器设置
     TIM_ICInit(TIM3, &TIM_ICInitStructure);
 
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-
-    NVIC_Init(&NVIC_InitStructure);
-
-    TIM_ClearFlag(TIM3, TIM_FLAG_Update);
-    TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
     TIM_SetCounter(TIM3, 0);
     TIM_Cmd(TIM3, ENABLE);
 
     Encoder_TCB_Init(&TIMER3_MOTOR);
 }
-
-void TIM3_IRQHandler(void)
-{
-    TIMER3_MOTOR.overflow_cnt ++;
-    if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET)    //是否产生更新（溢出）中断
-    {
-        printf("TIM3_IRQHandler \r\n");
-        TIM_ClearITPendingBit(TIM3,TIM_IT_Update);  //清空TIM5中断标志位
-    }
-}
-

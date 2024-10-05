@@ -27,5 +27,6 @@
 #include "uart7.h"
 #include "uart8.h"
 #include "led.h"
+#include "drv_def.h"
 
 #endif /* USER_DRIVERS_BOARD_CONFIG_H_ */

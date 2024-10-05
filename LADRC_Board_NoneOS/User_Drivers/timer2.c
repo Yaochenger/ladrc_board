@@ -5,6 +5,7 @@
  *      Author: MCU
  */
 #include "timer2.h"
+#include "board_config.h"
 
 void TIMER2_GPIO_Init(u16 arr,u16 psc)
 {
@@ -30,12 +31,25 @@ void TIMER2_GPIO_Init(u16 arr,u16 psc)
     TIM_Cmd(TIM2, ENABLE);                                      //TIM2Ê¹ÄÜ
 }
 
-static unsigned int cnt = 0;
 void TIM2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
-void TIM2_IRQHandler(void) {
-    cnt++;
+void TIM2_IRQHandler(void)
+{
     if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
-        // ToDo
+        TIMER3_MOTOR.dir = TIMER3_ENCODER_COUNTING_DIR();
+        TIMER3_MOTOR.current_cnt = (int16_t) TIM_GetCounter(TIM3);
+        TIM_SetCounter(TIM3, 0);
+
+        TIMER4_MOTOR.dir = TIMER4_ENCODER_COUNTING_DIR();
+        TIMER4_MOTOR.current_cnt = (int16_t) TIM_GetCounter(TIM4);
+        TIM_SetCounter(TIM4, 0);
+
+        TIMER5_MOTOR.dir = TIMER5_ENCODER_COUNTING_DIR();
+        TIMER5_MOTOR.current_cnt = (int16_t) TIM_GetCounter(TIM5);
+        TIM_SetCounter(TIM5, 0);
+
+        TIMER8_MOTOR.dir = TIMER8_ENCODER_COUNTING_DIR();
+        TIMER8_MOTOR.current_cnt = (int16_t) TIM_GetCounter(TIM8);
+        TIM_SetCounter(TIM8, 0);
     }
     TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 }
