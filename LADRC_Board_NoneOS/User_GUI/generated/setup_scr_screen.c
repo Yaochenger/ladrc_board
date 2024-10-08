@@ -46,10 +46,10 @@ void setup_scr_screen(lv_ui *ui)
 
 	//Write codes screen_label_1
 	ui->screen_label_1 = lv_label_create(ui->screen_cont_1);
-	lv_label_set_text(ui->screen_label_1, "Label");
-	lv_label_set_long_mode(ui->screen_label_1, LV_LABEL_LONG_WRAP);
-	lv_obj_set_pos(ui->screen_label_1, 15, 21);
-	lv_obj_set_size(ui->screen_label_1, 100, 32);
+	lv_label_set_text(ui->screen_label_1, "Ladrc Board");
+	lv_label_set_long_mode(ui->screen_label_1, LV_LABEL_LONG_SCROLL_CIRCULAR);
+	lv_obj_set_pos(ui->screen_label_1, 14, 24);
+	lv_obj_set_size(ui->screen_label_1, 100, 14);
 
 	//Write style for screen_label_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_border_width(ui->screen_label_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -68,15 +68,13 @@ void setup_scr_screen(lv_ui *ui)
 
 	//Write codes screen_btn_1
 	ui->screen_btn_1 = lv_btn_create(ui->screen_cont_1);
-	lv_obj_add_flag(ui->screen_btn_1, LV_OBJ_FLAG_CHECKABLE);
 	ui->screen_btn_1_label = lv_label_create(ui->screen_btn_1);
-	lv_label_set_text(ui->screen_btn_1_label, "Button");
+	lv_label_set_text(ui->screen_btn_1_label, "Enter");
 	lv_label_set_long_mode(ui->screen_btn_1_label, LV_LABEL_LONG_WRAP);
 	lv_obj_align(ui->screen_btn_1_label, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_set_style_pad_all(ui->screen_btn_1, 0, LV_STATE_DEFAULT);
-	lv_obj_set_pos(ui->screen_btn_1, 14, 69);
+	lv_obj_set_pos(ui->screen_btn_1, 14, 63);
 	lv_obj_set_size(ui->screen_btn_1, 100, 50);
-	lv_obj_add_flag(ui->screen_btn_1, LV_OBJ_FLAG_CLICKABLE);
 
 	//Write style for screen_btn_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen_btn_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -92,6 +90,4 @@ void setup_scr_screen(lv_ui *ui)
 	lv_obj_update_layout(ui->screen);
 
 	
-	//Init events for screen.
-	events_init_screen(ui);
 }

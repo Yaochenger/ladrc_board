@@ -88,7 +88,6 @@ void lv_port_indev_init(void)
 static void keypad_init(void)
 {
     /*Your code comes here*/
-    EXTI0_GPIO_Init();
 }
 
 /*Will be called by the library to read the mouse*/
@@ -99,23 +98,23 @@ static void keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 
     /*Get whether the a key is pressed and save the pressed key*/
     uint32_t act_key = keypad_get_key();
-    printf("act_key %d \r\n",act_key);
+    printf("act_key %d \r\n",act_key); // 通过printf判断按键是否进入 再判断是否能修改LVGL控件
     if(act_key != 0) {
         data->state = LV_INDEV_STATE_PR;
 
         /*Translate the keys to LVGL control characters according to your key definitions*/
         switch(act_key) {
             case 1:
-                act_key = LV_KEY_LEFT;
-                break;
-            case 2:
                 act_key = LV_KEY_RIGHT;
                 break;
-            case 3:
+            case 2:
                 act_key = LV_KEY_UP;
                 break;
-            case 4:
+            case 3:
                 act_key = LV_KEY_DOWN;
+                break;
+            case 4:
+                act_key = LV_KEY_ENTER;
                 break;
         }
 
@@ -129,23 +128,18 @@ static void keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 }
 
 /*Get the currently being pressed key.  0 if no key is pressed*/
-static uint32_t keypad_get_key(void)
-{
+static uint32_t keypad_get_key(void) {
     /*Your code comes here*/
-    if ((GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0)) == 0)
-    {
+    if ((GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_0)) == 0) {
         return 1;
     }
-    if ((GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1)) == 0)
-    {
+    if ((GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_1)) == 0) {
         return 2;
     }
-    if ((GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3)) == 0)
-    {
+    if ((GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3)) == 0) {
         return 3;
     }
-    if ((GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_4)) == 0)
-    {
+    if ((GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_4)) == 0) {
         return 4;
     }
     return 0;

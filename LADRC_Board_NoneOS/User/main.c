@@ -42,7 +42,7 @@ int main(void)
     Delay_Init();
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n",SystemCoreClock);
-//    EXTI0_GPIO_Init();
+    EXTI0_GPIO_Init();
     userShellInit(); //letter Shell
     Lcd_Init();
     Lcd_Clear(WHITE);//clear LCD
