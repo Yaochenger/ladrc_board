@@ -105,16 +105,16 @@ static void keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
         /*Translate the keys to LVGL control characters according to your key definitions*/
         switch(act_key) {
             case 1:
-                act_key = LV_KEY_RIGHT;
+                act_key = LV_KEY_NEXT;// LV_KEY_RIGHT
                 break;
             case 2:
-                act_key = LV_KEY_UP;
+                act_key = LV_KEY_ESC; // LV_KEY_UP
                 break;
             case 3:
-                act_key = LV_KEY_DOWN;
+                act_key = LV_KEY_ENTER; // LV_KEY_DOWN
                 break;
             case 4:
-                act_key = LV_KEY_ENTER;
+                act_key = LV_KEY_PREV; //
                 break;
         }
 

@@ -34,44 +34,23 @@
 /**
  * Create a demo application
  */
+extern lv_ui guider_ui;
 static void btn_label_time_add_cb(lv_event_t * e)
 {
-    static int times = 0;
-    lv_obj_t *btn = lv_event_get_target(e);
-    lv_obj_t *label = lv_obj_get_child(btn, NULL);
     lv_event_code_t code = lv_event_get_code(e);
-    uint32_t key = lv_event_get_key(e);  // »ñÈ¡¼üÖµ
 
-    if (code == LV_EVENT_KEY)
+    if (code == LV_EVENT_CLICKED)
     {
-        if (key == LV_KEY_UP)
-        {
-            times++;
-            lv_label_set_text_fmt(label, "%d", times);
-        }
-        else if (key == LV_KEY_DOWN)
-        {
-            times--;
-            lv_label_set_text_fmt(label, "%d", times);
-        }
-        else if (key == LV_KEY_RIGHT)
-        {
-            times = times + 10;
-            lv_label_set_text_fmt(label, "%d", times);
-        }
-        else if (key == LV_KEY_ENTER)
-        {
-            times = 0;
-            lv_label_set_text_fmt(label, "%d", times);
-        }
-        lv_label_set_text_fmt(label, "%d", times);
+           lv_scr_load(guider_ui.screen_1);
     }
-
+    if (code == LV_EVENT_LONG_PRESSED)
+    {
+           lv_scr_load(guider_ui.screen);
+    }
 }
 
 void custom_init(lv_ui *ui)
 {
-    /* Add your codes here */
-    lv_obj_add_event_cb(ui->screen_btn_1, btn_label_time_add_cb, LV_EVENT_KEY, NULL);
+    lv_obj_add_event_cb(ui->screen_btn_1, btn_label_time_add_cb, LV_EVENT_ALL, ui->screen_btn_1);
 }
 

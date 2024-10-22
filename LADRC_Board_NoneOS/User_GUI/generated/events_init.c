@@ -12,6 +12,19 @@
 #include "lvgl.h"
 
 
+static void screen_event_handler (lv_event_t *e)
+{
+	lv_event_code_t code = lv_event_get_code(e);
+
+	switch (code) {
+	default:
+		break;
+	}
+}
+void events_init_screen(lv_ui *ui)
+{
+	lv_obj_add_event_cb(ui->screen, screen_event_handler, LV_EVENT_ALL, NULL);
+}
 
 void events_init(lv_ui *ui)
 {
