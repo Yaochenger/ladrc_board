@@ -119,6 +119,9 @@ static void load_screen2(void)
 
 void custom_init(lv_ui *ui)
 {
+    setup_scr_screen_1(ui);
+    setup_scr_screen_2(ui);
+
     for (int var = 0; var < 3; var++) {
         gui_group[var] = lv_group_create();
     }
