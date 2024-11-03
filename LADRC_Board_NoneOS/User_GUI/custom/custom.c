@@ -30,6 +30,7 @@ static void load_screen2(void);
  *  STATIC PROTOTYPES
  **********************/
 static lv_group_t *gui_group[3];
+static lv_obj_t *screen1_saved_focus_obj;
 /**********************
  *  STATIC VARIABLES
  **********************/
@@ -55,11 +56,37 @@ static void screen1_page_cb(lv_event_t * e)
     uint32_t key = lv_event_get_key(e);
 
     if (key == LV_KEY_ESC) {
+        screen1_saved_focus_obj = lv_group_get_focused(gui_group[1]);
         load_screen0();
     }
 
     if(code == LV_EVENT_PRESSED) {
-        load_screen2();
+        screen1_saved_focus_obj = lv_group_get_focused(gui_group[1]);
+
+        if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item0)
+        {
+            load_screen2();
+        }
+        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item1)
+        {
+            load_screen0();
+        }
+        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item2)
+        {
+            load_screen0();
+        }
+        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item3)
+        {
+            load_screen0();
+        }
+        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item4)
+        {
+            load_screen0();
+        }
+        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item5)
+        {
+            load_screen0();
+        }
     }
 }
 
@@ -106,7 +133,12 @@ static void load_screen1(void)
     lv_group_add_obj(gui_group[1], guider_ui.screen_1_list_1_item3);
     lv_group_add_obj(gui_group[1], guider_ui.screen_1_list_1_item4);
     lv_group_add_obj(gui_group[1], guider_ui.screen_1_list_1_item5);
-    lv_group_focus_obj(guider_ui.screen_1_list_1_item0);
+
+    if (screen1_saved_focus_obj != NULL) {
+        lv_group_focus_obj(screen1_saved_focus_obj);
+        screen1_saved_focus_obj = NULL;
+    }
+
     lv_scr_load(guider_ui.screen_1);
 }
 
