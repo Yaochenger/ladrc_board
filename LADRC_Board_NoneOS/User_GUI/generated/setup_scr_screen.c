@@ -20,7 +20,6 @@ void setup_scr_screen(lv_ui *ui)
 	//Write codes screen
 	ui->screen = lv_obj_create(NULL);
 	lv_obj_set_size(ui->screen, 128, 128);
-	lv_obj_add_flag(ui->screen, LV_OBJ_FLAG_CLICKABLE);
 
 	//Write style for screen, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen, 0, LV_PART_MAIN|LV_STATE_DEFAULT);

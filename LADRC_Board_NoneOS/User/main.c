@@ -24,17 +24,6 @@ extern LDRC_Encoder_Handler TIMER4_MOTOR;
 extern LDRC_Encoder_Handler TIMER5_MOTOR;
 extern LDRC_Encoder_Handler TIMER8_MOTOR;
 
-static void event_handler(lv_event_t * e) {
-    lv_obj_t * btn = lv_event_get_target(e);
-    lv_obj_t * label = lv_obj_get_child(btn, NULL); // 获取标签对象
-
-    if (e->code == LV_EVENT_PRESSED) {
-        lv_label_set_text(label, "1");  // 按下时设置字符为 1
-    } else if (e->code == LV_EVENT_RELEASED) {
-        lv_label_set_text(label, "0");  // 释放时设置字符为 0
-    }
-}
-
 lv_ui guider_ui;
 int main(void)
 {
