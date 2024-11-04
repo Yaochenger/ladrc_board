@@ -47,11 +47,11 @@ void setup_scr_screen_1(lv_ui *ui)
 	//Write codes screen_1_list_1
 	ui->screen_1_list_1 = lv_list_create(ui->screen_1_cont_1);
 	ui->screen_1_list_1_item0 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_LIST, "LED");
-	ui->screen_1_list_1_item1 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_LIST, "MOTOR");
-	ui->screen_1_list_1_item2 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_LIST, "MPU6050");
-	ui->screen_1_list_1_item3 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_LIST, "BLE");
-	ui->screen_1_list_1_item4 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_LIST, "NULL");
-	ui->screen_1_list_1_item5 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_LIST, "NULL");
+	ui->screen_1_list_1_item1 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_REFRESH, "MOTOR");
+	ui->screen_1_list_1_item2 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_SHUFFLE, "MPU6050");
+	ui->screen_1_list_1_item3 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_BLUETOOTH, "BLE");
+	ui->screen_1_list_1_item4 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_PAUSE, "ADC");
+	ui->screen_1_list_1_item5 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_HOME, "HOME");
 	lv_obj_set_pos(ui->screen_1_list_1, 0, 0);
 	lv_obj_set_size(ui->screen_1_list_1, 124, 124);
 	lv_obj_set_scrollbar_mode(ui->screen_1_list_1, LV_SCROLLBAR_MODE_ON);
