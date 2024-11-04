@@ -19,17 +19,18 @@
 /*********************
  *      DEFINES
  *********************/
-
+#define usr_group_num 4
 /**********************
  *      TYPEDEFS
  **********************/
 static void load_screen0(void);
 static void load_screen1(void);
 static void load_screen2(void);
+static void load_screen2_1(void);
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-static lv_group_t *gui_group[3];
+static lv_group_t *gui_group[usr_group_num];
 static lv_obj_t *screen1_saved_focus_obj;
 /**********************
  *  STATIC VARIABLES
@@ -79,9 +80,9 @@ static void screen1_page_cb(lv_event_t * e)
         {
             load_screen0();
         }
-        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item4)
+        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item4) // ADC
         {
-            load_screen0();
+            load_screen2_1();
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item5)
         {
@@ -109,6 +110,17 @@ static void screen2_page_cb(lv_event_t * e)
             lv_led_off(guider_ui.screen_2_led_1);
         }
     }
+
+    if (key == LV_KEY_ESC) {
+        load_screen1();
+    }
+
+}
+
+static void screen2_1_page_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    uint32_t key = lv_event_get_key(e);
 
     if (key == LV_KEY_ESC) {
         load_screen1();
@@ -149,12 +161,20 @@ static void load_screen2(void)
     lv_scr_load(guider_ui.screen_2);
 }
 
+static void load_screen2_1(void)
+{
+    lv_indev_set_group(indev_keypad, gui_group[3]);
+    lv_group_add_obj(gui_group[3], guider_ui.screen_3_chart_1);
+    lv_scr_load(guider_ui.screen_3);
+}
+
 void custom_init(lv_ui *ui)
 {
     setup_scr_screen_1(ui);
     setup_scr_screen_2(ui);
+    setup_scr_screen_3(ui);
 
-    for (int var = 0; var < 3; var++) {
+    for (int var = 0; var < usr_group_num; var++) {
         gui_group[var] = lv_group_create();
     }
 
@@ -166,5 +186,6 @@ void custom_init(lv_ui *ui)
     lv_obj_add_event_cb(ui->screen_1_list_1_item4, screen1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_1_list_1_item5, screen1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_2_btn_1, screen2_page_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_3_chart_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
 }
 

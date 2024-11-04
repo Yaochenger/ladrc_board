@@ -26,6 +26,7 @@ void init_scr_del_flag(lv_ui *ui)
 	ui->screen_del = true;
 	ui->screen_1_del = true;
 	ui->screen_2_del = true;
+	ui->screen_3_del = true;
 }
 
 void setup_ui(lv_ui *ui)
