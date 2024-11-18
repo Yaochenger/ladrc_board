@@ -61,6 +61,7 @@ LV_FONT_DECLARE(lv_font_montserratMedium_16)
 LV_FONT_DECLARE(lv_font_arial_10)
 LV_FONT_DECLARE(lv_font_montserratMedium_12)
 LV_FONT_DECLARE(lv_font_arial_12)
+LV_FONT_DECLARE(lv_font_arial_16)
 
 
 #ifdef __cplusplus

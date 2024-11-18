@@ -20,6 +20,8 @@
  *      DEFINES
  *********************/
 #define usr_group_num 4
+#define usr_timer_num 1
+#define usr_serie_num 1
 /**********************
  *      TYPEDEFS
  **********************/
@@ -27,10 +29,15 @@ static void load_screen0(void);
 static void load_screen1(void);
 static void load_screen2(void);
 static void load_screen2_1(void);
+
+static void usr_timer_0(lv_timer_t* timer);
 /**********************
  *  STATIC PROTOTYPES
  **********************/
 static lv_group_t *gui_group[usr_group_num];
+static lv_timer_t *gui_timer[usr_timer_num];
+static lv_chart_series_t * gui_ser[usr_serie_num];
+
 static lv_obj_t *screen1_saved_focus_obj;
 /**********************
  *  STATIC VARIABLES
@@ -96,7 +103,6 @@ static void screen2_page_cb(lv_event_t * e)
     lv_event_code_t code = lv_event_get_code(e);
     uint32_t key = lv_event_get_key(e);
     static int led = 0;
-
     if(code == LV_EVENT_PRESSED) {
         led ++;
         if (led % 2 == 0)
@@ -119,7 +125,6 @@ static void screen2_page_cb(lv_event_t * e)
 
 static void screen2_1_page_cb(lv_event_t * e)
 {
-    lv_event_code_t code = lv_event_get_code(e);
     uint32_t key = lv_event_get_key(e);
 
     if (key == LV_KEY_ESC) {
@@ -164,8 +169,22 @@ static void load_screen2(void)
 static void load_screen2_1(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[3]);
+    gui_ser[0] = lv_chart_add_series(guider_ui.screen_3_chart_1, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y); // 添加红色数据系列
+    gui_timer[0] = lv_timer_create(usr_timer_0, 50, (void *)guider_ui.screen_3_chart_1);
     lv_group_add_obj(gui_group[3], guider_ui.screen_3_chart_1);
     lv_scr_load(guider_ui.screen_3);
+}
+
+static void usr_timer_0(lv_timer_t* timer)
+{
+    lv_obj_t * chart = timer->user_data;  // 获取图表对象
+    static int value = 0;
+
+    value = (value + 1) % 4;
+
+    lv_chart_set_next_value(chart, gui_ser[0], value);
+    lv_chart_refresh(chart);
+
 }
 
 void custom_init(lv_ui *ui)
