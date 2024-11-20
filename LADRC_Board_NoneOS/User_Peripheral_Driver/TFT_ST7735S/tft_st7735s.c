@@ -7,6 +7,9 @@
 
 #include "tft_st7735s.h"
 
+#define USE_DMA
+#define SPI_WriteData  SPI3_ReadWriteByte
+
 void LCD_GPIO_Init(void) {
     GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -19,7 +22,7 @@ void LCD_GPIO_Init(void) {
     GPIO_Init(GPIOE, &GPIO_InitStructure);
     GPIO_SetBits(GPIOE, GPIO_Pin_10);
 }
-
+#ifndef USE_DMA
 u8 SPI_WriteData(u8 TxData) {
     u8 i = 0;
 
@@ -40,6 +43,7 @@ u8 SPI_WriteData(u8 TxData) {
 
     return SPI_I2S_ReceiveData(SPI3);  //读取数据寄存器，获取接收缓冲区数据，即返回SPI1最近接收到的数据
 }
+#endif /* USE_DMA */
 
 //向液晶屏写一个8位指令
 void Lcd_WriteIndex(u8 Index) {

@@ -7,6 +7,8 @@
 
 #include "spi3.h"
 
+u8 Usr_TxData[1] = {0};
+
 void SPI3_GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -34,9 +36,11 @@ void SPI3_GPIO_Init(void)
     SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
     SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
     SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
-    SPI_InitStructure.SPI_CRCPolynomial = 7;
     SPI_Init(SPI3, &SPI_InitStructure);
     SPI_Cmd(SPI3, ENABLE);
+
+    SPI_I2S_DMACmd(SPI3, SPI_I2S_DMAReq_Tx, ENABLE);
+    DMA_Tx_Init(DMA2_Channel2, (u32)&SPI3->DATAR, (u32)(Usr_TxData), 1);
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_14;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -46,22 +50,35 @@ void SPI3_GPIO_Init(void)
 
 u8 SPI3_ReadWriteByte(u8 TxData)
 {
-    u8 i = 0;
+    Usr_TxData[0] = TxData;
+    DMA2_Channel2->CNTR = 1;
+    DMA_Cmd(DMA2_Channel2,ENABLE);
+    while( DMA_GetFlagStatus(DMA2_FLAG_TC2) == RESET);
+    DMA_Cmd(DMA2_Channel2,DISABLE);
+    DMA_ClearFlag(DMA2_FLAG_TC2);
+    return 0;
+}
 
-    while (SPI_I2S_GetFlagStatus(SPI3, SPI_I2S_FLAG_TXE) == RESET) //等待发送缓冲区为空，TXE事件
-    {
-        i++;
-        if(i>200)return 0;
-    }
+void DMA_Tx_Init(DMA_Channel_TypeDef *DMA_CHx, u32 ppadr, u32 memadr, u16 bufsize)
+{
+    DMA_InitTypeDef DMA_InitStructure = {0};
 
-    SPI_I2S_SendData(SPI3, TxData);    //写入数据寄存器，把要写入的数据写入发送缓冲区，即通过外设SPI1发送一个数据
-    i = 0;
+    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);
 
-    while (SPI_I2S_GetFlagStatus(SPI3, SPI_I2S_FLAG_RXNE) == RESET) //等待接收缓冲区非空，RXNE事件
-    {
-        i++;
-        if(i>200)return 0;
-    }
+    DMA_DeInit(DMA_CHx);
 
-    return SPI_I2S_ReceiveData(SPI3);  //读取数据寄存器，获取接收缓冲区数据，即返回SPI1最近接收到的数据
+    DMA_InitStructure.DMA_PeripheralBaseAddr = ppadr;
+    DMA_InitStructure.DMA_MemoryBaseAddr = memadr;
+    DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
+    DMA_InitStructure.DMA_BufferSize = bufsize;
+    DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+    DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+    DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
+    DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+    DMA_Init(DMA_CHx, &DMA_InitStructure);
+
+    DMA_ClearFlag(DMA2_FLAG_TC2);
 }
