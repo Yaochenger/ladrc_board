@@ -43,7 +43,18 @@ typedef struct
 	lv_obj_t *screen_3;
 	bool screen_3_del;
 	lv_obj_t *screen_3_cont_1;
-	lv_obj_t *screen_3_chart_1;
+	lv_obj_t *screen_3_ta_1;
+	lv_obj_t *screen_3_label_1;
+	lv_obj_t *screen_4;
+	bool screen_4_del;
+	lv_obj_t *screen_4_cont_1;
+	lv_obj_t *screen_4_label_2;
+	lv_obj_t *screen_4_label_3;
+	lv_obj_t *screen_4_label_4;
+	lv_obj_t *screen_4_label_8;
+	lv_obj_t *screen_4_label_9;
+	lv_obj_t *screen_4_label_10;
+	lv_obj_t *screen_4_label_11;
 }lv_ui;
 
 void ui_init_style(lv_style_t * style);
@@ -55,13 +66,12 @@ void setup_scr_screen(lv_ui *ui);
 void setup_scr_screen_1(lv_ui *ui);
 void setup_scr_screen_2(lv_ui *ui);
 void setup_scr_screen_3(lv_ui *ui);
+void setup_scr_screen_4(lv_ui *ui);
 
-LV_FONT_DECLARE(lv_font_ArchitectsDaughter_16)
+LV_FONT_DECLARE(lv_font_Abel_regular_25)
 LV_FONT_DECLARE(lv_font_montserratMedium_16)
-LV_FONT_DECLARE(lv_font_arial_10)
+LV_FONT_DECLARE(lv_font_Abel_regular_12)
 LV_FONT_DECLARE(lv_font_montserratMedium_12)
-LV_FONT_DECLARE(lv_font_arial_12)
-LV_FONT_DECLARE(lv_font_arial_16)
 
 
 #ifdef __cplusplus

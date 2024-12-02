@@ -43,6 +43,7 @@ int main(void)
 
     setup_ui(&guider_ui);
     events_init(&guider_ui);
+    extern void custom_init(lv_ui *ui);
     custom_init(&guider_ui);
 
     while(1)

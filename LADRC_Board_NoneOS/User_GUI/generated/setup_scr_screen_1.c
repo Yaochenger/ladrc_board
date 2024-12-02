@@ -95,7 +95,7 @@ void setup_scr_screen_1(lv_ui *ui)
 	lv_style_set_border_color(&style_screen_1_list_1_extra_btns_main_default, lv_color_hex(0xBEAF14));
 	lv_style_set_border_side(&style_screen_1_list_1_extra_btns_main_default, LV_BORDER_SIDE_FULL);
 	lv_style_set_text_color(&style_screen_1_list_1_extra_btns_main_default, lv_color_hex(0xfef6ea));
-	lv_style_set_text_font(&style_screen_1_list_1_extra_btns_main_default, &lv_font_arial_12);
+	lv_style_set_text_font(&style_screen_1_list_1_extra_btns_main_default, &lv_font_Abel_regular_12);
 	lv_style_set_radius(&style_screen_1_list_1_extra_btns_main_default, 0);
 	lv_style_set_bg_opa(&style_screen_1_list_1_extra_btns_main_default, 0);
 	lv_obj_add_style(ui->screen_1_list_1_item5, &style_screen_1_list_1_extra_btns_main_default, LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -115,7 +115,7 @@ void setup_scr_screen_1(lv_ui *ui)
 	lv_style_set_pad_bottom(&style_screen_1_list_1_extra_texts_main_default, 0);
 	lv_style_set_border_width(&style_screen_1_list_1_extra_texts_main_default, 0);
 	lv_style_set_text_color(&style_screen_1_list_1_extra_texts_main_default, lv_color_hex(0x0D3055));
-	lv_style_set_text_font(&style_screen_1_list_1_extra_texts_main_default, &lv_font_arial_12);
+	lv_style_set_text_font(&style_screen_1_list_1_extra_texts_main_default, &lv_font_Abel_regular_12);
 	lv_style_set_radius(&style_screen_1_list_1_extra_texts_main_default, 3);
 	lv_style_set_bg_opa(&style_screen_1_list_1_extra_texts_main_default, 0);
 

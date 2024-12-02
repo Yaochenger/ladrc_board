@@ -98,7 +98,7 @@ static void keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 
     /*Get whether the a key is pressed and save the pressed key*/
     uint32_t act_key = keypad_get_key();
-    printf("act_key %d \r\n",act_key); // 通过printf判断按键是否进入 再判断是否能修改LVGL控件
+//    printf("act_key %d \r\n",act_key); // 通过printf判断按键是否进入 再判断是否能修改LVGL控件
     if(act_key != 0) {
         data->state = LV_INDEV_STATE_PR;
 

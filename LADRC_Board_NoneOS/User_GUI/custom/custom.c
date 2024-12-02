@@ -15,12 +15,12 @@
 #include "lvgl.h"
 #include "custom.h"
 #include "ch32v30x.h"
-
+#include "mpu6050_soft.h"
 /*********************
  *      DEFINES
  *********************/
-#define usr_group_num 4
-#define usr_timer_num 1
+#define usr_group_num 5
+#define usr_timer_num 2
 #define usr_serie_num 1
 /**********************
  *      TYPEDEFS
@@ -29,14 +29,15 @@ static void load_screen0(void);
 static void load_screen1(void);
 static void load_screen2(void);
 static void load_screen2_1(void);
+static void load_screen2_2(void);
 
-static void usr_timer_0(lv_timer_t* timer);
+static void usr_timer_1(lv_timer_t* timer);
 /**********************
  *  STATIC PROTOTYPES
  **********************/
 static lv_group_t *gui_group[usr_group_num];
 static lv_timer_t *gui_timer[usr_timer_num];
-static lv_chart_series_t * gui_ser[usr_serie_num];
+//static lv_chart_series_t * gui_ser[usr_serie_num];
 
 static lv_obj_t *screen1_saved_focus_obj;
 /**********************
@@ -81,15 +82,18 @@ static void screen1_page_cb(lv_event_t * e)
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item2)
         {
-            load_screen0();
+            gui_timer[1] = lv_timer_create(usr_timer_1, 10, (void *)guider_ui.screen_4_label_8);
+            MPU_Init();
+            MPU6050_Filter_Init(50);
+            load_screen2_2();
         }
-        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item3)
-        {
-            load_screen0();
-        }
-        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item4) // ADC
+        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item3) // Bluetoolh
         {
             load_screen2_1();
+        }
+        else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item4) // uart
+        {
+            load_screen0();
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item5)
         {
@@ -130,7 +134,6 @@ static void screen2_1_page_cb(lv_event_t * e)
     if (key == LV_KEY_ESC) {
         load_screen1();
     }
-
 }
 
 static void load_screen0(void)
@@ -169,21 +172,31 @@ static void load_screen2(void)
 static void load_screen2_1(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[3]);
-    gui_ser[0] = lv_chart_add_series(guider_ui.screen_3_chart_1, lv_palette_main(LV_PALETTE_RED), LV_CHART_AXIS_PRIMARY_Y); // 添加红色数据系列
-    gui_timer[0] = lv_timer_create(usr_timer_0, 50, (void *)guider_ui.screen_3_chart_1);
-    lv_group_add_obj(gui_group[3], guider_ui.screen_3_chart_1);
+    lv_group_add_obj(gui_group[3], guider_ui.screen_3_ta_1);
+    lv_textarea_set_text(guider_ui.screen_3_ta_1, "Hello Hello Hello Hello Hello World");
     lv_scr_load(guider_ui.screen_3);
 }
 
-static void usr_timer_0(lv_timer_t* timer)
+static void load_screen2_2(void)
 {
-    lv_obj_t * chart = timer->user_data;  // 获取图表对象
-    static int value = 0;
+    lv_indev_set_group(indev_keypad, gui_group[4]);
+    lv_group_add_obj(gui_group[4], guider_ui.screen_4_label_8);
+    lv_group_focus_obj(guider_ui.screen_4_label_8);
+    lv_scr_load(guider_ui.screen_4);
+}
 
-    value = (value + 1) % 4;
+static void usr_timer_1(lv_timer_t* timer)
+{
+    char new_text[20];
+    IMU_data USER_IMU_data;
 
-    lv_chart_set_next_value(chart, gui_ser[0], value);
-    lv_chart_refresh(chart);
+    USER_GET_MPU6050_DATA(&USER_IMU_data);
+    snprintf(new_text, sizeof(new_text), "%.1f",USER_IMU_data.Pitch);
+    lv_label_set_text(guider_ui.screen_4_label_2, new_text);
+    snprintf(new_text, sizeof(new_text), "%.1f",USER_IMU_data.Roll);
+    lv_label_set_text(guider_ui.screen_4_label_3, new_text);
+    snprintf(new_text, sizeof(new_text), "%.1f",USER_IMU_data.Yaw);
+    lv_label_set_text(guider_ui.screen_4_label_4, new_text);
 
 }
 
@@ -192,6 +205,7 @@ void custom_init(lv_ui *ui)
     setup_scr_screen_1(ui);
     setup_scr_screen_2(ui);
     setup_scr_screen_3(ui);
+    setup_scr_screen_4(ui);
 
     for (int var = 0; var < usr_group_num; var++) {
         gui_group[var] = lv_group_create();
@@ -205,6 +219,8 @@ void custom_init(lv_ui *ui)
     lv_obj_add_event_cb(ui->screen_1_list_1_item4, screen1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_1_list_1_item5, screen1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_2_btn_1, screen2_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_3_chart_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_3_ta_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_4_label_8, screen2_1_page_cb, LV_EVENT_ALL, NULL);
+
 }
 
