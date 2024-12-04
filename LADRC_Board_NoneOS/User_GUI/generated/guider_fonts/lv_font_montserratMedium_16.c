@@ -9,7 +9,7 @@
 /*******************************************************************************
  * Size: 16 px
  * Bpp: 4
- * Opts: --user-data-dir=C:\Users\MCU\AppData\Roaming\gui-guider --app-path=D:\GUI_GUIDER\Gui-Guider\resources\app.asar --no-sandbox --no-zygote --lang=zh-CN --device-scale-factor=1.25 --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1732889841944215 --launch-time-ticks=254842602894 --mojo-platform-channel-handle=1684 --field-trial-handle=1720,i,465159277550729414,14110794129939768523,131072 --disable-features=SpareRendererForSitePerProcess,WinRetrieveSuggestionsOnlyOnDemand /prefetch:1
+ * Opts: --user-data-dir=C:\Users\MCU\AppData\Roaming\gui-guider --app-path=D:\GUI_GUIDER\Gui-Guider\resources\app.asar --no-sandbox --no-zygote --lang=zh-CN --device-scale-factor=1.25 --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1732889835643850 --launch-time-ticks=429968394754 --mojo-platform-channel-handle=2976 --field-trial-handle=1688,i,2255721271411298016,11646993990481555380,131072 --disable-features=SpareRendererForSitePerProcess,WinRetrieveSuggestionsOnlyOnDemand /prefetch:1
  ******************************************************************************/
 
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
@@ -835,6 +835,8 @@ static LV_ATTRIBUTE_LARGE_CONST const uint8_t glyph_bitmap[] = {
     0x0, 0x0, 0x0, 0x0, 0x0, 0x3d, 0xe4, 0x0,
     0xb5, 0xc, 0x86, 0xf5, 0x1e, 0x20, 0xf0, 0x3,
     0xef, 0x90, 0x2, 0x0, 0x0, 0x10, 0x0,
+
+    /* U+00A0 " " */
 
     /* U+F001 "" */
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
@@ -1839,6 +1841,7 @@ static const lv_font_fmt_txt_glyph_dsc_t glyph_dsc[] = {
     {.bitmap_index = 4535, .adv_w = 77, .box_w = 3, .box_h = 15, .ofs_x = 1, .ofs_y = -3},
     {.bitmap_index = 4558, .adv_w = 90, .box_w = 5, .box_h = 15, .ofs_x = 0, .ofs_y = -3},
     {.bitmap_index = 4596, .adv_w = 149, .box_w = 9, .box_h = 5, .ofs_x = 0, .ofs_y = 4},
+    {.bitmap_index = 4619, .adv_w = 69, .box_w = 0, .box_h = 0, .ofs_x = 0, .ofs_y = 0},
     {.bitmap_index = 4619, .adv_w = 256, .box_w = 16, .box_h = 17, .ofs_x = 0, .ofs_y = -2},
     {.bitmap_index = 4755, .adv_w = 256, .box_w = 16, .box_h = 12, .ofs_x = 0, .ofs_y = 0},
     {.bitmap_index = 4851, .adv_w = 256, .box_w = 16, .box_h = 14, .ofs_x = 0, .ofs_y = -1},
@@ -1903,14 +1906,14 @@ static const lv_font_fmt_txt_glyph_dsc_t glyph_dsc[] = {
  *--------------------*/
 
 static const uint16_t unicode_list_1[] = {
-    0x0, 0x7, 0xa, 0xb, 0xc, 0x10, 0x12, 0x14,
-    0x18, 0x1b, 0x20, 0x25, 0x26, 0x27, 0x3d, 0x47,
-    0x4a, 0x4b, 0x4c, 0x50, 0x51, 0x52, 0x53, 0x66,
-    0x67, 0x6d, 0x6f, 0x70, 0x73, 0x76, 0x77, 0x78,
-    0x7a, 0x92, 0x94, 0xc3, 0xc4, 0xc6, 0xe6, 0xe9,
-    0xf2, 0x11b, 0x123, 0x15a, 0x1ea, 0x23f, 0x240, 0x241,
-    0x242, 0x243, 0x286, 0x292, 0x2ec, 0x303, 0x559, 0x7c1,
-    0x8a1
+    0x0, 0xef61, 0xef68, 0xef6b, 0xef6c, 0xef6d, 0xef71, 0xef73,
+    0xef75, 0xef79, 0xef7c, 0xef81, 0xef86, 0xef87, 0xef88, 0xef9e,
+    0xefa8, 0xefab, 0xefac, 0xefad, 0xefb1, 0xefb2, 0xefb3, 0xefb4,
+    0xefc7, 0xefc8, 0xefce, 0xefd0, 0xefd1, 0xefd4, 0xefd7, 0xefd8,
+    0xefd9, 0xefdb, 0xeff3, 0xeff5, 0xf024, 0xf025, 0xf027, 0xf047,
+    0xf04a, 0xf053, 0xf07c, 0xf084, 0xf0bb, 0xf14b, 0xf1a0, 0xf1a1,
+    0xf1a2, 0xf1a3, 0xf1a4, 0xf1e7, 0xf1f3, 0xf24d, 0xf264, 0xf4ba,
+    0xf722, 0xf802
 };
 
 /*Collect the unicode lists and glyph_id offsets*/
@@ -1921,8 +1924,8 @@ static const lv_font_fmt_txt_cmap_t cmaps[] =
         .unicode_list = NULL, .glyph_id_ofs_list = NULL, .list_length = 0, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_TINY
     },
     {
-        .range_start = 61441, .range_length = 2210, .glyph_id_start = 96,
-        .unicode_list = unicode_list_1, .glyph_id_ofs_list = NULL, .list_length = 57, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
+        .range_start = 160, .range_length = 63491, .glyph_id_start = 96,
+        .unicode_list = unicode_list_1, .glyph_id_ofs_list = NULL, .list_length = 58, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
     }
 };
 
@@ -1953,7 +1956,7 @@ static const uint8_t kern_left_class_mapping[] =
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
-    0
+    0, 0
 };
 
 /*Map glyph_ids to kern right classes*/
@@ -1978,7 +1981,7 @@ static const uint8_t kern_right_class_mapping[] =
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
-    0
+    0, 0
 };
 
 /*Kern values between classes*/

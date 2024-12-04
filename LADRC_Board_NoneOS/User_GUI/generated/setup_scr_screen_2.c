@@ -36,8 +36,8 @@ void setup_scr_screen_2(lv_ui *ui)
 	lv_obj_set_style_border_color(ui->screen_2_cont_1, lv_color_hex(0x2195f6), LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_border_side(ui->screen_2_cont_1, LV_BORDER_SIDE_FULL, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_radius(ui->screen_2_cont_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_opa(ui->screen_2_cont_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_2_cont_1, lv_color_hex(0xffffff), LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_opa(ui->screen_2_cont_1, 249, LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_color(ui->screen_2_cont_1, lv_color_hex(0xff00c6), LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_pad_top(ui->screen_2_cont_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_pad_bottom(ui->screen_2_cont_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_pad_left(ui->screen_2_cont_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -47,14 +47,14 @@ void setup_scr_screen_2(lv_ui *ui)
 	//Write codes screen_2_led_1
 	ui->screen_2_led_1 = lv_led_create(ui->screen_2_cont_1);
 	lv_led_set_brightness(ui->screen_2_led_1, 255);
-	lv_led_set_color(ui->screen_2_led_1, lv_color_hex(0xff0027));
+	lv_led_set_color(ui->screen_2_led_1, lv_color_hex(0x00ff08));
 	lv_obj_set_pos(ui->screen_2_led_1, 44, 12);
 	lv_obj_set_size(ui->screen_2_led_1, 40, 40);
 
 	//Write codes screen_2_btn_1
 	ui->screen_2_btn_1 = lv_btn_create(ui->screen_2_cont_1);
 	ui->screen_2_btn_1_label = lv_label_create(ui->screen_2_btn_1);
-	lv_label_set_text(ui->screen_2_btn_1_label, "Button");
+	lv_label_set_text(ui->screen_2_btn_1_label, "LED");
 	lv_label_set_long_mode(ui->screen_2_btn_1_label, LV_LABEL_LONG_WRAP);
 	lv_obj_align(ui->screen_2_btn_1_label, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_set_style_pad_all(ui->screen_2_btn_1, 0, LV_STATE_DEFAULT);
@@ -63,11 +63,11 @@ void setup_scr_screen_2(lv_ui *ui)
 
 	//Write style for screen_2_btn_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen_2_btn_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_2_btn_1, lv_color_hex(0x2195f6), LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_color(ui->screen_2_btn_1, lv_color_hex(0xb4ff00), LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_border_width(ui->screen_2_btn_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_radius(ui->screen_2_btn_1, 5, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_shadow_width(ui->screen_2_btn_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_color(ui->screen_2_btn_1, lv_color_hex(0xffffff), LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(ui->screen_2_btn_1, lv_color_hex(0x0040ff), LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_text_font(ui->screen_2_btn_1, &lv_font_Abel_regular_12, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_text_align(ui->screen_2_btn_1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN|LV_STATE_DEFAULT);
 
