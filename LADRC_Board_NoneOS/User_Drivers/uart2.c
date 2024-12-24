@@ -6,11 +6,21 @@
  */
 
 #include "uart2.h"
+#include "string.h"
+#include "chry_ringbuffer.h"
+
+uint8_t USART_RX_BUF[256];
+uint8_t UsartData[256];
+int RxCounter = 0;
+int USART_RX_STA = 0;
+
+void USART2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
 void UART2_GPIO_Init(void)
 {
     GPIO_InitTypeDef  GPIO_InitStructure = {0};
     USART_InitTypeDef USART_InitStructure = {0};
+    NVIC_InitTypeDef  NVIC_InitStructure = {0};
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
@@ -26,13 +36,42 @@ void UART2_GPIO_Init(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-    USART_InitStructure.USART_BaudRate = 9600;
-    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-    USART_InitStructure.USART_StopBits = USART_StopBits_1;
-    USART_InitStructure.USART_Parity = USART_Parity_No;
+    USART_InitStructure.USART_BaudRate            = 9600;
+    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+    USART_InitStructure.USART_Parity              = USART_Parity_No;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-    USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
 
     USART_Init(USART2, &USART_InitStructure);
+    USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+    USART_ITConfig(USART2, USART_IT_IDLE, ENABLE);
+
+    NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
     USART_Cmd(USART2, ENABLE);
+    USART_SetAddress(USART2, 0x1);
+}
+
+void USART2_IRQHandler(void)
+{
+    uint16_t Clear = Clear;
+
+    if(USART_GetITStatus(USART2,USART_IT_RXNE)!= RESET)
+    {
+        USART_RX_BUF[RxCounter++]= USART_ReceiveData(USART2);
+    }
+
+    else if(USART_GetITStatus(USART2, USART_IT_IDLE)!= RESET)
+    {
+        Clear = USART2->STATR;
+        Clear = USART2->DATAR;
+//        strcpy(UsartData,USART_RX_BUF);
+//        memset(USART_RX_BUF, 0, sizeof (USART_RX_BUF));
+        RxCounter = 0;
+        USART_RX_STA = 1;
+    }
 }

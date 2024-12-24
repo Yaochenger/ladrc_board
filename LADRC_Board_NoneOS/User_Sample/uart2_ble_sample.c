@@ -29,7 +29,6 @@ int uart2_ble_func(int para) {
         }
     }
     return 0;
-
 }
 SHELL_EXPORT_CMD(SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_FUNC), uart2_ble_func, uart2_ble_func, test uart2 and ble);
 

@@ -18,15 +18,13 @@
 #include "mpu6050_soft.h"
 #include "uart2.h"
 #include "adc.h"
+
 /*********************
  *      DEFINES
  *********************/
 #define usr_group_num 6
 #define usr_timer_num 3
 #define usr_serie_num 1
-
-uint16_t ble_data = 0, ble_cnt = 0;
-char ble_buf[20];
 
 static uint16_t adc_value[6];
 /**********************
@@ -239,13 +237,15 @@ static void usr_timer_1(lv_timer_t* timer)
 
 }
 
+extern uint8_t USART_RX_BUF[100];
+extern int USART_RX_STA;
 static void usr_timer_bluetooth(lv_timer_t* timer)
 {
-    while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == 1)
+    if(USART_RX_STA == 1)
     {
-        ble_data = USART_ReceiveData(USART2);
-        snprintf(ble_buf, sizeof(ble_buf), "%c", ble_data);
-        lv_textarea_add_text(guider_ui.screen_3_ta_1, ble_buf);
+        lv_textarea_set_text(guider_ui.screen_3_ta_1, USART_RX_BUF);
+        memset(USART_RX_BUF, 0, sizeof (USART_RX_BUF));
+        USART_RX_STA = 0;
     }
 }
 
