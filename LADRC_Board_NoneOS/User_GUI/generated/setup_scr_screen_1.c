@@ -54,7 +54,7 @@ void setup_scr_screen_1(lv_ui *ui)
 	ui->screen_1_list_1_item5 = lv_list_add_btn(ui->screen_1_list_1, LV_SYMBOL_HOME, "HOME");
 	lv_obj_set_pos(ui->screen_1_list_1, -1, -1);
 	lv_obj_set_size(ui->screen_1_list_1, 125, 125);
-	lv_obj_set_scrollbar_mode(ui->screen_1_list_1, LV_SCROLLBAR_MODE_ON);
+	lv_obj_set_scrollbar_mode(ui->screen_1_list_1, LV_SCROLLBAR_MODE_OFF);
 
 	//Write style state: LV_STATE_DEFAULT for &style_screen_1_list_1_main_main_default
 	static lv_style_t style_screen_1_list_1_main_main_default;
@@ -65,9 +65,7 @@ void setup_scr_screen_1(lv_ui *ui)
 	lv_style_set_pad_right(&style_screen_1_list_1_main_main_default, 0);
 	lv_style_set_pad_bottom(&style_screen_1_list_1_main_main_default, 0);
 	lv_style_set_bg_opa(&style_screen_1_list_1_main_main_default, 255);
-	lv_style_set_bg_color(&style_screen_1_list_1_main_main_default, lv_color_hex(0x282294));
-	lv_style_set_bg_grad_dir(&style_screen_1_list_1_main_main_default, LV_GRAD_DIR_HOR);
-	lv_style_set_bg_grad_color(&style_screen_1_list_1_main_main_default, lv_color_hex(0xff006c));
+	lv_style_set_bg_color(&style_screen_1_list_1_main_main_default, lv_color_hex(0x2F35DA));
 	lv_style_set_border_width(&style_screen_1_list_1_main_main_default, 0);
 	lv_style_set_radius(&style_screen_1_list_1_main_main_default, 0);
 	lv_style_set_shadow_width(&style_screen_1_list_1_main_main_default, 0);

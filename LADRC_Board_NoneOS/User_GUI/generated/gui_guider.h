@@ -37,9 +37,9 @@ typedef struct
 	lv_obj_t *screen_2;
 	bool screen_2_del;
 	lv_obj_t *screen_2_cont_1;
-	lv_obj_t *screen_2_led_1;
 	lv_obj_t *screen_2_btn_1;
 	lv_obj_t *screen_2_btn_1_label;
+	lv_obj_t *screen_2_led_1;
 	lv_obj_t *screen_3;
 	bool screen_3_del;
 	lv_obj_t *screen_3_cont_1;
@@ -71,6 +71,17 @@ typedef struct
 	lv_obj_t *screen_5_label_9;
 	lv_obj_t *screen_5_label_10;
 	lv_obj_t *screen_5_label_11;
+	lv_obj_t *screen_6;
+	bool screen_6_del;
+	lv_obj_t *screen_6_cont_1;
+	lv_obj_t *screen_6_arc_1;
+	lv_obj_t *screen_6_arc_2;
+	lv_obj_t *screen_6_arc_3;
+	lv_obj_t *screen_6_arc_4;
+	lv_obj_t *screen_6_label_1;
+	lv_obj_t *screen_6_label_2;
+	lv_obj_t *screen_6_label_3;
+	lv_obj_t *screen_6_label_4;
 }lv_ui;
 
 void ui_init_style(lv_style_t * style);
@@ -84,6 +95,7 @@ void setup_scr_screen_2(lv_ui *ui);
 void setup_scr_screen_3(lv_ui *ui);
 void setup_scr_screen_4(lv_ui *ui);
 void setup_scr_screen_5(lv_ui *ui);
+void setup_scr_screen_6(lv_ui *ui);
 
 LV_FONT_DECLARE(lv_font_Abel_regular_25)
 LV_FONT_DECLARE(lv_font_montserratMedium_16)

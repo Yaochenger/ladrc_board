@@ -37,7 +37,7 @@ void setup_scr_screen_3(lv_ui *ui)
 	lv_obj_set_style_border_side(ui->screen_3_cont_1, LV_BORDER_SIDE_FULL, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_radius(ui->screen_3_cont_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_bg_opa(ui->screen_3_cont_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_3_cont_1, lv_color_hex(0xff00c6), LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_color(ui->screen_3_cont_1, lv_color_hex(0x2F35DA), LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_pad_top(ui->screen_3_cont_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_pad_bottom(ui->screen_3_cont_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_pad_left(ui->screen_3_cont_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -74,7 +74,7 @@ void setup_scr_screen_3(lv_ui *ui)
 
 	//Write codes screen_3_label_1
 	ui->screen_3_label_1 = lv_label_create(ui->screen_3_cont_1);
-	lv_label_set_text(ui->screen_3_label_1, "Bluetoolth");
+	lv_label_set_text(ui->screen_3_label_1, "BLE TEXT");
 	lv_label_set_long_mode(ui->screen_3_label_1, LV_LABEL_LONG_WRAP);
 	lv_obj_set_pos(ui->screen_3_label_1, 7, 5);
 	lv_obj_set_size(ui->screen_3_label_1, 109, 15);
@@ -82,7 +82,7 @@ void setup_scr_screen_3(lv_ui *ui)
 	//Write style for screen_3_label_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_border_width(ui->screen_3_label_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_radius(ui->screen_3_label_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_color(ui->screen_3_label_1, lv_color_hex(0x2FDA64), LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_text_color(ui->screen_3_label_1, lv_color_hex(0xe5ff00), LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_text_font(ui->screen_3_label_1, &lv_font_Abel_regular_12, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_text_letter_space(ui->screen_3_label_1, 2, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_text_line_space(ui->screen_3_label_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);

@@ -22,7 +22,7 @@
 /*********************
  *      DEFINES
  *********************/
-#define usr_group_num 6
+#define usr_group_num 8
 #define usr_timer_num 3
 #define usr_serie_num 1
 
@@ -36,6 +36,7 @@ static void load_screen2(void);
 static void load_screen2_1(void);
 static void load_screen2_2(void);
 static void load_screen2_3(void);
+static void load_screen2_4(void);
 
 static void usr_timer_1(lv_timer_t* timer);
 static void usr_timer_bluetooth(lv_timer_t* timer);
@@ -86,11 +87,11 @@ static void screen1_page_cb(lv_event_t * e)
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item1)
         {
-            load_screen0();
+            load_screen2_4();
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item2)
         {
-            gui_timer[0] = lv_timer_create(usr_timer_1, 10, (void *)guider_ui.screen_4_label_8);// mpu6050
+            gui_timer[0] = lv_timer_create(usr_timer_1, 5, (void *)guider_ui.screen_4_label_8);// mpu6050
             MPU_Init();
             MPU6050_Filter_Init(50);
             load_screen2_2();
@@ -158,6 +159,39 @@ static void screen2_1_page_cb(lv_event_t * e)
     }
 }
 
+static void screen2_4_page_cb(lv_event_t * e)
+{
+    uint32_t key = lv_event_get_key(e);
+    lv_obj_t *label = lv_group_get_focused(gui_group[6]);
+    if(label != NULL)
+    {
+        lv_obj_set_style_text_color(guider_ui.screen_6_label_1, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(guider_ui.screen_6_label_2, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(guider_ui.screen_6_label_3, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(guider_ui.screen_6_label_4, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        if (label == guider_ui.screen_6_label_1)
+        {
+            lv_obj_set_style_text_color(guider_ui.screen_6_label_1, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        }
+        else if (label == guider_ui.screen_6_label_2)
+        {
+            lv_obj_set_style_text_color(guider_ui.screen_6_label_2, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        }
+        else if (label == guider_ui.screen_6_label_3)
+        {
+            lv_obj_set_style_text_color(guider_ui.screen_6_label_3, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        }
+        else if (label == guider_ui.screen_6_label_4)
+        {
+            lv_obj_set_style_text_color(guider_ui.screen_6_label_4, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        }
+    }
+
+    if (key == LV_KEY_ESC) {
+        load_screen1();
+    }
+}
+
 static void load_screen0(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[0]);
@@ -190,7 +224,8 @@ static void load_screen2(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[2]);
     lv_group_set_default(gui_group[2]);
-    lv_group_add_obj(gui_group[2], guider_ui.screen_2_btn_1);
+    lv_group_add_obj(gui_group[2], guider_ui.screen_2_cont_1);
+    lv_group_focus_obj(guider_ui.screen_2_cont_1);
     lv_scr_load(guider_ui.screen_2);
 }
 
@@ -200,7 +235,7 @@ static void load_screen2_1(void)
     lv_group_set_default(gui_group[3]);
     lv_group_add_obj(gui_group[3], guider_ui.screen_3_ta_1);
     lv_group_focus_obj(guider_ui.screen_3_ta_1);
-    lv_textarea_set_text(guider_ui.screen_3_ta_1, "Hello World");
+    lv_textarea_set_text(guider_ui.screen_3_ta_1, "Hello World\rSerial baud 9600");
     lv_scr_load(guider_ui.screen_3);
 }
 
@@ -220,6 +255,19 @@ static void load_screen2_3(void)
     lv_group_add_obj(gui_group[5], guider_ui.screen_5_cont_1);
     lv_group_focus_obj(guider_ui.screen_5_cont_1);
     lv_scr_load(guider_ui.screen_5);
+}
+
+static void load_screen2_4(void)
+{
+    lv_indev_set_group(indev_keypad, gui_group[6]);
+    lv_group_set_default(gui_group[6]);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_cont_1);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_label_1);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_label_2);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_label_3);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_label_4);
+    lv_group_focus_obj(guider_ui.screen_6_cont_1);
+    lv_scr_load(guider_ui.screen_6);
 }
 
 static void usr_timer_1(lv_timer_t* timer)
@@ -288,6 +336,7 @@ void custom_init(lv_ui *ui)
     setup_scr_screen_3(ui);
     setup_scr_screen_4(ui);
     setup_scr_screen_5(ui);
+    setup_scr_screen_6(ui);
 
     for (int var = 0; var < usr_group_num; var++) {
         gui_group[var] = lv_group_create();
@@ -300,9 +349,15 @@ void custom_init(lv_ui *ui)
     lv_obj_add_event_cb(ui->screen_1_list_1_item3, screen1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_1_list_1_item4, screen1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_1_list_1_item5, screen1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_2_btn_1, screen2_page_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_2_cont_1, screen2_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_3_ta_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_4_label_8, screen2_1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_5_cont_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
+
+    lv_obj_add_event_cb(ui->screen_6_cont_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_6_label_1, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_label_1);
+    lv_obj_add_event_cb(ui->screen_6_label_2, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_label_2);
+    lv_obj_add_event_cb(ui->screen_6_label_3, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_label_3);
+    lv_obj_add_event_cb(ui->screen_6_label_4, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_label_4);
 }
 
