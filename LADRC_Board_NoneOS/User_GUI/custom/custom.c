@@ -159,36 +159,48 @@ static void screen2_1_page_cb(lv_event_t * e)
     }
 }
 
+static uint8_t g_is_editing = 0;
 static void screen2_4_page_cb(lv_event_t * e)
 {
     uint32_t key = lv_event_get_key(e);
     lv_obj_t *label = lv_group_get_focused(gui_group[6]);
+    static uint16_t cnt = 50;
     if(label != NULL)
     {
-        lv_obj_set_style_text_color(guider_ui.screen_6_label_1, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
-        lv_obj_set_style_text_color(guider_ui.screen_6_label_2, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
-        lv_obj_set_style_text_color(guider_ui.screen_6_label_3, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
-        lv_obj_set_style_text_color(guider_ui.screen_6_label_4, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
-        if (label == guider_ui.screen_6_label_1)
+        lv_obj_set_style_text_color(guider_ui.screen_6_btn_1_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(guider_ui.screen_6_btn_2_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(guider_ui.screen_6_btn_3_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(guider_ui.screen_6_btn_4_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
+        if (label == guider_ui.screen_6_btn_1)
         {
-            lv_obj_set_style_text_color(guider_ui.screen_6_label_1, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_obj_set_style_text_color(guider_ui.screen_6_btn_1_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_arc_set_value(guider_ui.screen_6_arc_1, cnt);
         }
-        else if (label == guider_ui.screen_6_label_2)
+        else if (label == guider_ui.screen_6_btn_2)
         {
-            lv_obj_set_style_text_color(guider_ui.screen_6_label_2, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_obj_set_style_text_color(guider_ui.screen_6_btn_2_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_arc_set_value(guider_ui.screen_6_arc_2, cnt);
         }
-        else if (label == guider_ui.screen_6_label_3)
+        else if (label == guider_ui.screen_6_btn_3)
         {
-            lv_obj_set_style_text_color(guider_ui.screen_6_label_3, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_obj_set_style_text_color(guider_ui.screen_6_btn_3_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_arc_set_value(guider_ui.screen_6_arc_3, cnt);
         }
-        else if (label == guider_ui.screen_6_label_4)
+        else if (label == guider_ui.screen_6_btn_4)
         {
-            lv_obj_set_style_text_color(guider_ui.screen_6_label_4, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_obj_set_style_text_color(guider_ui.screen_6_btn_4_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_arc_set_value(guider_ui.screen_6_arc_4, cnt);
         }
     }
 
     if (key == LV_KEY_ESC) {
         load_screen1();
+    }
+
+    if (key == LV_KEY_ENTER) {
+        g_is_editing = !g_is_editing;
+        printf("g_is_editing %d \r\n", g_is_editing);
+        lv_group_set_editing(gui_group[6], g_is_editing);
     }
 }
 
@@ -262,10 +274,10 @@ static void load_screen2_4(void)
     lv_indev_set_group(indev_keypad, gui_group[6]);
     lv_group_set_default(gui_group[6]);
     lv_group_add_obj(gui_group[6], guider_ui.screen_6_cont_1);
-    lv_group_add_obj(gui_group[6], guider_ui.screen_6_label_1);
-    lv_group_add_obj(gui_group[6], guider_ui.screen_6_label_2);
-    lv_group_add_obj(gui_group[6], guider_ui.screen_6_label_3);
-    lv_group_add_obj(gui_group[6], guider_ui.screen_6_label_4);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_btn_1);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_btn_2);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_btn_3);
+    lv_group_add_obj(gui_group[6], guider_ui.screen_6_btn_4);
     lv_group_focus_obj(guider_ui.screen_6_cont_1);
     lv_scr_load(guider_ui.screen_6);
 }
@@ -355,9 +367,9 @@ void custom_init(lv_ui *ui)
     lv_obj_add_event_cb(ui->screen_5_cont_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
 
     lv_obj_add_event_cb(ui->screen_6_cont_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_6_label_1, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_label_1);
-    lv_obj_add_event_cb(ui->screen_6_label_2, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_label_2);
-    lv_obj_add_event_cb(ui->screen_6_label_3, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_label_3);
-    lv_obj_add_event_cb(ui->screen_6_label_4, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_label_4);
+    lv_obj_add_event_cb(ui->screen_6_btn_1, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_btn_1);
+    lv_obj_add_event_cb(ui->screen_6_btn_2, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_btn_2);
+    lv_obj_add_event_cb(ui->screen_6_btn_3, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_btn_3);
+    lv_obj_add_event_cb(ui->screen_6_btn_4, screen2_4_page_cb, LV_EVENT_ALL, ui->screen_6_btn_4);
 }
 

@@ -78,10 +78,14 @@ typedef struct
 	lv_obj_t *screen_6_arc_2;
 	lv_obj_t *screen_6_arc_3;
 	lv_obj_t *screen_6_arc_4;
-	lv_obj_t *screen_6_label_1;
-	lv_obj_t *screen_6_label_2;
-	lv_obj_t *screen_6_label_3;
-	lv_obj_t *screen_6_label_4;
+	lv_obj_t *screen_6_btn_1;
+	lv_obj_t *screen_6_btn_1_label;
+	lv_obj_t *screen_6_btn_2;
+	lv_obj_t *screen_6_btn_2_label;
+	lv_obj_t *screen_6_btn_3;
+	lv_obj_t *screen_6_btn_3_label;
+	lv_obj_t *screen_6_btn_4;
+	lv_obj_t *screen_6_btn_4_label;
 }lv_ui;
 
 void ui_init_style(lv_style_t * style);
