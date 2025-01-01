@@ -167,14 +167,8 @@ static void screen2_4_page_cb(lv_event_t * e)
     static uint8_t cnt[4] = {0};
     if(label != NULL)
     {
-        printf("key %d \r\n", key);
-        lv_obj_set_style_text_color(guider_ui.screen_6_btn_1_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
-        lv_obj_set_style_text_color(guider_ui.screen_6_btn_2_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
-        lv_obj_set_style_text_color(guider_ui.screen_6_btn_3_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
-        lv_obj_set_style_text_color(guider_ui.screen_6_btn_4_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
         if (label == guider_ui.screen_6_btn_1)
         {
-            lv_obj_set_style_text_color(guider_ui.screen_6_btn_1_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
             if (key == LV_KEY_RIGHT)
             {
                 lv_arc_set_value(guider_ui.screen_6_arc_1, cnt[0]++);
@@ -186,7 +180,6 @@ static void screen2_4_page_cb(lv_event_t * e)
         }
         else if (label == guider_ui.screen_6_btn_2)
         {
-            lv_obj_set_style_text_color(guider_ui.screen_6_btn_2_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
             if (key == LV_KEY_RIGHT)
             {
                 lv_arc_set_value(guider_ui.screen_6_arc_2, cnt[1]++);
@@ -199,7 +192,6 @@ static void screen2_4_page_cb(lv_event_t * e)
         }
         else if (label == guider_ui.screen_6_btn_3)
         {
-            lv_obj_set_style_text_color(guider_ui.screen_6_btn_3_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
             if (key == LV_KEY_RIGHT)
             {
                 lv_arc_set_value(guider_ui.screen_6_arc_3, cnt[2]++);
@@ -211,7 +203,6 @@ static void screen2_4_page_cb(lv_event_t * e)
         }
         else if (label == guider_ui.screen_6_btn_4)
         {
-            lv_obj_set_style_text_color(guider_ui.screen_6_btn_4_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
             if (key == LV_KEY_RIGHT)
             {
                 lv_arc_set_value(guider_ui.screen_6_arc_4, cnt[3]++);
@@ -219,6 +210,13 @@ static void screen2_4_page_cb(lv_event_t * e)
             else if (key == LV_KEY_LEFT)
             {
                 lv_arc_set_value(guider_ui.screen_6_arc_4, cnt[3]--);
+            }
+        }
+        else if (label == guider_ui.screen_6_cont_1)
+        {
+            if (key == LV_KEY_RIGHT)
+            {
+                printf("to do :motor stop\r\n");
             }
         }
     }

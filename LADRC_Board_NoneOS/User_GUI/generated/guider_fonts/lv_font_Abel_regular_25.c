@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2025 NXP
  * NXP Confidential and Proprietary. This software is owned or controlled by NXP and may only be used strictly in
  * accordance with the applicable license terms. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you agree to
@@ -9,7 +9,7 @@
 /*******************************************************************************
  * Size: 25 px
  * Bpp: 4
- * Opts: --user-data-dir=C:\Users\MCU\AppData\Roaming\gui-guider --app-path=D:\GUI_GUIDER\Gui-Guider\resources\app.asar --no-sandbox --no-zygote --lang=zh-CN --device-scale-factor=1.25 --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1735442704829593 --launch-time-ticks=122330563427 --mojo-platform-channel-handle=3040 --field-trial-handle=1744,i,17364739548736604450,18407711635694133739,131072 --disable-features=SpareRendererForSitePerProcess,WinRetrieveSuggestionsOnlyOnDemand /prefetch:1
+ * Opts: --user-data-dir=C:\Users\MCU\AppData\Roaming\gui-guider --app-path=D:\GUI_GUIDER\Gui-Guider\resources\app.asar --no-sandbox --no-zygote --lang=zh-CN --device-scale-factor=1.25 --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1735726115883205 --launch-time-ticks=11189262119 --mojo-platform-channel-handle=2972 --field-trial-handle=1848,i,17734359788382398512,13852661233355287159,131072 --disable-features=SpareRendererForSitePerProcess,WinRetrieveSuggestionsOnlyOnDemand /prefetch:1
  ******************************************************************************/
 
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
