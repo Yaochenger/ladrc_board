@@ -159,14 +159,15 @@ static void screen2_1_page_cb(lv_event_t * e)
     }
 }
 
-static uint8_t g_is_editing = 0;
+static bool g_is_editing = 0;
 static void screen2_4_page_cb(lv_event_t * e)
 {
     uint32_t key = lv_event_get_key(e);
     lv_obj_t *label = lv_group_get_focused(gui_group[6]);
-    static uint16_t cnt = 50;
+    static uint8_t cnt[4] = {0};
     if(label != NULL)
     {
+        printf("key %d \r\n", key);
         lv_obj_set_style_text_color(guider_ui.screen_6_btn_1_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
         lv_obj_set_style_text_color(guider_ui.screen_6_btn_2_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
         lv_obj_set_style_text_color(guider_ui.screen_6_btn_3_label, lv_color_hex(0x000000), LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -174,22 +175,51 @@ static void screen2_4_page_cb(lv_event_t * e)
         if (label == guider_ui.screen_6_btn_1)
         {
             lv_obj_set_style_text_color(guider_ui.screen_6_btn_1_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
-            lv_arc_set_value(guider_ui.screen_6_arc_1, cnt);
+            if (key == LV_KEY_RIGHT)
+            {
+                lv_arc_set_value(guider_ui.screen_6_arc_1, cnt[0]++);
+            }
+            else if (key == LV_KEY_LEFT)
+            {
+                lv_arc_set_value(guider_ui.screen_6_arc_1, cnt[0]--);
+            }
         }
         else if (label == guider_ui.screen_6_btn_2)
         {
             lv_obj_set_style_text_color(guider_ui.screen_6_btn_2_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
-            lv_arc_set_value(guider_ui.screen_6_arc_2, cnt);
+            if (key == LV_KEY_RIGHT)
+            {
+                lv_arc_set_value(guider_ui.screen_6_arc_2, cnt[1]++);
+            }
+            else if (key == LV_KEY_LEFT)
+            {
+                lv_arc_set_value(guider_ui.screen_6_arc_2, cnt[1]--);
+            }
+
         }
         else if (label == guider_ui.screen_6_btn_3)
         {
             lv_obj_set_style_text_color(guider_ui.screen_6_btn_3_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
-            lv_arc_set_value(guider_ui.screen_6_arc_3, cnt);
+            if (key == LV_KEY_RIGHT)
+            {
+                lv_arc_set_value(guider_ui.screen_6_arc_3, cnt[2]++);
+            }
+            else if (key == LV_KEY_LEFT)
+            {
+                lv_arc_set_value(guider_ui.screen_6_arc_3, cnt[2]--);
+            }
         }
         else if (label == guider_ui.screen_6_btn_4)
         {
             lv_obj_set_style_text_color(guider_ui.screen_6_btn_4_label, lv_color_hex(0xFF0000), LV_PART_MAIN|LV_STATE_DEFAULT);
-            lv_arc_set_value(guider_ui.screen_6_arc_4, cnt);
+            if (key == LV_KEY_RIGHT)
+            {
+                lv_arc_set_value(guider_ui.screen_6_arc_4, cnt[3]++);
+            }
+            else if (key == LV_KEY_LEFT)
+            {
+                lv_arc_set_value(guider_ui.screen_6_arc_4, cnt[3]--);
+            }
         }
     }
 
@@ -199,8 +229,7 @@ static void screen2_4_page_cb(lv_event_t * e)
 
     if (key == LV_KEY_ENTER) {
         g_is_editing = !g_is_editing;
-        printf("g_is_editing %d \r\n", g_is_editing);
-        lv_group_set_editing(gui_group[6], g_is_editing);
+        lv_group_set_editing(lv_group_get_default(), g_is_editing);
     }
 }
 
