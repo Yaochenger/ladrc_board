@@ -202,7 +202,6 @@ void setup_scr_screen_6(lv_ui *ui)
 
 	//Write codes screen_6_btn_1
 	ui->screen_6_btn_1 = lv_btn_create(ui->screen_6_cont_1);
-	lv_obj_add_flag(ui->screen_6_btn_1, LV_OBJ_FLAG_CHECKABLE);
 	ui->screen_6_btn_1_label = lv_label_create(ui->screen_6_btn_1);
 	lv_label_set_text(ui->screen_6_btn_1_label, "M1");
 	lv_label_set_long_mode(ui->screen_6_btn_1_label, LV_LABEL_LONG_WRAP);
@@ -222,7 +221,6 @@ void setup_scr_screen_6(lv_ui *ui)
 
 	//Write codes screen_6_btn_2
 	ui->screen_6_btn_2 = lv_btn_create(ui->screen_6_cont_1);
-	lv_obj_add_flag(ui->screen_6_btn_2, LV_OBJ_FLAG_CHECKABLE);
 	ui->screen_6_btn_2_label = lv_label_create(ui->screen_6_btn_2);
 	lv_label_set_text(ui->screen_6_btn_2_label, "M2");
 	lv_label_set_long_mode(ui->screen_6_btn_2_label, LV_LABEL_LONG_WRAP);
@@ -242,7 +240,6 @@ void setup_scr_screen_6(lv_ui *ui)
 
 	//Write codes screen_6_btn_3
 	ui->screen_6_btn_3 = lv_btn_create(ui->screen_6_cont_1);
-	lv_obj_add_flag(ui->screen_6_btn_3, LV_OBJ_FLAG_CHECKABLE);
 	ui->screen_6_btn_3_label = lv_label_create(ui->screen_6_btn_3);
 	lv_label_set_text(ui->screen_6_btn_3_label, "M3");
 	lv_label_set_long_mode(ui->screen_6_btn_3_label, LV_LABEL_LONG_WRAP);
@@ -262,7 +259,6 @@ void setup_scr_screen_6(lv_ui *ui)
 
 	//Write codes screen_6_btn_4
 	ui->screen_6_btn_4 = lv_btn_create(ui->screen_6_cont_1);
-	lv_obj_add_flag(ui->screen_6_btn_4, LV_OBJ_FLAG_CHECKABLE);
 	ui->screen_6_btn_4_label = lv_label_create(ui->screen_6_btn_4);
 	lv_label_set_text(ui->screen_6_btn_4_label, "M4");
 	lv_label_set_long_mode(ui->screen_6_btn_4_label, LV_LABEL_LONG_WRAP);
