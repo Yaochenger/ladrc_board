@@ -194,12 +194,21 @@ void arc_key_val(lv_obj_t * obj, uint32_t *key, int8_t *cnt)
     }
 }
 
+void arc_set_txt(void)
+{
+    lv_label_set_text(guider_ui.screen_6_btn_1_label, "M1");
+    lv_label_set_text(guider_ui.screen_6_btn_2_label, "M2");
+    lv_label_set_text(guider_ui.screen_6_btn_3_label, "M3");
+    lv_label_set_text(guider_ui.screen_6_btn_4_label, "M4");
+}
+
 static void screen2_4_page_cb(lv_event_t * e)
 {
+    char buffer[5];
+    uint8_t i = 0;
+    static int8_t cnt[4] = {0};
     uint32_t key = lv_event_get_key(e);
     lv_obj_t *label = lv_group_get_focused(gui_group[6]);
-    static int8_t cnt[4] = {0};
-    char buffer[5];
     if(label != NULL)
     {
         if (label == guider_ui.screen_6_btn_1)
@@ -224,12 +233,20 @@ static void screen2_4_page_cb(lv_event_t * e)
         }
         else if (label == guider_ui.screen_6_cont_1)
         {
+            for (i = 0; i < 4; i++)
+            {
+                cnt[i] = 0;
+            }
+            lv_arc_set_value(guider_ui.screen_6_arc_1, 0);
+            lv_arc_set_value(guider_ui.screen_6_arc_2, 0);
+            lv_arc_set_value(guider_ui.screen_6_arc_3, 0);
+            lv_arc_set_value(guider_ui.screen_6_arc_4, 0);
             printf("to do :motor stop\r\n");
-            return;
         }
     }
 
     if (key == LV_KEY_ESC) {
+        arc_set_txt();
         load_screen1();
     }
 
@@ -237,10 +254,7 @@ static void screen2_4_page_cb(lv_event_t * e)
         g_is_editing = !g_is_editing;
         if (!g_is_editing)
         {
-            lv_label_set_text(guider_ui.screen_6_btn_1_label, "M1");
-            lv_label_set_text(guider_ui.screen_6_btn_2_label, "M2");
-            lv_label_set_text(guider_ui.screen_6_btn_3_label, "M3");
-            lv_label_set_text(guider_ui.screen_6_btn_4_label, "M4");
+            arc_set_txt();
             lv_obj_set_style_bg_color(guider_ui.screen_6_cont_1, lv_color_hex(0x2F35DA), LV_PART_MAIN|LV_STATE_DEFAULT);
         }
         else
@@ -413,7 +427,7 @@ void custom_init(lv_ui *ui)
     lv_obj_add_event_cb(ui->screen_4_label_8, screen2_1_page_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_5_cont_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
 
-//    lv_obj_add_event_cb(ui->screen_6_cont_1, screen2_4_page_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_6_cont_1, screen2_4_page_cb, LV_EVENT_PRESSED | LV_EVENT_KEY, NULL);
     lv_obj_add_event_cb(ui->screen_6_btn_1, screen2_4_page_cb, LV_EVENT_KEY, ui->screen_6_btn_1);
     lv_obj_add_event_cb(ui->screen_6_btn_2, screen2_4_page_cb, LV_EVENT_KEY, ui->screen_6_btn_2);
     lv_obj_add_event_cb(ui->screen_6_btn_3, screen2_4_page_cb, LV_EVENT_KEY, ui->screen_6_btn_3);
