@@ -30,6 +30,7 @@ void init_scr_del_flag(lv_ui *ui)
 	ui->screen_4_del = true;
 	ui->screen_5_del = true;
 	ui->screen_6_del = true;
+	ui->screen_7_del = true;
 }
 
 void setup_ui(lv_ui *ui)

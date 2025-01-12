@@ -22,21 +22,29 @@
 /*********************
  *      DEFINES
  *********************/
-#define usr_group_num 8
+#define usr_group_num 9
 #define usr_timer_num 3
 #define usr_serie_num 1
 
+#define edit_char "#"
+static bool g_is_editing = 0;
 static uint16_t adc_value[6];
+int8_t arc_cnt_inc(int8_t *cnt);
+int8_t arc_cnt_dec(int8_t *cnt);
+void arc_txt_set(lv_obj_t * obj, char *buffer, int8_t *cnt);
+void arc_key_val(lv_obj_t * obj, uint32_t *key, int8_t *cnt);
+static void load_screen2_4(void);
+void arc_set_txt(void);
 /**********************
  *      TYPEDEFS
  **********************/
-static void load_screen0(void);
-static void load_screen1(void);
-static void load_screen2(void);
-static void load_screen2_1(void);
-static void load_screen2_2(void);
-static void load_screen2_3(void);
-static void load_screen2_4(void);
+static void load_screen_main(void);
+static void load_screen_second(void);
+static void load_screen2_led(void);
+static void load_screen2_ble(void);
+static void load_screen2_mpu6050(void);
+static void load_screen2_adc(void);
+static void load_screen2_motor(void);
 
 static void usr_timer_1(lv_timer_t* timer);
 static void usr_timer_bluetooth(lv_timer_t* timer);
@@ -46,9 +54,9 @@ static void usr_timer_adc(lv_timer_t* timer);
  **********************/
 static lv_group_t *gui_group[usr_group_num];
 static lv_timer_t *gui_timer[usr_timer_num];
-//static lv_chart_series_t * gui_ser[usr_serie_num];
 
 static lv_obj_t *screen1_saved_focus_obj;
+static lv_obj_t *screen2_saved_focus_obj;
 /**********************
  *  STATIC VARIABLES
  **********************/
@@ -58,24 +66,24 @@ static lv_obj_t *screen1_saved_focus_obj;
  */
 extern lv_ui guider_ui;
 extern lv_indev_t * indev_keypad;
-static void screen_page_cb(lv_event_t * e)
+static void screen_mian_cb(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
 
     if (code == LV_EVENT_PRESSED)
     {
-        load_screen1();
+        load_screen_second();
     }
 }
 
-static void screen1_page_cb(lv_event_t * e)
+static void screen_second_cb(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     uint32_t key = lv_event_get_key(e);
 
     if (key == LV_KEY_ESC) {
         screen1_saved_focus_obj = lv_group_get_focused(gui_group[1]);
-        load_screen0();
+        load_screen_main();
     }
 
     if(code == LV_EVENT_PRESSED) {
@@ -83,39 +91,71 @@ static void screen1_page_cb(lv_event_t * e)
 
         if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item0)
         {
-            load_screen2();
+            load_screen2_led();
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item1)
         {
-            load_screen2_4();
+            load_screen2_motor();
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item2)
         {
             gui_timer[0] = lv_timer_create(usr_timer_1, 5, (void *)guider_ui.screen_4_label_8);// mpu6050
             MPU_Init();
             MPU6050_Filter_Init(50);
-            load_screen2_2();
+            load_screen2_mpu6050();
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item3) // Bluetoolh
         {
             gui_timer[1] = lv_timer_create(usr_timer_bluetooth, 1, NULL);
             UART2_GPIO_Init();
-            load_screen2_1();
+            load_screen2_ble();
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item4) // ADC
         {
             gui_timer[2] = lv_timer_create(usr_timer_adc, 50, NULL);
             ADC_GPIO_Init();
-            load_screen2_3();
+            load_screen2_adc();
         }
         else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item5)
         {
-            load_screen0();
+            load_screen_main();
         }
     }
 }
 
-static void screen2_page_cb(lv_event_t * e)
+static void screen_third_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    uint32_t key = lv_event_get_key(e);
+
+    if (key == LV_KEY_ESC) {
+        screen2_saved_focus_obj = lv_group_get_focused(gui_group[7]);
+        load_screen_second();
+    }
+
+    if(code == LV_EVENT_PRESSED) {
+        screen2_saved_focus_obj = lv_group_get_focused(gui_group[7]);
+
+        if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item0)
+        {
+            load_screen2_4();
+        }
+        else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item1)
+        {
+            load_screen_second();
+        }
+        else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item2)
+        {
+            load_screen_second();
+        }
+        else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item3) // Bluetoolh
+        {
+            load_screen_second();
+        }
+    }
+}
+
+static void screen_2_cont_1_cb(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     uint32_t key = lv_event_get_key(e);
@@ -134,11 +174,11 @@ static void screen2_page_cb(lv_event_t * e)
     }
 
     if (key == LV_KEY_ESC) {
-        load_screen1();
+        load_screen_second();
     }
 }
 
-static void screen2_1_page_cb(lv_event_t * e)
+static void screen_second_back_cb(lv_event_t * e)
 {
     uint32_t key = lv_event_get_key(e);
     lv_group_t *group_temp  = lv_group_get_default();
@@ -155,54 +195,11 @@ static void screen2_1_page_cb(lv_event_t * e)
         {
             lv_timer_del(gui_timer[1]);
         }
-        load_screen1();
+        load_screen_second();
     }
 }
 
-#define edit_char "#"
-static bool g_is_editing = 0;
-
-int8_t arc_cnt_inc(int8_t *cnt)
-{
-    if (((*cnt)++) > 99) {
-        *cnt = 100;
-    }
-    return *cnt;
-}
-
-int8_t arc_cnt_dec(int8_t *cnt)
-{
-    if (((*cnt)--) < 1) {
-        *cnt = 0;
-    }
-    return *cnt;
-}
-
-void arc_txt_set(lv_obj_t * obj, char *buffer, int8_t *cnt)
-{
-    snprintf(buffer, sizeof(buffer), "%d", *cnt);
-    lv_label_set_text(obj, buffer);
-}
-
-void arc_key_val(lv_obj_t * obj, uint32_t *key, int8_t *cnt)
-{
-    if (*key == LV_KEY_RIGHT) {
-        lv_arc_set_value(obj, arc_cnt_inc(cnt));
-    }
-    if (*key == LV_KEY_LEFT) {
-        lv_arc_set_value(obj, arc_cnt_dec(cnt));
-    }
-}
-
-void arc_set_txt(void)
-{
-    lv_label_set_text(guider_ui.screen_6_btn_1_label, "M1");
-    lv_label_set_text(guider_ui.screen_6_btn_2_label, "M2");
-    lv_label_set_text(guider_ui.screen_6_btn_3_label, "M3");
-    lv_label_set_text(guider_ui.screen_6_btn_4_label, "M4");
-}
-
-static void screen2_4_page_cb(lv_event_t * e)
+static void screen_6_cont_btn_cb(lv_event_t * e)
 {
     char buffer[5];
     uint8_t i = 0;
@@ -247,7 +244,7 @@ static void screen2_4_page_cb(lv_event_t * e)
 
     if (key == LV_KEY_ESC) {
         arc_set_txt();
-        load_screen1();
+        load_screen2_motor();
     }
 
     if (key == LV_KEY_ENTER) {
@@ -265,7 +262,7 @@ static void screen2_4_page_cb(lv_event_t * e)
     }
 }
 
-static void load_screen0(void)
+static void load_screen_main(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[0]);
     lv_group_set_default(gui_group[0]);
@@ -274,7 +271,7 @@ static void load_screen0(void)
     lv_scr_load(guider_ui.screen);
 }
 
-static void load_screen1(void)
+static void load_screen_second(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[1]);
     lv_group_set_default(gui_group[1]);
@@ -293,7 +290,7 @@ static void load_screen1(void)
     lv_scr_load(guider_ui.screen_1);
 }
 
-static void load_screen2(void)
+static void load_screen2_led(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[2]);
     lv_group_set_default(gui_group[2]);
@@ -302,7 +299,7 @@ static void load_screen2(void)
     lv_scr_load(guider_ui.screen_2);
 }
 
-static void load_screen2_1(void)
+static void load_screen2_ble(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[3]);
     lv_group_set_default(gui_group[3]);
@@ -312,7 +309,7 @@ static void load_screen2_1(void)
     lv_scr_load(guider_ui.screen_3);
 }
 
-static void load_screen2_2(void)
+static void load_screen2_mpu6050(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[4]);
     lv_group_set_default(gui_group[4]);
@@ -321,7 +318,7 @@ static void load_screen2_2(void)
     lv_scr_load(guider_ui.screen_4);
 }
 
-static void load_screen2_3(void)
+static void load_screen2_adc(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[5]);
     lv_group_set_default(gui_group[5]);
@@ -341,6 +338,23 @@ static void load_screen2_4(void)
     lv_group_add_obj(gui_group[6], guider_ui.screen_6_btn_4);
     lv_group_focus_obj(guider_ui.screen_6_cont_1);
     lv_scr_load(guider_ui.screen_6);
+}
+
+static void load_screen2_motor(void)
+{
+    lv_indev_set_group(indev_keypad, gui_group[7]);
+    lv_group_set_default(gui_group[7]);
+    lv_group_add_obj(gui_group[7], guider_ui.screen_7_list_1_item0);
+    lv_group_add_obj(gui_group[7], guider_ui.screen_7_list_1_item1);
+    lv_group_add_obj(gui_group[7], guider_ui.screen_7_list_1_item2);
+    lv_group_add_obj(gui_group[7], guider_ui.screen_7_list_1_item3);
+
+    if (screen2_saved_focus_obj != NULL) {
+        lv_group_focus_obj(screen2_saved_focus_obj);
+        screen2_saved_focus_obj = NULL;
+    }
+
+    lv_scr_load(guider_ui.screen_7);
 }
 
 static void usr_timer_1(lv_timer_t* timer)
@@ -410,27 +424,73 @@ void custom_init(lv_ui *ui)
     setup_scr_screen_4(ui);
     setup_scr_screen_5(ui);
     setup_scr_screen_6(ui);
+    setup_scr_screen_7(ui);
 
     for (int var = 0; var < usr_group_num; var++) {
         gui_group[var] = lv_group_create();
     }
 
-    lv_obj_add_event_cb(ui->screen_btn_1, screen_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_1_list_1_item0, screen1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_1_list_1_item1, screen1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_1_list_1_item2, screen1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_1_list_1_item3, screen1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_1_list_1_item4, screen1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_1_list_1_item5, screen1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_2_cont_1, screen2_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_3_ta_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_4_label_8, screen2_1_page_cb, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui->screen_5_cont_1, screen2_1_page_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_btn_1, screen_mian_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_1_list_1_item0, screen_second_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_1_list_1_item1, screen_second_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_1_list_1_item2, screen_second_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_1_list_1_item3, screen_second_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_1_list_1_item4, screen_second_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_1_list_1_item5, screen_second_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_2_cont_1,  screen_2_cont_1_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_3_ta_1,    screen_second_back_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_4_label_8, screen_second_back_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_5_cont_1,  screen_second_back_cb, LV_EVENT_ALL, NULL);
 
-    lv_obj_add_event_cb(ui->screen_6_cont_1, screen2_4_page_cb, LV_EVENT_PRESSED | LV_EVENT_KEY, NULL);
-    lv_obj_add_event_cb(ui->screen_6_btn_1, screen2_4_page_cb, LV_EVENT_KEY, ui->screen_6_btn_1);
-    lv_obj_add_event_cb(ui->screen_6_btn_2, screen2_4_page_cb, LV_EVENT_KEY, ui->screen_6_btn_2);
-    lv_obj_add_event_cb(ui->screen_6_btn_3, screen2_4_page_cb, LV_EVENT_KEY, ui->screen_6_btn_3);
-    lv_obj_add_event_cb(ui->screen_6_btn_4, screen2_4_page_cb, LV_EVENT_KEY, ui->screen_6_btn_4);
+    lv_obj_add_event_cb(ui->screen_6_cont_1,screen_6_cont_btn_cb, LV_EVENT_PRESSED | LV_EVENT_KEY, NULL);
+    lv_obj_add_event_cb(ui->screen_6_btn_1, screen_6_cont_btn_cb, LV_EVENT_KEY, ui->screen_6_btn_1);
+    lv_obj_add_event_cb(ui->screen_6_btn_2, screen_6_cont_btn_cb, LV_EVENT_KEY, ui->screen_6_btn_2);
+    lv_obj_add_event_cb(ui->screen_6_btn_3, screen_6_cont_btn_cb, LV_EVENT_KEY, ui->screen_6_btn_3);
+    lv_obj_add_event_cb(ui->screen_6_btn_4, screen_6_cont_btn_cb, LV_EVENT_KEY, ui->screen_6_btn_4);
+
+    lv_obj_add_event_cb(ui->screen_7_list_1_item0, screen_third_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_7_list_1_item1, screen_third_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_7_list_1_item2, screen_third_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui->screen_7_list_1_item3, screen_third_cb, LV_EVENT_ALL, NULL);
+}
+
+int8_t arc_cnt_inc(int8_t *cnt)
+{
+    if (((*cnt)++) > 99) {
+        *cnt = 100;
+    }
+    return *cnt;
+}
+
+int8_t arc_cnt_dec(int8_t *cnt)
+{
+    if (((*cnt)--) < 1) {
+        *cnt = 0;
+    }
+    return *cnt;
+}
+
+void arc_txt_set(lv_obj_t * obj, char *buffer, int8_t *cnt)
+{
+    snprintf(buffer, sizeof(buffer), "%d", *cnt);
+    lv_label_set_text(obj, buffer);
+}
+
+void arc_key_val(lv_obj_t * obj, uint32_t *key, int8_t *cnt)
+{
+    if (*key == LV_KEY_RIGHT) {
+        lv_arc_set_value(obj, arc_cnt_inc(cnt));
+    }
+    if (*key == LV_KEY_LEFT) {
+        lv_arc_set_value(obj, arc_cnt_dec(cnt));
+    }
+}
+
+void arc_set_txt(void)
+{
+    lv_label_set_text(guider_ui.screen_6_btn_1_label, "M1");
+    lv_label_set_text(guider_ui.screen_6_btn_2_label, "M2");
+    lv_label_set_text(guider_ui.screen_6_btn_3_label, "M3");
+    lv_label_set_text(guider_ui.screen_6_btn_4_label, "M4");
 }
 

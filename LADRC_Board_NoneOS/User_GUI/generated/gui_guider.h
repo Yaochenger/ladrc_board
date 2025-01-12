@@ -87,6 +87,14 @@ typedef struct
 	lv_obj_t *screen_6_btn_4;
 	lv_obj_t *screen_6_btn_4_label;
 	lv_obj_t *screen_6_label_1;
+	lv_obj_t *screen_7;
+	bool screen_7_del;
+	lv_obj_t *screen_7_cont_1;
+	lv_obj_t *screen_7_list_1;
+	lv_obj_t *screen_7_list_1_item0;
+	lv_obj_t *screen_7_list_1_item1;
+	lv_obj_t *screen_7_list_1_item2;
+	lv_obj_t *screen_7_list_1_item3;
 }lv_ui;
 
 void ui_init_style(lv_style_t * style);
@@ -101,6 +109,7 @@ void setup_scr_screen_3(lv_ui *ui);
 void setup_scr_screen_4(lv_ui *ui);
 void setup_scr_screen_5(lv_ui *ui);
 void setup_scr_screen_6(lv_ui *ui);
+void setup_scr_screen_7(lv_ui *ui);
 
 LV_FONT_DECLARE(lv_font_Abel_regular_25)
 LV_FONT_DECLARE(lv_font_montserratMedium_16)
