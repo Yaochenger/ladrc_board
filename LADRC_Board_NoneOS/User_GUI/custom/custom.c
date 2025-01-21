@@ -22,7 +22,7 @@
 /*********************
  *      DEFINES
  *********************/
-#define usr_group_num 9
+#define usr_group_num 10
 #define usr_timer_num 3
 #define usr_serie_num 1
 
@@ -33,7 +33,6 @@ int8_t arc_cnt_inc(int8_t *cnt);
 int8_t arc_cnt_dec(int8_t *cnt);
 void arc_txt_set(lv_obj_t * obj, char *buffer, int8_t *cnt);
 void arc_key_val(lv_obj_t * obj, uint32_t *key, int8_t *cnt);
-static void load_screen2_4(void);
 void arc_set_txt(void);
 /**********************
  *      TYPEDEFS
@@ -45,6 +44,8 @@ static void load_screen2_ble(void);
 static void load_screen2_mpu6050(void);
 static void load_screen2_adc(void);
 static void load_screen2_motor(void);
+static void load_screen3_motor_ui(void);
+static void load_screen3_motor_ui2(void);
 
 static void usr_timer_1(lv_timer_t* timer);
 static void usr_timer_bluetooth(lv_timer_t* timer);
@@ -57,6 +58,7 @@ static lv_timer_t *gui_timer[usr_timer_num];
 
 static lv_obj_t *screen1_saved_focus_obj;
 static lv_obj_t *screen2_saved_focus_obj;
+static lv_obj_t *screen3_saved_focus_obj;
 /**********************
  *  STATIC VARIABLES
  **********************/
@@ -138,11 +140,11 @@ static void screen_third_cb(lv_event_t * e)
 
         if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item0)
         {
-            load_screen2_4();
+            load_screen3_motor_ui();
         }
         else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item1)
         {
-            load_screen_second();
+            load_screen3_motor_ui2();
         }
         else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item2)
         {
@@ -151,6 +153,38 @@ static void screen_third_cb(lv_event_t * e)
         else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item3) // Bluetoolh
         {
             load_screen_second();
+        }
+    }
+}
+
+static void screen_four_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    uint32_t key = lv_event_get_key(e);
+
+    if (key == LV_KEY_ESC) {
+        screen3_saved_focus_obj = lv_group_get_focused(gui_group[8]);
+        load_screen2_motor();
+    }
+
+    if(code == LV_EVENT_PRESSED) {
+        screen3_saved_focus_obj = lv_group_get_focused(gui_group[8]);
+
+        if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item0)
+        {
+//            load_screen3_motor_ui();
+        }
+        else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item1)
+        {
+//            load_screen3_motor_ui2();
+        }
+        else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item2)
+        {
+//            load_screen_second();
+        }
+        else if (screen2_saved_focus_obj == guider_ui.screen_7_list_1_item3) // Bluetoolh
+        {
+//            load_screen_second();
         }
     }
 }
@@ -327,7 +361,7 @@ static void load_screen2_adc(void)
     lv_scr_load(guider_ui.screen_5);
 }
 
-static void load_screen2_4(void)
+static void load_screen3_motor_ui(void)
 {
     lv_indev_set_group(indev_keypad, gui_group[6]);
     lv_group_set_default(gui_group[6]);
@@ -338,6 +372,23 @@ static void load_screen2_4(void)
     lv_group_add_obj(gui_group[6], guider_ui.screen_6_btn_4);
     lv_group_focus_obj(guider_ui.screen_6_cont_1);
     lv_scr_load(guider_ui.screen_6);
+}
+
+static void load_screen3_motor_ui2(void)
+{
+    lv_indev_set_group(indev_keypad, gui_group[8]);
+    lv_group_set_default(gui_group[8]);
+    lv_group_add_obj(gui_group[8], guider_ui.screen_8_btn_1);
+    lv_group_add_obj(gui_group[8], guider_ui.screen_8_btn_2);
+    lv_group_add_obj(gui_group[8], guider_ui.screen_8_btn_3);
+    lv_group_add_obj(gui_group[8], guider_ui.screen_8_btn_4);
+
+    if (screen3_saved_focus_obj != NULL) {
+        lv_group_focus_obj(screen3_saved_focus_obj);
+        screen3_saved_focus_obj = NULL;
+    }
+
+    lv_scr_load(guider_ui.screen_8);
 }
 
 static void load_screen2_motor(void)
@@ -425,6 +476,7 @@ void custom_init(lv_ui *ui)
     setup_scr_screen_5(ui);
     setup_scr_screen_6(ui);
     setup_scr_screen_7(ui);
+    setup_scr_screen_8(ui);
 
     for (int var = 0; var < usr_group_num; var++) {
         gui_group[var] = lv_group_create();
@@ -452,6 +504,11 @@ void custom_init(lv_ui *ui)
     lv_obj_add_event_cb(ui->screen_7_list_1_item1, screen_third_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_7_list_1_item2, screen_third_cb, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui->screen_7_list_1_item3, screen_third_cb, LV_EVENT_ALL, NULL);
+
+    lv_obj_add_event_cb(ui->screen_8_btn_1, screen_four_cb, LV_EVENT_KEY, NULL);
+    lv_obj_add_event_cb(ui->screen_8_btn_2, screen_four_cb, LV_EVENT_KEY, NULL);
+    lv_obj_add_event_cb(ui->screen_8_btn_3, screen_four_cb, LV_EVENT_KEY, NULL);
+    lv_obj_add_event_cb(ui->screen_8_btn_4, screen_four_cb, LV_EVENT_KEY, NULL);
 }
 
 int8_t arc_cnt_inc(int8_t *cnt)
