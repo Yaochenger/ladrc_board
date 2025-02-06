@@ -9,7 +9,7 @@
 #define USER_PERIPHERAL_DRIVER_MPU6050_MPU6050_DMP_DRIVER_MPU6050_DMP_H_
 
 // «∑Ò∆Ù”√DMP
-#define DMP
+// #define DMP
 
 //MPU6050µÿ÷∑
 #define MPU6050_ADDR  (0x68<<1)

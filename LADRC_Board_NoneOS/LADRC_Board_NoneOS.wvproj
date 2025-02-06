@@ -42,7 +42,8 @@
 				"excludeResources": [
 					"${project}/Board_Component/LVGL/lvgl-8.3.5/demos",
 					"${project}/Board_Component/LLGUI",
-					"${project}/Startup/startup_ch32v30x_D8.S"
+					"${project}/Startup/startup_ch32v30x_D8.S",
+					"${project}/Board_Component/MPU6050/MPU6050_DMP/eMPL"
 				],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",

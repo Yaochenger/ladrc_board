@@ -293,7 +293,7 @@
             </toolChain>
           </folderInfo>
           <sourceEntries>
-            <entry excluding="Board_Component/LVGL/lvgl-8.3.5/demos|Board_Component/LLGUI|Startup/startup_ch32v30x_D8.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+            <entry excluding="Board_Component/LVGL/lvgl-8.3.5/demos|Board_Component/LLGUI|Startup/startup_ch32v30x_D8.S|Board_Component/MPU6050/MPU6050_DMP/eMPL" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
           </sourceEntries>
         </configuration>
       </storageModule>
