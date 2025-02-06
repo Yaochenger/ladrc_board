@@ -177,7 +177,8 @@
 							"${project}/User_Peripheral_Driver/FLASH_W25Q16",
 							"${project}/User_Peripheral_Driver/Encoder_Speed",
 							"${project}/Peripheral/inc",
-							"${project}/User_GUI/ui_misc"
+							"${project}/User_GUI/ui_misc",
+							"${project}/User_Peripheral_Driver/MultiTimer"
 						],
 						"include_system_paths": [],
 						"include_files": []
@@ -672,7 +673,7 @@
 		"address": "0x08000000",
 		"target_path": "obj\\LADRC_Board_NoneOS.hex",
 		"clkSpeed": "High",
-		"debug_interface_mode": "",
+		"debug_interface_mode": "1-wire serial",
 		"erase": true,
 		"program": true,
 		"verify": false,

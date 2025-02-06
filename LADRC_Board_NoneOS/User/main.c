@@ -23,6 +23,7 @@ extern LDRC_Encoder_Handler TIMER3_MOTOR;
 extern LDRC_Encoder_Handler TIMER4_MOTOR;
 extern LDRC_Encoder_Handler TIMER5_MOTOR;
 extern LDRC_Encoder_Handler TIMER8_MOTOR;
+void MultiTimerCallback1(MultiTimer* timer, void* userData);
 
 lv_ui guider_ui;
 int main(void)
@@ -36,7 +37,14 @@ int main(void)
     userShellInit(); //letter Shell
     Lcd_Init();
     Lcd_Clear(WHITE);//clear LCD
+    TIMER6_GPIO_Init(10 - 1, 9600 - 1);
     TIMER7_GPIO_Init(10 - 1, 9600 - 1);
+
+    multiTimerInstall(getPlatformTicks);
+    MultiTimer timer1;
+
+    multiTimerStart(&timer1, 10, MultiTimerCallback1, NULL); // 1000 ms repeating
+
     lv_init();
     lv_port_disp_init();
     lv_port_indev_init();
@@ -48,19 +56,14 @@ int main(void)
 
     while(1)
     {
-#if 0
-        printf("TIME3 cnt=%d dir=%d\r\n",TIMER3_MOTOR.current_cnt, TIMER3_MOTOR.dir);
-        printf("TIME4 cnt=%d dir=%d\r\n",TIMER4_MOTOR.current_cnt, TIMER4_MOTOR.dir);
-        printf("TIME5 cnt=%d dir=%d\r\n",TIMER5_MOTOR.current_cnt, TIMER5_MOTOR.dir);
-        printf("TIME8 cnt=%d dir=%d\r\n",TIMER8_MOTOR.current_cnt, TIMER8_MOTOR.dir);
-        Delay_Ms(1000);
-#endif
-
-#if 1
-        Delay_Ms(5);
+        multiTimerYield();
         lv_timer_handler();
-#endif
     }
+}
+
+void MultiTimerCallback1(MultiTimer* timer, void* userData) {
+    printf("val:%d\n", (int)getPlatformTicks() );   
+    multiTimerStart(timer, 500, MultiTimerCallback1, NULL);
 }
 
 
