@@ -1,0 +1,16 @@
+{
+	"details": [
+		{
+			"file": "User_GUI/ui_misc/ui_timer.c",
+			"encoding": "utf8"
+		},
+		{
+			"file": "User_GUI/ui_misc/ui_page.h",
+			"encoding": "utf8"
+		},
+		{
+			"file": "User_GUI/ui_misc/ui_page.c",
+			"encoding": "utf8"
+		}
+	]
+}

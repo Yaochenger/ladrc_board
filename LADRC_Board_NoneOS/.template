@@ -9,10 +9,15 @@ Description=================Website: http://www.wch.cn/products/CH32V307.html?\n
 Mcu Type=CH32V30x
 Address=0x08000000
 Target Path=obj\LADRC_Board_NoneOS.hex
+Exe Path=
+Exe Arguments=
 CLKSpeed=1
-DebugInterfaceMode=-1
+DebugInterfaceMode=0
 Erase All=true
 Program=true
 Verify=false
 Reset=true
 SDIPrintf=false
+Disable Power Output=false
+Clear CodeFlash=false
+Disable Code-Protect=false
