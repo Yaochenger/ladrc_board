@@ -179,7 +179,8 @@
 							"${project}/Board_Component/Encoder_Speed",
 							"${project}/Peripheral/inc",
 							"${project}/Board_GUI/ui_misc",
-							"${project}/Board_Component/MultiTimer"
+							"${project}/Board_Component/MultiTimer",
+							"${project}/Board_Component/LADRC"
 						],
 						"include_system_paths": [],
 						"include_files": []
