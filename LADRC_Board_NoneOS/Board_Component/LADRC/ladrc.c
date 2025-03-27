@@ -1,8 +1,12 @@
 #include "LADRC.h"
-#include "ladrc_params.h"
+#include "LADRC_Params.h"
+
+// https://blog.csdn.net/weixin_41276397/article/details/127353049
+// https://www.zhihu.com/topic/21674178/hot?utm_id=0
+// https://zhuanlan.zhihu.com/p/671470218
 
 /**
-  * @brief ÏµÍ³ĞèÒªÕû¶¨µÄ²ÎÊı
+  * @brief å®šä¹‰å››ä¸ªLADRCç³»ç»Ÿå‚æ•°ç»“æ„ä½“å˜é‡
   */
 LADRC_NUM M1_Sysparam;
 LADRC_NUM M2_Sysparam;
@@ -10,7 +14,7 @@ LADRC_NUM M3_Sysparam;
 LADRC_NUM M4_Sysparam;
 
 /**
-  * @brief LADRC³õÊ¼²Î¿¼Öµ
+  * @brief LADRCå‚æ•°çŸ©é˜µ
   */
 const float LADRC_Unit[5][5] =
 {
@@ -22,88 +26,88 @@ const float LADRC_Unit[5][5] =
 };
 
 /**
-  * @brief LADRC³õÊ¼»¯
+  * @brief åˆå§‹åŒ–LADRCå‚æ•°
   */
-void LADRC_Init(LADRC_NUM *LADRC_TYPE1)
+void LADRC_Init(LADRC_NUM *LADRC_Para)
 {
-    LADRC_TYPE1->h = LADRC_Unit[1][0];  // ¶¨Ê±Ê±¼ä¼°Ê±¼ä²½³¤
-    LADRC_TYPE1->r = LADRC_Unit[1][1];  // ¸ú×ÙËÙ¶È²ÎÊı
-    LADRC_TYPE1->wc = LADRC_Unit[1][2]; // ¹Û²âÆ÷´ø¿í
-    LADRC_TYPE1->w0 = LADRC_Unit[1][3]; // ×´Ì¬Îó²î·´À¡ÂÊ´ø¿í
-    LADRC_TYPE1->b0 = LADRC_Unit[1][4]; // ÏµÍ³²ÎÊı
+    LADRC_Para->h = LADRC_Unit[1][0];  // é‡‡æ ·æ—¶é—´
+    LADRC_Para->r = LADRC_Unit[1][1];  // è·Ÿè¸ªå¾®åˆ†å™¨å‚æ•°
+    LADRC_Para->wc = LADRC_Unit[1][2]; // æ‰°åŠ¨è§‚æµ‹å™¨å¸¦å®½
+    LADRC_Para->w0 = LADRC_Unit[1][3]; // æ‰°åŠ¨è§‚æµ‹å™¨å¸¦å®½
+    LADRC_Para->b0 = LADRC_Unit[1][4]; // ç³»ç»Ÿå¢ç›Š
 }
 
 /**
-  * @brief LADRCÈ±Ê¡
+  * @brief é‡ç½®LADRCå‚æ•°
   */
-void LADRC_REST(LADRC_NUM *LADRC_TYPE1)
+void LADRC_REST(LADRC_NUM *LADRC_Para)
 {
-    LADRC_TYPE1->z1 = 0; // ¶¨Ê±Ê±¼ä¼°Ê±¼ä²½³¤
-    LADRC_TYPE1->z2 = 0; // ¸ú×ÙËÙ¶È²ÎÊı
-    LADRC_TYPE1->z3 = 0; // ¹Û²âÆ÷´ø¿í
+    LADRC_Para->z1 = 0; // çŠ¶æ€å˜é‡1
+    LADRC_Para->z2 = 0; // çŠ¶æ€å˜é‡2
+    LADRC_Para->z3 = 0; // çŠ¶æ€å˜é‡3
 }
 
 /**
-  * @brief LADRC¸ú×ÙÎ¢·Ö²¿·Ö
-  * @param[in] LADRC_TYPE1 Èë¿Ú²ÎÊı
-  * @param[in] Expect ÆÚÍûÖµ
+  * @brief è·Ÿè¸ªå¾®åˆ†å™¨
+  * @param[in] LADRC_Para LADRCå‚æ•°
+  * @param[in] Expect æœŸæœ›å€¼
   */
-void LADRC_TD(LADRC_NUM *LADRC_TYPE1, float Expect)
+void LADRC_TD(LADRC_NUM *LADRC_Para, float Expect)
 {
-    float fh = -LADRC_TYPE1->r * LADRC_TYPE1->r * (LADRC_TYPE1->v1 - Expect) - 2 * LADRC_TYPE1->r * LADRC_TYPE1->v2;
-    LADRC_TYPE1->v1 += LADRC_TYPE1->v2 * LADRC_TYPE1->h;
-    LADRC_TYPE1->v2 += fh * LADRC_TYPE1->h;
+    float fh = -LADRC_Para->r * LADRC_Para->r * (LADRC_Para->v1 - Expect) - 2 * LADRC_Para->r * LADRC_Para->v2;
+    LADRC_Para->v1 += LADRC_Para->v2 * LADRC_Para->h;
+    LADRC_Para->v2 += fh * LADRC_Para->h;
 }
 
 /**
-  * @brief LADRCÏßĞÔ×´Ì¬¹Û²âÆ÷
-  * @param[in] LADRC_TYPE1 Èë¿Ú²ÎÊı
-  * @param[in] FeedBack ·´À¡Öµ
+  * @brief æ‰°åŠ¨è§‚æµ‹å™¨
+  * @param[in] LADRC_Para LADRCå‚æ•°
+  * @param[in] FeedBack åé¦ˆå€¼
   */
-void LADRC_ESO(LADRC_NUM *LADRC_TYPE1, float FeedBack)
+void LADRC_ESO(LADRC_NUM *LADRC_Para, float FeedBack)
 {
-    float Beita_01 = 3 * LADRC_TYPE1->w0;
-    float Beita_02 = 3 * LADRC_TYPE1->w0 * LADRC_TYPE1->w0;
-    float Beita_03 = LADRC_TYPE1->w0 * LADRC_TYPE1->w0 * LADRC_TYPE1->w0;
+    float Beita_01 = 3 * LADRC_Para->w0;
+    float Beita_02 = 3 * LADRC_Para->w0 * LADRC_Para->w0;
+    float Beita_03 = LADRC_Para->w0 * LADRC_Para->w0 * LADRC_Para->w0;
 
-    float e = LADRC_TYPE1->z1 - FeedBack;
-    LADRC_TYPE1->z1 += (LADRC_TYPE1->z2 - Beita_01 * e) * LADRC_TYPE1->h;
-    LADRC_TYPE1->z2 += (LADRC_TYPE1->z3 - Beita_02 * e + LADRC_TYPE1->b0 * LADRC_TYPE1->u) * LADRC_TYPE1->h;
-    LADRC_TYPE1->z3 += -Beita_03 * e * LADRC_TYPE1->h;
+    float e = LADRC_Para->z1 - FeedBack;
+    LADRC_Para->z1 += (LADRC_Para->z2 - Beita_01 * e) * LADRC_Para->h;
+    LADRC_Para->z2 += (LADRC_Para->z3 - Beita_02 * e + LADRC_Para->b0 * LADRC_Para->u) * LADRC_Para->h;
+    LADRC_Para->z3 += -Beita_03 * e * LADRC_Para->h;
 }
 
 /**
-  * @brief LADRCÏßĞÔ¿ØÖÆÂÊ
+  * @brief çº¿æ€§åé¦ˆæ§åˆ¶å¾‹
   */
-void LADRC_LF(LADRC_NUM *LADRC_TYPE1)
+void LADRC_LF(LADRC_NUM *LADRC_Para)
 {
-    float Kp = LADRC_TYPE1->wc * LADRC_TYPE1->wc;
-    float Kd = 2 * LADRC_TYPE1->wc;
+    float Kp = LADRC_Para->wc * LADRC_Para->wc;
+    float Kd = 2 * LADRC_Para->wc;
     /**
-      * @brief °´×Ô¿¹ÈÅÈëÃÅÊéÉÏkd = 2wc
-      * @note  Kd=3*LADRC_TYPE1->wc;
-      * @note  Kd=2*LADRC_TYPE1->wc;
-      * @date  2022-04-27
+      * @brief çº¿æ€§åé¦ˆæ§åˆ¶å¾‹ï¼Œæ¯”ä¾‹ç³»æ•°Kpï¼Œå¾®åˆ†ç³»æ•°Kd
+      * @note  Kd=3*LADRC_Para->wc;
+      * @note  Kd=2*LADRC_Para->wc;
       */
-    float e1 = LADRC_TYPE1->v1 - LADRC_TYPE1->z1;
-    float e2 = LADRC_TYPE1->v2 - LADRC_TYPE1->z2;
+    float e1 = LADRC_Para->v1 - LADRC_Para->z1;
+    float e2 = LADRC_Para->v2 - LADRC_Para->z2;
     float u0 = Kp * e1 + Kd * e2;
-    LADRC_TYPE1->u = (u0 - LADRC_TYPE1->z3) / LADRC_TYPE1->b0;
-    if (LADRC_TYPE1->u > 2000)
-        LADRC_TYPE1->u = 2000;
-    else if (LADRC_TYPE1->u < -2000)
-        LADRC_TYPE1->u = -2000;
+    LADRC_Para->u = (u0 - LADRC_Para->z3) / LADRC_Para->b0;
+
+    if (LADRC_Para->u > RealTimeOut_Threshold)
+        LADRC_Para->u = RealTimeOut_Threshold;
+    else if (LADRC_Para->u < -RealTimeOut_Threshold)
+        LADRC_Para->u = -RealTimeOut_Threshold;
 }
 
 /**
-  * @brief LADRC¿ØÖÆº¯Êı
-  * @note ½«ÆäÖÃÓÚÈÎÎñÑ­»·ÖĞ¼´¿É
+  * @brief LADRCæ§åˆ¶å¾ªç¯
+  * @note è¯¥å‡½æ•°å®ç°äº†LADRCæ§åˆ¶çš„å®Œæ•´æµç¨‹
   */
-void LADRC_Loop(LADRC_NUM *LADRC_TYPE1, float* Expect, float* RealTimeOut)
+void LADRC_Loop(LADRC_NUM *LADRC_Para, float* Expect, float* RealTimeOut)
 {
     float Expect_Value = *Expect;
     float Measure = *RealTimeOut;
-    LADRC_TD(LADRC_TYPE1, Expect_Value);
-    LADRC_ESO(LADRC_TYPE1, Measure);
-    LADRC_LF(LADRC_TYPE1);
+    LADRC_TD(LADRC_Para, Expect_Value);
+    LADRC_ESO(LADRC_Para, Measure);
+    LADRC_LF(LADRC_Para);
 }

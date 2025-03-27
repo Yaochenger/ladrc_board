@@ -180,7 +180,8 @@
 							"${project}/Peripheral/inc",
 							"${project}/Board_GUI/ui_misc",
 							"${project}/Board_Component/MultiTimer",
-							"${project}/Board_Component/LADRC"
+							"${project}/Board_Component/LADRC",
+							"${project}/Board_Component/VOFA+"
 						],
 						"include_system_paths": [],
 						"include_files": []
