@@ -7,12 +7,10 @@
 
 #include "uart2.h"
 #include "string.h"
-#include "chry_ringbuffer.h"
 
-uint8_t USART_RX_BUF[256];
-uint8_t UsartData[256];
-int RxCounter = 0;
-int USART_RX_STA = 0;
+chry_ringbuffer_t chry_rbuffer_tid;
+static uint8_t rbuffer_pool[1024];
+static uint8_t g_recvFinshFlag = 0;
 
 void USART2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
@@ -21,6 +19,11 @@ void UART2_GPIO_Init(void)
     GPIO_InitTypeDef  GPIO_InitStructure = {0};
     USART_InitTypeDef USART_InitStructure = {0};
     NVIC_InitTypeDef  NVIC_InitStructure = {0};
+
+    if (0 == chry_ringbuffer_init(&chry_rbuffer_tid, rbuffer_pool, 1024))
+        printf("success\r\n");
+    else
+        printf("error\r\n");
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
@@ -56,22 +59,26 @@ void UART2_GPIO_Init(void)
     USART_SetAddress(USART2, 0x1);
 }
 
+uint8_t *IsUsart1RecvFinsh(void)
+{
+    return &g_recvFinshFlag;
+}
+
 void USART2_IRQHandler(void)
 {
     uint16_t Clear = Clear;
+    uint8_t res;
 
     if(USART_GetITStatus(USART2,USART_IT_RXNE)!= RESET)
     {
-        USART_RX_BUF[RxCounter++]= USART_ReceiveData(USART2);
+        res = USART_ReceiveData(USART2);
+        chry_ringbuffer_write_byte(&chry_rbuffer_tid, res);
     }
 
     else if(USART_GetITStatus(USART2, USART_IT_IDLE)!= RESET)
     {
         Clear = USART2->STATR;
         Clear = USART2->DATAR;
-//        strcpy(UsartData,USART_RX_BUF);
-//        memset(USART_RX_BUF, 0, sizeof (USART_RX_BUF));
-        RxCounter = 0;
-        USART_RX_STA = 1;
+        g_recvFinshFlag = 1;
     }
 }

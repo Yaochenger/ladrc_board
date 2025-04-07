@@ -2,6 +2,7 @@
 #include "custom.h"
 #include "mpu6050_soft.h"
 #include "adc.h"
+#include "uart2.h"
 #include "ui_misc.h"
 
 // 外部引用的UI元素和缓冲区
@@ -26,13 +27,15 @@ void usr_timer_mpu6050(lv_timer_t* timer)
     ui_misc_update_label(guider_ui.screen_4_label_4, USER_IMU_data.Yaw);
 }
 
+char rbuffer_temp[512];
 void usr_timer_bluetooth(lv_timer_t* timer)
 {
-    if (USART_RX_STA == 1)
+    if (*IsUsart1RecvFinsh())
     {
-        lv_textarea_set_text(guider_ui.screen_3_ta_1, (const char*)USART_RX_BUF);
-        memset(USART_RX_BUF, 0, sizeof(USART_RX_BUF));
-        USART_RX_STA = 0;
+        chry_ringbuffer_read(&chry_rbuffer_tid, rbuffer_temp, chry_ringbuffer_get_used(&chry_rbuffer_tid));
+        lv_textarea_set_text(guider_ui.screen_3_ta_1, (const char*)rbuffer_temp);
+        memset(rbuffer_temp, 0, sizeof(rbuffer_temp));
+        *IsUsart1RecvFinsh() = 0;
     }
 }
 
