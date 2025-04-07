@@ -32,6 +32,8 @@ extern LADRC_NUM Yaw_Sysparam;
 extern LADRC_NUM Depth_Sysparam;
 extern LADRC_NUM Pitch_Sysparam;
 
+#define RealTimeOut_Threshold 2000
+
 /**
   * @brief 以下为LADRC相关函数
   */
