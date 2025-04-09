@@ -8,6 +8,7 @@
 #include "shell.h"
 #include "mpu6050_soft.h"
 #include "mpu6050_dmp.h"
+#include "usr_printf.h"
 
 float MPU6050_Temp;
 IMU_data USER_IMU_data;
@@ -22,11 +23,14 @@ int i2c_mpu6050_soft_func(int cnt)
             MPU6050_Temp = MPU_Get_Temperature(); //得到温度值
 
             USER_GET_MPU6050_DATA(&USER_IMU_data);
+#if 0
             printf("Pitch %.1f, " , USER_IMU_data.Pitch);
             printf("Roll  %.1f, " , USER_IMU_data.Roll);
             printf("Yaw   %.1f, " , USER_IMU_data.Yaw);
             printf("Temperature:%.1f \r\n",MPU6050_Temp);
-            Delay_Ms(50);
+#endif
+            ladrc_printf(USART2, "%d,%d,%d\r\n",(int)USER_IMU_data.Pitch, (int)USER_IMU_data.Roll, (int)USER_IMU_data.Yaw);
+            Delay_Ms(100);
         }
         return 0;
     }

@@ -1,6 +1,6 @@
 #include "vofa.h"
 
-#define MAX_BUFFER_SIZE 512
+#define MAX_BUFFER_SIZE 128
 
 void send_to_vofa_fw(float *data, int num_channels)
 {
@@ -37,5 +37,5 @@ void send_to_vofa_fw(float *data, int num_channels)
         buffer[MAX_BUFFER_SIZE - 1] = '\0';
     }
 
-    printf("%s", buffer);
+    UART2_SendString(buffer);
 }

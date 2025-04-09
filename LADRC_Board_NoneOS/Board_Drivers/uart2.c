@@ -1,12 +1,11 @@
 /*
  * uart2.c
  *
- *  Created on: 2024Äê3ÔÂ15ÈÕ
+ *  Created on: 2024å¹´3æœˆ15æ—¥
  *      Author: MCU
  */
 
 #include "uart2.h"
-#include "string.h"
 
 chry_ringbuffer_t chry_rbuffer_tid;
 static uint8_t rbuffer_pool[1024];

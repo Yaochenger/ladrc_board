@@ -12,6 +12,7 @@
 #include "lvgl.h"
 #include "events_init.h"
 #include "gui_guider.h"
+#include "vofa.h"
 /*******************************************************************************
 * Function Name  : main
 * Description    : Main program.
@@ -34,6 +35,7 @@ int main(void)
     printf("SystemClk:%d\r\n",SystemCoreClock);
     EXTI0_GPIO_Init();
     LED_GPIO_Init();
+    UART2_GPIO_Init();
     userShellInit(); //letter Shell
     Lcd_Init();
     Lcd_Clear(WHITE);//clear LCD
@@ -62,7 +64,7 @@ int main(void)
 }
 
 void MultiTimerCallback1(MultiTimer* timer, void* userData) {
-    printf("val:%d\n", (int)getPlatformTicks() );   
+
     multiTimerStart(timer, 500, MultiTimerCallback1, NULL);
 }
 
