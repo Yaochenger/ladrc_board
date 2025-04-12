@@ -30,7 +30,7 @@ int i2c_mpu6050_soft_func(int cnt)
             printf("Temperature:%.1f \r\n",MPU6050_Temp);
 #endif
             ladrc_printf(USART2, "%d,%d,%d\r\n",(int)USER_IMU_data.Pitch, (int)USER_IMU_data.Roll, (int)USER_IMU_data.Yaw);
-            Delay_Ms(100);
+            Delay_Ms(200);
         }
         return 0;
     }

@@ -26,6 +26,8 @@ extern LDRC_Encoder_Handler TIMER5_MOTOR;
 extern LDRC_Encoder_Handler TIMER8_MOTOR;
 void MultiTimerCallback1(MultiTimer* timer, void* userData);
 
+extern Command extended_commands[];
+extern void parse_command(Command* commands, int cmd_count);
 lv_ui guider_ui;
 int main(void)
 {
@@ -39,6 +41,7 @@ int main(void)
     userShellInit(); //letter Shell
     Lcd_Init();
     Lcd_Clear(WHITE);//clear LCD
+
     TIMER6_GPIO_Init(10 - 1, 9600 - 1);
     TIMER7_GPIO_Init(10 - 1, 9600 - 1);
 
@@ -58,13 +61,14 @@ int main(void)
 
     while(1)
     {
+        parse_command(&extended_commands,  vofa_cmd_cnt);
         multiTimerYield();
         lv_timer_handler();
     }
 }
 
-void MultiTimerCallback1(MultiTimer* timer, void* userData) {
-
+void MultiTimerCallback1(MultiTimer* timer, void* userData)
+{
     multiTimerStart(timer, 500, MultiTimerCallback1, NULL);
 }
 

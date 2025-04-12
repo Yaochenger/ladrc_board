@@ -4,6 +4,7 @@
 #include "adc.h"
 #include "uart2.h"
 #include "ui_misc.h"
+#include "usr_printf.h"
 
 // 外部引用的UI元素和缓冲区
 extern lv_ui guider_ui;
@@ -25,9 +26,11 @@ void usr_timer_mpu6050(lv_timer_t* timer)
     ui_misc_update_label(guider_ui.screen_4_label_2, USER_IMU_data.Pitch);
     ui_misc_update_label(guider_ui.screen_4_label_3, USER_IMU_data.Roll);
     ui_misc_update_label(guider_ui.screen_4_label_4, USER_IMU_data.Yaw);
+    ladrc_printf(USART2, "%d,%d,%d\r\n",(int)USER_IMU_data.Yaw, (int)USER_IMU_data.Pitch, (int)USER_IMU_data.Roll);
+
 }
 
-char rbuffer_temp[512];
+char rbuffer_temp[32];
 void usr_timer_bluetooth(lv_timer_t* timer)
 {
     if (*IsUsart1RecvFinsh())

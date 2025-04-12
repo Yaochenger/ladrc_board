@@ -38,7 +38,7 @@ void UART2_GPIO_Init(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-    USART_InitStructure.USART_BaudRate            = 9600;
+    USART_InitStructure.USART_BaudRate            = 9600; // 板载蓝牙使用SPP透传模式 这里波特率建议《=9600
     USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
     USART_InitStructure.USART_StopBits            = USART_StopBits_1;
     USART_InitStructure.USART_Parity              = USART_Parity_No;

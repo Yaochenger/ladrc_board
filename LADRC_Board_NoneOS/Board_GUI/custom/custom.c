@@ -104,7 +104,7 @@ static void second_scr_callback (lv_event_t *e) {
         } else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item1) {
             load_screen_third (SCR_MOTOR_ID);
         } else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item2) {
-            gui_timer[0] = lv_timer_create (usr_timer_mpu6050, 5, (void *)guider_ui.screen_4_label_8);  // mpu6050
+            gui_timer[0] = lv_timer_create (usr_timer_mpu6050, 50, (void *)guider_ui.screen_4_label_8);  // mpu6050
             MPU_Init();
             MPU6050_Filter_Init (50);
             load_screen_third (SCR_MPU6050_ID);
