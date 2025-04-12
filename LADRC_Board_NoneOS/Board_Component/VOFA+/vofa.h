@@ -14,9 +14,15 @@ typedef struct{
     CommandHandler handler;
 } Command;
 
+typedef struct {
+    uint8_t state;
+    float init_val;
+    float real_val;
+    float expect_val;
+} Mode_Para;
 
 extern Command extended_commands[];
-extern uint32_t vofa_cmd_cnt;
+extern int vofa_cmd_cnt;
 
 void cmd_r_callback(const char* data);
 void cmd_h_callback(const char* data);
@@ -25,8 +31,7 @@ void cmd_wc_callback(const char* data);
 void cmd_bo_callback(const char* data);
 void cmd_init_callback(const char* data);
 void cmd_expe_callback(const char* data);
-void cmd_start_callback(const char* data);
-void cmd_stop_callback(const char* data);
+void cmd_run_callback(const char* data);
 
-void parse_command(Command* commands, int cmd_count);
+void parse_command(Command *commands, int cmd_count);
 #endif // VOFA_H

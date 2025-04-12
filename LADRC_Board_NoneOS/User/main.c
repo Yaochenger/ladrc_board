@@ -13,22 +13,20 @@
 #include "events_init.h"
 #include "gui_guider.h"
 #include "vofa.h"
+#include "LADRC.h"
 /*******************************************************************************
 * Function Name  : main
 * Description    : Main program.
 * Input          : None
 * Return         : None
 *******************************************************************************/
-uint16_t cnt= 0, dir =0;
-extern LDRC_Encoder_Handler TIMER3_MOTOR;
-extern LDRC_Encoder_Handler TIMER4_MOTOR;
-extern LDRC_Encoder_Handler TIMER5_MOTOR;
-extern LDRC_Encoder_Handler TIMER8_MOTOR;
-void MultiTimerCallback1(MultiTimer* timer, void* userData);
+void MulTimer_Simulation_Callback(MultiTimer* timer, void* userData);
 
 extern Command extended_commands[];
 extern void parse_command(Command* commands, int cmd_count);
 lv_ui guider_ui;
+static Mode_Para USR_Sim_Mode;
+static LADRC_NUM USR_Ladrc_Mode;
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -48,7 +46,7 @@ int main(void)
     multiTimerInstall(getPlatformTicks);
     MultiTimer timer1;
 
-    multiTimerStart(&timer1, 10, MultiTimerCallback1, NULL); // 1000 ms repeating
+    multiTimerStart(&timer1, 50, MulTimer_Simulation_Callback, NULL); // 50ms repeating
 
     lv_init();
     lv_port_disp_init();
@@ -59,17 +57,25 @@ int main(void)
     extern void custom_init(lv_ui *ui);
     custom_init(&guider_ui);
 
+    LADRC_Init(&USR_Ladrc_Mode);
+    USR_Sim_Mode.init_val = 0;
+    USR_Sim_Mode.real_val = 0;
+    USR_Sim_Mode.expect_val = 200;
+
     while(1)
     {
-        parse_command(&extended_commands,  vofa_cmd_cnt);
+        parse_command(extended_commands, vofa_cmd_cnt);
         multiTimerYield();
         lv_timer_handler();
     }
 }
 
-void MultiTimerCallback1(MultiTimer* timer, void* userData)
+void MulTimer_Simulation_Callback(MultiTimer* timer, void* userData)
 {
-    multiTimerStart(timer, 500, MultiTimerCallback1, NULL);
+    LADRC_Loop(&USR_Ladrc_Mode, &USR_Sim_Mode.expect_val, &USR_Sim_Mode.real_val);
+    USR_Sim_Mode.real_val = USR_Sim_Mode.init_val + USR_Ladrc_Mode.u *0.2;
+    ladrc_printf(USART2, "%f,%f,%f,%f,%f,%f\r\n",USR_Ladrc_Mode.v1, USR_Ladrc_Mode.v2,USR_Ladrc_Mode.z1, USR_Ladrc_Mode.z2, USR_Ladrc_Mode.z3,USR_Ladrc_Mode.u);
+    multiTimerStart(timer, 50, MulTimer_Simulation_Callback, NULL);
 }
 
 

@@ -1,5 +1,5 @@
-#include "LADRC.h"
-#include "LADRC_Params.h"
+#include "ladrc.h"
+#include "ladrc_params.h"
 
 // https://blog.csdn.net/weixin_41276397/article/details/127353049
 // https://www.zhihu.com/topic/21674178/hot?utm_id=0

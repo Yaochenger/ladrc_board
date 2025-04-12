@@ -19,5 +19,6 @@
 #include "lv_port_indev.h"
 #include "MultiTimer.h"
 #include "usr_printf.h"
+#include "ladrc.h"
 #include "vofa.h"
 #endif /* USER_PERIPHERAL_DRIVER_USER_PERIPHERAL_DRIVER_H_ */

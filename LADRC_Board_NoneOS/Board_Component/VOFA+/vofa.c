@@ -15,11 +15,10 @@ Command extended_commands[] = {
     {"bo", cmd_bo_callback},
     {"init", cmd_init_callback},
     {"expe", cmd_expe_callback},
-    {"start", cmd_start_callback},
-    {"stop", cmd_stop_callback},
+    {"run", cmd_run_callback},
 };
 
-uint32_t vofa_cmd_cnt = sizeof(extended_commands) / sizeof(extended_commands[0]);
+int vofa_cmd_cnt = sizeof(extended_commands) / sizeof(extended_commands[0]);
 
 void cmd_r_callback(const char* data)
 {
@@ -63,16 +62,10 @@ void cmd_expe_callback(const char* data)
     printf("expe command received, value: %d\r\n", value);
 }
 
-void cmd_start_callback(const char* data)
+void cmd_run_callback(const char* data)
 {
     int value = atoi(data);
-    printf("start command received, value: %d\r\n", value);
-}
-
-void cmd_stop_callback(const char* data)
-{
-    int value = atoi(data);
-    printf("stop command received, value: %d\r\n", value);
+    printf("run command received, value: %d\r\n", value);
 }
 
 static void process_command(const char* cmd_type, const char* cmd_data, const Command* commands, int cmd_count)
