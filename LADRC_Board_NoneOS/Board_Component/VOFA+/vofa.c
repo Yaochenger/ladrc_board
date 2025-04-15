@@ -7,6 +7,9 @@
 #define CMD_BUFFER_SIZE 32
 static char cmd_buffer[CMD_BUFFER_SIZE];
 
+extern Mode_Para USR_Sim_Mode;
+extern LADRC_NUM USR_Ladrc_Mode;
+
 Command extended_commands[] = {
     {"r", cmd_r_callback},
     {"h", cmd_h_callback},
@@ -23,49 +26,65 @@ int vofa_cmd_cnt = sizeof(extended_commands) / sizeof(extended_commands[0]);
 void cmd_r_callback(const char* data)
 {
     int value = atoi(data);
+    USR_Ladrc_Mode.r = value;
     printf("R command received, value: %d\r\n", value);
 }
 
 void cmd_h_callback(const char* data)
 {
     int value = atoi(data);
+    USR_Ladrc_Mode.h = value;
     printf("H command received, value: %d\r\n", value);
 }
 
 void cmd_wo_callback(const char* data)
 {
     int value = atoi(data);
+    USR_Ladrc_Mode.w0 = value;
     printf("W0 command received, value: %d\r\n", value);
 }
 
 void cmd_wc_callback(const char* data)
 {
     int value = atoi(data);
+    USR_Ladrc_Mode.wc = value;
     printf("Wc command received, value: %d\r\n", value);
 }
 
 void cmd_bo_callback(const char* data)
 {
     int value = atoi(data);
+    USR_Ladrc_Mode.b0 = value;
     printf("b0 command received, value: %d\r\n", value);
 }
 
 void cmd_init_callback(const char* data)
 {
     int value = atoi(data);
+    USR_Ladrc_Mode.h = value;
     printf("init command received, value: %d\r\n", value);
 }
 
 void cmd_expe_callback(const char* data)
 {
     int value = atoi(data);
+    USR_Sim_Mode.expect_val = value;
     printf("expe command received, value: %d\r\n", value);
 }
 
 void cmd_run_callback(const char* data)
 {
     int value = atoi(data);
+    USR_Sim_Mode.state = value;
     printf("run command received, value: %d\r\n", value);
+}
+
+void USR_Sim_Para_DInit(Mode_Para * Usr_Mode_Para)
+{
+    Usr_Mode_Para->state = 0;
+    Usr_Mode_Para->init_val = 0;
+    Usr_Mode_Para->expect_val = 0;
+    Usr_Mode_Para->real_val = 0;
 }
 
 static void process_command(const char* cmd_type, const char* cmd_data, const Command* commands, int cmd_count)

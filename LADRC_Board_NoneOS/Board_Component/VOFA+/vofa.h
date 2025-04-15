@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "uart2.h"
+#include "ladrc.h"
 
 #define MAX_TYPE_LEN 8
 
@@ -32,6 +33,7 @@ void cmd_bo_callback(const char* data);
 void cmd_init_callback(const char* data);
 void cmd_expe_callback(const char* data);
 void cmd_run_callback(const char* data);
+void USR_Sim_Para_DInit(Mode_Para * Usr_Mode_Para);
 
 void parse_command(Command *commands, int cmd_count);
 #endif // VOFA_H

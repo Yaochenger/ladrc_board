@@ -42,6 +42,13 @@ void LADRC_Init(LADRC_NUM *LADRC_Para)
   */
 void LADRC_REST(LADRC_NUM *LADRC_Para)
 {
+    LADRC_Para->r = 0;
+    LADRC_Para->v1 = 0;
+    LADRC_Para->v2 =0;
+    LADRC_Para->w0 = 0;
+    LADRC_Para->wc = 0;
+    LADRC_Para->b0 = 0;
+    LADRC_Para->u = 0;
     LADRC_Para->z1 = 0; // 状态变量1
     LADRC_Para->z2 = 0; // 状态变量2
     LADRC_Para->z3 = 0; // 状态变量3

@@ -21,12 +21,15 @@
 * Return         : None
 *******************************************************************************/
 void MulTimer_Simulation_Callback(MultiTimer* timer, void* userData);
+void MulTimer_Simul_TD_Callback(MultiTimer* timer, void* userData);
 
 extern Command extended_commands[];
 extern void parse_command(Command* commands, int cmd_count);
 lv_ui guider_ui;
-static Mode_Para USR_Sim_Mode;
-static LADRC_NUM USR_Ladrc_Mode;
+Mode_Para USR_Sim_Mode;
+LADRC_NUM USR_Ladrc_Mode;
+
+static MultiTimer timer2;
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -44,9 +47,7 @@ int main(void)
     TIMER7_GPIO_Init(10 - 1, 9600 - 1);
 
     multiTimerInstall(getPlatformTicks);
-    MultiTimer timer1;
-
-    multiTimerStart(&timer1, 50, MulTimer_Simulation_Callback, NULL); // 50ms repeating
+    multiTimerStart(&timer2, 50, MulTimer_Simul_TD_Callback, NULL); // 50ms repeating
 
     lv_init();
     lv_port_disp_init();
@@ -58,9 +59,8 @@ int main(void)
     custom_init(&guider_ui);
 
     LADRC_Init(&USR_Ladrc_Mode);
-    USR_Sim_Mode.init_val = 0;
-    USR_Sim_Mode.real_val = 0;
-    USR_Sim_Mode.expect_val = 200;
+    USR_Sim_Para_DInit(&USR_Sim_Mode);
+    LADRC_REST(&USR_Ladrc_Mode);
 
     while(1)
     {
@@ -70,12 +70,14 @@ int main(void)
     }
 }
 
-void MulTimer_Simulation_Callback(MultiTimer* timer, void* userData)
+void MulTimer_Simul_TD_Callback(MultiTimer* timer, void* userData)
 {
-    LADRC_Loop(&USR_Ladrc_Mode, &USR_Sim_Mode.expect_val, &USR_Sim_Mode.real_val);
-    USR_Sim_Mode.real_val = USR_Sim_Mode.init_val + USR_Ladrc_Mode.u *0.2;
-    ladrc_printf(USART2, "%f,%f,%f,%f,%f,%f\r\n",USR_Ladrc_Mode.v1, USR_Ladrc_Mode.v2,USR_Ladrc_Mode.z1, USR_Ladrc_Mode.z2, USR_Ladrc_Mode.z3,USR_Ladrc_Mode.u);
-    multiTimerStart(timer, 50, MulTimer_Simulation_Callback, NULL);
+    if (USR_Sim_Mode.state)
+    {
+        LADRC_TD(&USR_Ladrc_Mode, 500);
+        ladrc_printf(USART2, "%f,%f\r\n",USR_Ladrc_Mode.v1,
+                                         USR_Ladrc_Mode.v2);
+    }
+    multiTimerStart(timer, 50, MulTimer_Simul_TD_Callback, NULL);
 }
-
 
