@@ -21,4 +21,5 @@
 #include "usr_printf.h"
 #include "ladrc.h"
 #include "vofa.h"
+#include "simulation.h"
 #endif /* USER_PERIPHERAL_DRIVER_USER_PERIPHERAL_DRIVER_H_ */

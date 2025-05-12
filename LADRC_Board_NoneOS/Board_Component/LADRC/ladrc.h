@@ -6,11 +6,11 @@
   */
 typedef struct LADRC
 {
-    float v1, v2;         // 最速输出值
-    float r;              // 速度因子
-    float h;              // 积分步长
-    float z1, z2, z3;     // 观测器输出
-    float w0, wc, b0, u;  // 观测器带宽 控制器带宽 系统参数 控制器输出
+    double v1, v2;         // 最速输出值
+    double r;              // 速度因子
+    double h;              // 积分步长
+    double z1, z2, z3;     // 观测器输出
+    double w0, wc, b0, u;  // 观测器带宽 控制器带宽 系统参数 控制器输出
 } LADRC_NUM;
 
 /**
@@ -18,11 +18,11 @@ typedef struct LADRC
   */
 typedef struct Auto_Tuning
 {
-    float Pu; // 继电实验输出周期
-    float a;  // 继电实验输出幅值
-    float h;  // 指令输出幅值
-    float Wu; // 系统临界频率
-    float Kp; // 系统临界幅值
+    double Pu; // 继电实验输出周期
+    double a;  // 继电实验输出幅值
+    double h;  // 指令输出幅值
+    double Wu; // 系统临界频率
+    double Kp; // 系统临界幅值
 } AuTu;
 
 /**
@@ -39,9 +39,9 @@ extern LADRC_NUM Pitch_Sysparam;
   */
 void LADRC_Init(LADRC_NUM *LADRC_TYPE1);
 void LADRC_REST(LADRC_NUM *LADRC_TYPE1);
-void LADRC_TD(LADRC_NUM *LADRC_TYPE1, float Expect);
-void LADRC_ESO(LADRC_NUM *LADRC_TYPE1, float FeedBack);
+void LADRC_TD(LADRC_NUM *LADRC_TYPE1, double Expect);
+void LADRC_ESO(LADRC_NUM *LADRC_TYPE1, double FeedBack);
 void LADRC_LF(LADRC_NUM *LADRC_TYPE1);
-void LADRC_Loop(LADRC_NUM *LADRC_TYPE1, float* Expect, float* RealTimeOut);
+void LADRC_Loop(LADRC_NUM *LADRC_TYPE1, double* Expect, double* RealTimeOut);
 
 #endif

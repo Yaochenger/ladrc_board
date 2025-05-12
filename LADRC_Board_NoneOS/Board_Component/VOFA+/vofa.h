@@ -17,9 +17,10 @@ typedef struct{
 
 typedef struct {
     uint8_t state;
-    float init_val;
-    float real_val;
-    float expect_val;
+    uint8_t TD_state;
+    double init_val;
+    double real_val;
+    double expect_val;
 } Mode_Para;
 
 extern Command extended_commands[];
@@ -33,6 +34,9 @@ void cmd_bo_callback(const char* data);
 void cmd_init_callback(const char* data);
 void cmd_expe_callback(const char* data);
 void cmd_run_callback(const char* data);
+void cmd_TD_callback(const char* data);
+void cmd_res_callback(const char* data);
+
 void USR_Sim_Para_DInit(Mode_Para * Usr_Mode_Para);
 
 void parse_command(Command *commands, int cmd_count);

@@ -20,16 +20,11 @@
 * Input          : None
 * Return         : None
 *******************************************************************************/
-void MulTimer_Simulation_Callback(MultiTimer* timer, void* userData);
-void MulTimer_Simul_TD_Callback(MultiTimer* timer, void* userData);
 
 extern Command extended_commands[];
 extern void parse_command(Command* commands, int cmd_count);
 lv_ui guider_ui;
-Mode_Para USR_Sim_Mode;
-LADRC_NUM USR_Ladrc_Mode;
 
-static MultiTimer timer2;
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
@@ -47,7 +42,7 @@ int main(void)
     TIMER7_GPIO_Init(10 - 1, 9600 - 1);
 
     multiTimerInstall(getPlatformTicks);
-    multiTimerStart(&timer2, 50, MulTimer_Simul_TD_Callback, NULL); // 50ms repeating
+    Simulation_Init();
 
     lv_init();
     lv_port_disp_init();
@@ -60,7 +55,6 @@ int main(void)
 
     LADRC_Init(&USR_Ladrc_Mode);
     USR_Sim_Para_DInit(&USR_Sim_Mode);
-    LADRC_REST(&USR_Ladrc_Mode);
 
     while(1)
     {
@@ -69,15 +63,3 @@ int main(void)
         lv_timer_handler();
     }
 }
-
-void MulTimer_Simul_TD_Callback(MultiTimer* timer, void* userData)
-{
-    if (USR_Sim_Mode.state)
-    {
-        LADRC_TD(&USR_Ladrc_Mode, 500);
-        ladrc_printf(USART2, "%f,%f\r\n",USR_Ladrc_Mode.v1,
-                                         USR_Ladrc_Mode.v2);
-    }
-    multiTimerStart(timer, 50, MulTimer_Simul_TD_Callback, NULL);
-}
-
