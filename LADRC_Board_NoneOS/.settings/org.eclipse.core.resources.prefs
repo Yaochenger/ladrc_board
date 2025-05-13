@@ -1,6 +1,11 @@
 eclipse.preferences.version=1
 encoding//Board_Component/LADRC/ladrc.c=UTF-8
 encoding//Board_Component/LADRC/ladrc_params.h=UTF-8
+encoding//Board_Component/Letter_Shell/log.c=UTF-8
+encoding//Board_Component/Letter_Shell/log.h=UTF-8
+encoding//Board_Component/Letter_Shell/shell.c=UTF-8
+encoding//Board_Component/Letter_Shell/shell.h=UTF-8
+encoding//Board_Component/Letter_Shell/shell_cfg.h=UTF-8
 encoding//Board_Component/MPU6050/MPU6050_SOFT/mpu6050_soft.h=UTF-8
 encoding//Board_Component/VOFA+/vofa.c=UTF-8
 encoding//Board_Drivers/uart2.c=UTF-8

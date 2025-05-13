@@ -10,6 +10,20 @@
 Shell shell;
 char shellBuffer[512];
 
+Log uartLog = {
+    .write = uartLogWrite,
+    .active = 1,
+    .level = LOG_DEBUG
+};
+
+void uartLogWrite(char *buffer, short len)
+{
+    if (uartLog.shell)
+    {
+        shellWriteEndLine(uartLog.shell, buffer, len);
+    }
+}
+
 short userShellWrite(char *data, unsigned short len)
 {
 
@@ -40,8 +54,5 @@ void userShellInit(void)
 {
     shell.write = userShellWrite;
     shellInit(&shell, shellBuffer, 512);
+    logRegister(&uartLog, &shell);
 }
-
-
-
-

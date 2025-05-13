@@ -14,6 +14,7 @@
 #include "gui_guider.h"
 #include "vofa.h"
 #include "LADRC.h"
+#include "info.h"
 /*******************************************************************************
 * Function Name  : main
 * Description    : Main program.
@@ -30,11 +31,11 @@ int main(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     Delay_Init();
     USART_Printf_Init(115200);
-    printf("SystemClk:%d\r\n",SystemCoreClock);
     EXTI0_GPIO_Init();
     LED_GPIO_Init();
     UART2_GPIO_Init();
     userShellInit(); //letter Shell
+    board_info();
     Lcd_Init();
     Lcd_Clear(WHITE);//clear LCD
 
