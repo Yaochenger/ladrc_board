@@ -56,9 +56,12 @@ int main(void)
 
     LADRC_Init(&USR_Ladrc_Mode);
     USR_Sim_Para_DInit(&USR_Sim_Mode);
-
+    uint16_t temp;
     while(1)
     {
+        USART_SendData(USART2, 'a');
+        temp = USART_ReceiveData(USART2);
+        printf("data:%c\r\n", temp);
         parse_command(extended_commands, vofa_cmd_cnt);
         multiTimerYield();
 //        lv_timer_handler();

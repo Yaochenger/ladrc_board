@@ -23,6 +23,7 @@ void UART2_GPIO_Init(void)
         printf("\rsuccess\r\n");
     else
         printf("error\r\n");
+    USART_DeInit(USART2);
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
