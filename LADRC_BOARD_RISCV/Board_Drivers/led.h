@@ -7,7 +7,7 @@
 
 #ifndef USER_DRIVERS_LED_H_
 #define USER_DRIVERS_LED_H_
-#include "ch32v30x.h"
+#include "drv_config.h"
 
 void LED_GPIO_Init(void);
 void LED_GPIO_Sample(void);

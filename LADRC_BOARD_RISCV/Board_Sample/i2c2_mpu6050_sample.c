@@ -5,10 +5,8 @@
  *      Author: MCU
  */
 
-#include "shell.h"
-#include "mpu6050_soft.h"
-#include "mpu6050_dmp.h"
-#include "usr_printf.h"
+#include "drv_config.h"
+#include "user_peripheral_driver.h"
 
 float MPU6050_Temp;
 IMU_data USER_IMU_data;

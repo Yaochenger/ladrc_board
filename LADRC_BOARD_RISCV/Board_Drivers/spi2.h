@@ -7,8 +7,7 @@
 
 #ifndef USER_DRIVERS_SPI2_H_
 #define USER_DRIVERS_SPI2_H_
-
-#include "ch32v30x.h"
+#include "drv_config.h"
 
 void SPI2_GPIO_Init(void);
 u8 SPI2_ReadWriteByte(u8 TxData);

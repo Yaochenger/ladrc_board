@@ -4,9 +4,9 @@
  *  Created on: 2024Äê6ÔÂ22ÈÕ
  *      Author: MCU
  */
-#include "shell.h"
-#include "tft_st7735s.h"
-#include "debug.h"
+#include "drv_config.h"
+#include "user_peripheral_driver.h"
+
 void Gui_Circle(u16 X, u16 Y, u16 R, u16 fc);
 void Gui_DrawFont_GBK16(u16 x, u16 y, u16 fc, u16 bc, u8 *s);
 

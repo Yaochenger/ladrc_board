@@ -4,8 +4,8 @@
  *  Created on: 2024Äê6ÔÂ18ÈÕ
  *      Author: MCU
  */
-#include "shell.h"
-#include "adc.h"
+#include "drv_config.h"
+#include "user_peripheral_driver.h"
 
 int adc_func(int cnt)
  {

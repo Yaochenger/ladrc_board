@@ -7,7 +7,7 @@
 
 #ifndef USER_DRIVERS_ADC_H_
 #define USER_DRIVERS_ADC_H_
-#include "ch32v30x.h"
+#include "drv_config.h"
 
 void ADC_GPIO_Init(void);
 u16 Get_ADC_Val(u8 ch);

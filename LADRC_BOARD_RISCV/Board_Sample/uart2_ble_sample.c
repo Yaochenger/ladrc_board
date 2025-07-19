@@ -5,8 +5,8 @@
  *      Author: MCU
  */
 
-#include "shell.h"
-#include "uart2.h"
+#include "drv_config.h"
+#include "user_peripheral_driver.h"
 
 int uart2_ble_func(int para) {
 

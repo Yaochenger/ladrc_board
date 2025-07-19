@@ -7,8 +7,7 @@
 
 #ifndef USER_DRIVERS_TIMER6_H_
 #define USER_DRIVERS_TIMER6_H_
-#include "ch32v30x.h"
-
+#include "drv_config.h"
 
 void TIMER6_GPIO_Init(u16 arr,u16 psc);
 #endif /* USER_DRIVERS_TIMER6_H_ */

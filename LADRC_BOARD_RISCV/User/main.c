@@ -7,7 +7,7 @@
 *******************************************************************************/
 
 #include "debug.h"
-#include "board_config.h"
+#include "drv_config.h"
 #include "user_peripheral_driver.h"
 #include "lvgl.h"
 #include "events_init.h"

@@ -2,7 +2,7 @@
 #define SIMULATION_H
 
 #include "debug.h"
-#include "board_config.h"
+#include "drv_config.h"
 #include "user_peripheral_driver.h"
 #include "vofa.h"
 #include "LADRC.h"

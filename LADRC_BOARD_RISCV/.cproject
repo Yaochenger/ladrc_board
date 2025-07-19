@@ -299,7 +299,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Board_Component/OLED_SPI|Board_GUI|Startup/startup_ch32v30x_D8.S|Board_Component/LLGUI|Board_Component/LVGL/lvgl-8.3.5/demos|Board_Component/MPU6050/MPU6050_DMP/eMPL" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Board_Component/OLED_SPI|Startup/startup_ch32v30x_D8.S|Board_Component/LLGUI|Board_Component/LVGL/lvgl-8.3.5/demos|Board_Component/MPU6050/MPU6050_DMP/eMPL" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -617,5 +617,12 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="obj">
+			<resource resourceType="PROJECT" workspacePath="/LADRC_BOARD_RISCV"/>
+		</configuration>
+		<configuration configurationName="dbg">
+			<resource resourceType="PROJECT" workspacePath="/LADRC_BOARD_RISCV"/>
+		</configuration>
+	</storageModule>
 </cproject>

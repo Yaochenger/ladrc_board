@@ -8,7 +8,7 @@
 #include "log.h"
 #include "info.h"
 #include "debug.h"
-#include "board_config.h"
+#include "drv_config.h"
 
 void board_info(void)
 {

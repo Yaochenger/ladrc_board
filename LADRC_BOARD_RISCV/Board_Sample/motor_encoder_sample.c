@@ -5,14 +5,8 @@
  *      Author: MCU
  */
 
-#include "shell.h"
-#include "timer2.h"
-#include "timer3.h"
-#include "timer4.h"
-#include "timer5.h"
-#include "timer8.h"
-#include "timer9.h"
-#include "encoder_speed.h"
+#include "drv_config.h"
+#include "user_peripheral_driver.h"
 
 void TIMERX_MOTOR_Dir_GPIO_Init(void);
 

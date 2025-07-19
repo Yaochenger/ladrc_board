@@ -5,8 +5,8 @@
  *      Author: MCU
  */
 
-#include "shell.h"
-#include "uart6.h"
+#include "drv_config.h"
+#include "user_peripheral_driver.h"
 
 int uart6_rs485_func(int para) {
 

@@ -7,7 +7,7 @@
 
 #ifndef USER_DRIVERS_UART4_H_
 #define USER_DRIVERS_UART4_H_
-#include "ch32v30x.h"
+#include "drv_config.h"
 
 void UART4_GPIO_Init(void);
 #endif /* USER_DRIVERS_UART4_H_ */

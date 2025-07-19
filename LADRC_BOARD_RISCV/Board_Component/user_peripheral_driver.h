@@ -23,4 +23,7 @@
 #include "vofa.h"
 #include "simulation.h"
 #include "log.h"
+#include "LL_Gui.h"
+#include "ui_guiLogic.h"
+
 #endif /* USER_PERIPHERAL_DRIVER_USER_PERIPHERAL_DRIVER_H_ */

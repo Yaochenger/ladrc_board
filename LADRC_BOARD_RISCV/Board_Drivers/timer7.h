@@ -7,8 +7,7 @@
 
 #ifndef USER_DRIVERS_TIMER7_H_
 #define USER_DRIVERS_TIMER7_H_
-#include "ch32v30x.h"
-
+#include "drv_config.h"
 
 void TIMER7_GPIO_Init(u16 arr,u16 psc);
 #endif /* USER_DRIVERS_TIMER7_H_ */

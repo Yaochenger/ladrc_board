@@ -5,7 +5,6 @@
  *      Author: MCU
  */
 #include "timer2.h"
-#include "board_config.h"
 
 void TIMER2_GPIO_Init(u16 arr,u16 psc)
 {

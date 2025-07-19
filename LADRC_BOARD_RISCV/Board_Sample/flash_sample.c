@@ -5,8 +5,8 @@
  *      Author: MCU
  */
 
-#include "shell.h"
-#include "flash_w25q16.h"
+#include "drv_config.h"
+#include "user_peripheral_driver.h"
 
 const u8 TEXT_Buf[] = {"LADRC BOARD SPI FLASH W25Qxx"};
 #define SIZE    sizeof(TEXT_Buf)

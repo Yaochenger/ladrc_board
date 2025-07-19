@@ -6,7 +6,6 @@
  */
 
 #include "timer5.h"
-#include "drv_def.h"
 
 LDRC_Encoder_Handler TIMER5_MOTOR;
 

@@ -7,7 +7,7 @@
 
 #ifndef USER_DRIVERS_TIMER9_H_
 #define USER_DRIVERS_TIMER9_H_
-#include "ch32v30x.h"
+#include "drv_config.h"
 
 /* PWM Output Mode Definition */
 #define PWM_MODE1   0
