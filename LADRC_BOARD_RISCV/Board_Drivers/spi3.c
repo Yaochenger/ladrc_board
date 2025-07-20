@@ -4,6 +4,7 @@
 
 u8 Usr_TxData[1] = {0};
 
+static void DMA_Tx_Init(DMA_Channel_TypeDef *DMA_CHx, u32 ppadr, u32 memadr, u16 bufsize);
 void SPI3_GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -43,18 +44,7 @@ void SPI3_GPIO_Init(void)
     GPIO_Init(GPIOD, &GPIO_InitStructure);
 }
 
-u8 SPI3_ReadWriteByte(u8 TxData)
-{
-    Usr_TxData[0] = TxData;
-    DMA2_Channel2->CNTR = 1;
-    DMA_Cmd(DMA2_Channel2, ENABLE);
-    while (DMA_GetFlagStatus(DMA2_FLAG_TC2) == RESET);
-    DMA_Cmd(DMA2_Channel2, DISABLE);
-    DMA_ClearFlag(DMA2_FLAG_TC2);
-    return 0;
-}
-
-void DMA_Tx_Init(DMA_Channel_TypeDef *DMA_CHx, u32 ppadr, u32 memadr, u16 bufsize)
+static void DMA_Tx_Init(DMA_Channel_TypeDef *DMA_CHx, u32 ppadr, u32 memadr, u16 bufsize)
 {
     DMA_InitTypeDef DMA_InitStructure = {0};
 
@@ -75,6 +65,17 @@ void DMA_Tx_Init(DMA_Channel_TypeDef *DMA_CHx, u32 ppadr, u32 memadr, u16 bufsiz
     DMA_Init(DMA_CHx, &DMA_InitStructure);
 
     DMA_ClearFlag(DMA2_FLAG_TC2);
+}
+
+u8 SPI3_ReadWriteByte(u8 TxData)
+{
+    Usr_TxData[0] = TxData;
+    DMA2_Channel2->CNTR = 1;
+    DMA_Cmd(DMA2_Channel2, ENABLE);
+    while (DMA_GetFlagStatus(DMA2_FLAG_TC2) == RESET);
+    DMA_Cmd(DMA2_Channel2, DISABLE);
+    DMA_ClearFlag(DMA2_FLAG_TC2);
+    return 0;
 }
 
 #endif // LDARC_DEVICE_SPI3
