@@ -1,11 +1,5 @@
-/*
- * timer5.c
- *
- *  Created on: 2024Äê3ÔÂ23ÈÕ
- *      Author: MCU
- */
-
 #include "timer5.h"
+#ifdef LDARC_DEVICE_TIM5
 
 void TIMER5_ENCODER_GPIO_Init(void)
 {
@@ -42,3 +36,4 @@ void TIMER5_ENCODER_GPIO_Init(void)
     TIM_SetCounter(TIM5, 0);
     TIM_Cmd(TIM5, ENABLE);
 }
+#endif /* LDARC_DEVICE_TIM5 */

@@ -1,14 +1,8 @@
-/*
- * board_config.h
- *
- *  Created on: 2024Äê3ÔÂ10ÈÕ
- *      Author: MCU
- */
-
 #ifndef USER_DRIVERS_BOARD_CONFIG_H_
 #define USER_DRIVERS_BOARD_CONFIG_H_
 
 #include "ch32v30x.h"
+#include "board_config.h"
 #include "adc.h"
 #include "i2c2.h"
 #include "key.h"

@@ -1,11 +1,6 @@
-/*
- * timer2.c
- *
- *  Created on: 2024Äê9ÔÂ11ÈÕ
- *      Author: MCU
- */
 #include "timer2.h"
 
+#ifdef LDARC_DEVICE_TIM2
 void TIMER2_GPIO_Init(u16 arr,u16 psc)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
@@ -41,3 +36,4 @@ void TIM2_IRQHandler(void)
     }
     TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 }
+#endif /* LDARC_DEVICE_TIM2 */

@@ -1,10 +1,5 @@
-/*
- * timer7.c
- *
- *  Created on: 2024年3月25日
- *      Author: MCU
- */
 #include "timer7.h"
+#ifdef LDARC_DEVICE_TIM7
 
 void TIMER7_GPIO_Init(u16 arr,u16 psc)
 {
@@ -29,3 +24,4 @@ void TIMER7_GPIO_Init(u16 arr,u16 psc)
 
     TIM_Cmd(TIM7, ENABLE);                                      //TIM7使能
 }
+#endif /* LDARC_DEVICE_TIM7 */

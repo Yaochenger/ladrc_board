@@ -5,8 +5,8 @@
  *      Author: MCU
  */
 
+#include <board_info.h>
 #include "log.h"
-#include "info.h"
 #include "debug.h"
 #include "drv_config.h"
 

@@ -6,6 +6,7 @@
 * Description        : Main program body.
 *******************************************************************************/
 
+#include <board_info.h>
 #include "debug.h"
 #include "drv_config.h"
 #include "user_peripheral_driver.h"
@@ -14,7 +15,6 @@
 #include "gui_guider.h"
 #include "vofa.h"
 #include "LADRC.h"
-#include "info.h"
 /*******************************************************************************
 * Function Name  : main
 * Description    : Main program.
@@ -34,10 +34,10 @@ int main(void)
     EXTI0_GPIO_Init();
     LED_GPIO_Init();
     UART2_GPIO_Init();
-    userShellInit(); //letter Shell
+    userShellInit();
     board_info();
     Lcd_Init();
-    Lcd_Clear(WHITE);//clear LCD
+    Lcd_Clear(WHITE);
 
     TIMER6_GPIO_Init(10 - 1, 9600 - 1);
     TIMER7_GPIO_Init(10 - 1, 9600 - 1);
@@ -59,8 +59,8 @@ int main(void)
 
     while(1)
     {
-        parse_command(extended_commands, vofa_cmd_cnt);
-        multiTimerYield();
+//        parse_command(extended_commands, vofa_cmd_cnt);
+//        multiTimerYield();
         lv_timer_handler();
     }
 }

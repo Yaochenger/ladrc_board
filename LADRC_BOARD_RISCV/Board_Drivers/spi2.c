@@ -1,12 +1,6 @@
-/*
- * spi2.c
- *
- *  Created on: 2024年3月21日
- *      Author: MCU
- */
-
 #include "spi2.h"
 
+#ifdef LDARC_DEVICE_SPI2
 void SPI2_GPIO_Init(void) {
     GPIO_InitTypeDef GPIO_InitStructure = { 0 };
     SPI_InitTypeDef SPI_InitStructure = { 0 };
@@ -80,3 +74,4 @@ u8 SPI2_ReadWriteByte(u8 TxData)
 
     return SPI_I2S_ReceiveData(SPI2); // 接受缓存区非空 接收数据
 }
+#endif /* LDARC_DEVICE_SPI2 */ 

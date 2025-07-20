@@ -1,10 +1,5 @@
-/*
- * timer8.c
- *
- *  Created on: 2024Äê3ÔÂ23ÈÕ
- *      Author: MCU
- */
 #include "timer8.h"
+#ifdef LDARC_DEVICE_TIM8
 
 void TIMER8_ENCODER_GPIO_Init(void)
 {
@@ -38,3 +33,4 @@ void TIMER8_ENCODER_GPIO_Init(void)
     TIM_SetCounter(TIM8, 0);
     TIM_Cmd(TIM8, ENABLE);
 }
+#endif /* LDARC_DEVICE_TIM8 */

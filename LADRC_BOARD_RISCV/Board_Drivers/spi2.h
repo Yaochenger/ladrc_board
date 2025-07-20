@@ -1,10 +1,3 @@
-/*
- * spi2.h
- *
- *  Created on: 2024Äê3ÔÂ21ÈÕ
- *      Author: MCU
- */
-
 #ifndef USER_DRIVERS_SPI2_H_
 #define USER_DRIVERS_SPI2_H_
 #include "drv_config.h"

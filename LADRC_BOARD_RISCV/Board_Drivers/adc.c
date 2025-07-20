@@ -1,10 +1,5 @@
-/*
- * adc.c
- *
- *  Created on: 2024年6月18日
- *      Author: MCU
- */
 #include "adc.h"
+#ifdef LDARC_DEVICE_ADC
 
 void ADC_GPIO_Init(void)
 {
@@ -63,3 +58,4 @@ u16 Get_ConversionVal(s16 val)
     if((Calibrattion_Val+val)>4095||val==4095) return 4095;
     return (val+Calibrattion_Val); // 校准
 }
+#endif /* LDARC_DEVICE_ADC */

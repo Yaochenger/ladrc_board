@@ -1,11 +1,5 @@
-/*
- * uart4.c
- *
- *  Created on: 2024Äê3ÔÂ22ÈÕ
- *      Author: MCU
- */
-
 #include "uart4.h"
+#ifdef LDARC_DEVICE_UART4
 
 void UART4_GPIO_Init(void)
 {
@@ -36,3 +30,4 @@ void UART4_GPIO_Init(void)
     USART_Init(UART4, &USART_InitStructure);
     USART_Cmd(UART4, ENABLE);
 }
+#endif /* LDARC_DEVICE_UART4 */

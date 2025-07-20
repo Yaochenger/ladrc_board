@@ -1,11 +1,5 @@
-/*
- * uart2.c
- *
- *  Created on: 2024年3月15日
- *      Author: MCU
- */
-
 #include "uart2.h"
+#ifdef LDARC_DEVICE_UART2
 
 chry_ringbuffer_t chry_rbuffer_tid;
 static uint8_t rbuffer_pool[1024];
@@ -81,3 +75,4 @@ void USART2_IRQHandler(void)
         g_recvFinshFlag = 1;
     }
 }
+#endif /* LDARC_DEVICE_UART2 */

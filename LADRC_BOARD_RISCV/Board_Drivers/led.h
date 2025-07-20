@@ -1,10 +1,3 @@
-/*
- * led.h
- *
- *  Created on: 2024Äê3ÔÂ10ÈÕ
- *      Author: MCU
- */
-
 #ifndef USER_DRIVERS_LED_H_
 #define USER_DRIVERS_LED_H_
 #include "drv_config.h"

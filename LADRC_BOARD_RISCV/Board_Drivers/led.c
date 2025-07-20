@@ -1,12 +1,5 @@
-/*
- * led.c
- *
- *  Created on: 2024Äê3ÔÂ10ÈÕ
- *      Author: MCU
- */
-
 #include "led.h"
-
+#ifdef LDARC_DEVICE_LED
 void LED_GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = { 0 };
@@ -27,3 +20,4 @@ void LED_GPIO_Sample(void)
     GPIO_ResetBits(GPIOD, GPIO_Pin_8);
     GPIO_ResetBits(GPIOD, GPIO_Pin_10);
 }
+#endif /* LDARC_DEVICE_LED */

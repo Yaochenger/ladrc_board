@@ -1,10 +1,3 @@
-/*
- * uart8.h
- *
- *  Created on: 2024Äê3ÔÂ11ÈÕ
- *      Author: MCU
- */
-
 #ifndef USER_DRIVERS_UART7_H_
 #define USER_DRIVERS_UART7_H_
 #include "drv_config.h"

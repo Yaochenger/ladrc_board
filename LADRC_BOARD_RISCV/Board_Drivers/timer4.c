@@ -1,11 +1,5 @@
-/*
- * timer4.c
- *
- *  Created on: 2024Äê3ÔÂ23ÈÕ
- *      Author: MCU
- */
-
 #include "timer4.h"
+#ifdef LDARC_DEVICE_TIM4
 
 void TIMER4_ENCODER_GPIO_Init(void)
 {
@@ -42,3 +36,4 @@ void TIMER4_ENCODER_GPIO_Init(void)
     TIM_SetCounter(TIM4, 0);
     TIM_Cmd(TIM4, ENABLE);
 }
+#endif /* LDARC_DEVICE_TIM4 */

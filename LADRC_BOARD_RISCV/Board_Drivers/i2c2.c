@@ -1,12 +1,7 @@
-/*
- * i2c2.c
- *
- *  Created on: 2024Äê4ÔÂ8ÈÕ
- *      Author: MCU
- */
 
 #include "i2c2.h"
 
+#ifdef LDARC_DEVICE_I2C2
 void I2C2_GPIO_Init(u32 bound, u16 address) // 400 000  0x68
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
@@ -33,3 +28,4 @@ void I2C2_GPIO_Init(u32 bound, u16 address) // 400 000  0x68
 
     Delay_Ms(50);
 }
+#endif /* LDARC_DEVICE_I2C2 */

@@ -1,10 +1,3 @@
-/*
- * timer3.h
- *
- *  Created on: 2024Äê3ÔÂ23ÈÕ
- *      Author: MCU
- */
-
 #ifndef USER_DRIVERS_TIMER3_H_
 #define USER_DRIVERS_TIMER3_H_
 #include "drv_config.h"

@@ -1,11 +1,5 @@
-/*
- * key.c
- *
- *  Created on: 2024年4月3日
- *      Author: MCU
- */
-
 #include "key.h"
+#ifdef LDARC_DEVICE_KEY
 
 void EXTI0_GPIO_Init(void)
 {
@@ -17,3 +11,4 @@ void EXTI0_GPIO_Init(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;              //配置GPIO上拉输入模式
   GPIO_Init(GPIOD, &GPIO_InitStructure);                     //初始化GPIOA
 }
+#endif /* LDARC_DEVICE_KEY */

@@ -1,11 +1,5 @@
-/*
- * time6.c
- *
- *  Created on: 2024年3月25日
- *      Author: MCU
- */
-
 #include "timer6.h"
+#ifdef LDARC_DEVICE_TIM6
 
 void TIMER6_GPIO_Init(u16 arr,u16 psc)
 {
@@ -30,3 +24,4 @@ void TIMER6_GPIO_Init(u16 arr,u16 psc)
 
     TIM_Cmd(TIM6, ENABLE);                                      //TIM6使能
 }
+#endif /* LDARC_DEVICE_TIM6 */  

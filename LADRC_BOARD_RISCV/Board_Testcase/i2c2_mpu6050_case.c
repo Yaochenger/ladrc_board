@@ -21,13 +21,13 @@ int i2c_mpu6050_soft_func(int cnt)
             MPU6050_Temp = MPU_Get_Temperature(); //得到温度值
 
             USER_GET_MPU6050_DATA(&USER_IMU_data);
-#if 0
+#if 1
             printf("Pitch %.1f, " , USER_IMU_data.Pitch);
             printf("Roll  %.1f, " , USER_IMU_data.Roll);
             printf("Yaw   %.1f, " , USER_IMU_data.Yaw);
             printf("Temperature:%.1f \r\n",MPU6050_Temp);
 #endif
-            ladrc_printf(USART2, "%d,%d,%d\r\n",(int)USER_IMU_data.Pitch, (int)USER_IMU_data.Roll, (int)USER_IMU_data.Yaw);
+            // ladrc_printf(USART2, "%d,%d,%d\r\n",(int)USER_IMU_data.Pitch, (int)USER_IMU_data.Roll, (int)USER_IMU_data.Yaw);
             Delay_Ms(200);
         }
         return 0;

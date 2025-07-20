@@ -1,11 +1,5 @@
-/*
- * spi3.c
- *
- *  Created on: 2024Äê3ÔÂ16ÈÕ
- *      Author: MCU
- */
-
 #include "spi3.h"
+#ifdef LDARC_DEVICE_SPI3
 
 u8 Usr_TxData[1] = {0};
 
@@ -82,3 +76,4 @@ void DMA_Tx_Init(DMA_Channel_TypeDef *DMA_CHx, u32 ppadr, u32 memadr, u16 bufsiz
 
     DMA_ClearFlag(DMA2_FLAG_TC2);
 }
+#endif /* LDARC_DEVICE_SPI3 */

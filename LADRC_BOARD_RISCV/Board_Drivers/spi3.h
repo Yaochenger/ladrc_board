@@ -1,10 +1,3 @@
-/*
- * spi3.h
- *
- *  Created on: 2024Äê3ÔÂ16ÈÕ
- *      Author: MCU
- */
-
 #ifndef USER_DRIVERS_SPI3_H_
 #define USER_DRIVERS_SPI3_H_
 #include "drv_config.h"

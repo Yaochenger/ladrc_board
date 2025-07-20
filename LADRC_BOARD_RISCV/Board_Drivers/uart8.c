@@ -1,14 +1,8 @@
-/*
- * uart8.c
- *
- *  Created on: 2024Äê3ÔÂ13ÈÕ
- *      Author: MCU
- */
-
-
 #include <uart8.h>
+#ifdef LDARC_DEVICE_UART8
 
-void UART8_GPIO_Init(void) {
+void UART8_GPIO_Init(void)
+{
     GPIO_InitTypeDef GPIO_InitStructure = { 0 };
     USART_InitTypeDef USART_InitStructure = { 0 };
 
@@ -37,4 +31,4 @@ void UART8_GPIO_Init(void) {
     USART_Init(UART8, &USART_InitStructure);
     USART_Cmd(UART8, ENABLE);
 }
-
+#endif /* LDARC_DEVICE_UART8 */

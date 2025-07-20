@@ -1,10 +1,3 @@
-/*
- * key.h
- *
- *  Created on: 2024Äê4ÔÂ3ÈÕ
- *      Author: MCU
- */
-
 #ifndef USER_DRIVERS_KEY_H_
 #define USER_DRIVERS_KEY_H_
 #include "drv_config.h"

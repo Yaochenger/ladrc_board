@@ -1,10 +1,3 @@
-/*
- * timer9.h
- *
- *  Created on: 2024Äê3ÔÂ23ÈÕ
- *      Author: MCU
- */
-
 #ifndef USER_DRIVERS_TIMER9_H_
 #define USER_DRIVERS_TIMER9_H_
 #include "drv_config.h"

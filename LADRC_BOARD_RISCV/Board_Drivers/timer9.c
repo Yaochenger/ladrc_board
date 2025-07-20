@@ -1,11 +1,5 @@
-/*
- * timer9.c
- *
- *  Created on: 2024Äê3ÔÂ23ÈÕ
- *      Author: MCU
- */
-
 #include "timer9.h"
+#ifdef LDARC_DEVICE_TIM9
 
 void TIMER9_PWM_GPIO_Init(u16 arr, u32 psc, u16 ccp)
 {
@@ -62,3 +56,4 @@ void TIMER9_PWM_GPIO_Init(u16 arr, u32 psc, u16 ccp)
     TIM_ARRPreloadConfig( TIM9, ENABLE);
     TIM_Cmd( TIM9, ENABLE);
 }
+#endif /* LDARC_DEVICE_TIM9 */
