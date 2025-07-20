@@ -34,20 +34,9 @@ void TIM2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void TIM2_IRQHandler(void)
 {
     if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
-        TIMER3_MOTOR.dir = TIMER3_ENCODER_COUNTING_DIR();
-        TIMER3_MOTOR.current_cnt = (int16_t) TIM_GetCounter(TIM3);
         TIM_SetCounter(TIM3, 0);
-
-        TIMER4_MOTOR.dir = TIMER4_ENCODER_COUNTING_DIR();
-        TIMER4_MOTOR.current_cnt = (int16_t) TIM_GetCounter(TIM4);
         TIM_SetCounter(TIM4, 0);
-
-        TIMER5_MOTOR.dir = TIMER5_ENCODER_COUNTING_DIR();
-        TIMER5_MOTOR.current_cnt = (int16_t) TIM_GetCounter(TIM5);
         TIM_SetCounter(TIM5, 0);
-
-        TIMER8_MOTOR.dir = TIMER8_ENCODER_COUNTING_DIR();
-        TIMER8_MOTOR.current_cnt = (int16_t) TIM_GetCounter(TIM8);
         TIM_SetCounter(TIM8, 0);
     }
     TIM_ClearITPendingBit(TIM2, TIM_IT_Update);

@@ -9,7 +9,6 @@
 #define USER_DRIVERS_TIMER4_H_
 #include "drv_config.h"
 
-extern LDRC_Encoder_Handler TIMER4_MOTOR;
 #define TIMER4_ENCODER_COUNTING_DIR()    (((TIM4->CTLR1)&TIM_DIR) == (TIM_DIR))
 void TIMER4_ENCODER_GPIO_Init(void);
 #endif /* USER_DRIVERS_TIMER4_H_ */

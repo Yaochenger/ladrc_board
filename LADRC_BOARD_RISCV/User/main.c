@@ -49,18 +49,18 @@ int main(void)
     lv_port_disp_init();
     lv_port_indev_init();
 
-//    setup_ui(&guider_ui);
-//    events_init(&guider_ui);
-//    extern void custom_init(lv_ui *ui);
-//    custom_init(&guider_ui);
+    setup_ui(&guider_ui);
+    events_init(&guider_ui);
+    extern void custom_init(lv_ui *ui);
+    custom_init(&guider_ui);
 
     LADRC_Init(&USR_Ladrc_Mode);
     USR_Sim_Para_DInit(&USR_Sim_Mode);
 
     while(1)
     {
-//        parse_command(extended_commands, vofa_cmd_cnt);
+        parse_command(extended_commands, vofa_cmd_cnt);
         multiTimerYield();
-//        lv_timer_handler();
+        lv_timer_handler();
     }
 }

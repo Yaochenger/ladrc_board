@@ -6,8 +6,6 @@
  */
 #include "timer8.h"
 
-LDRC_Encoder_Handler TIMER8_MOTOR;
-
 void TIMER8_ENCODER_GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;

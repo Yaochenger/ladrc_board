@@ -7,8 +7,6 @@
 
 #include "timer4.h"
 
-LDRC_Encoder_Handler TIMER4_MOTOR;
-
 void TIMER4_ENCODER_GPIO_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -43,6 +41,4 @@ void TIMER4_ENCODER_GPIO_Init(void)
 
     TIM_SetCounter(TIM4, 0);
     TIM_Cmd(TIM4, ENABLE);
-
-    Encoder_TCB_Init(&TIMER4_MOTOR);
 }
