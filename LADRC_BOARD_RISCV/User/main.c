@@ -59,8 +59,8 @@ int main(void)
 
     while(1)
     {
-//        parse_command(extended_commands, vofa_cmd_cnt);
-//        multiTimerYield();
+        parse_command(extended_commands, vofa_cmd_cnt);
+        multiTimerYield();
         lv_timer_handler();
     }
 }

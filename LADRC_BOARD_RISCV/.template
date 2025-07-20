@@ -1,0 +1,18 @@
+Vendor=WCH
+Toolchain=RISC-V
+Series=CH32L103
+RTOS=NoneOS
+MCU=CH32V307VCT6
+Link=WCH-Link
+PeripheralVersion===1.0
+Description===
+Mcu Type=CH32V30x
+Address=0x08000000
+Target Path=obj\LADRC_BOARD_RISCV.hex
+CLKSpeed=1
+DebugInterfaceMode=-1
+Erase All=true
+Program=true
+Verify=true
+Reset=true
+SDIPrintf=false
