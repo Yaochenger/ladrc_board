@@ -3,4 +3,4 @@
 #include "drv_config.h"
 
 void EXTI0_GPIO_Init(void);
-#endif /* USER_DRIVERS_KEY_H_ */
+#endif

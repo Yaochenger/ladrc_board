@@ -1,9 +1,10 @@
+
 #include "uart4.h"
 #ifdef LDARC_DEVICE_UART4
 
 void UART4_GPIO_Init(void)
 {
-    GPIO_InitTypeDef  GPIO_InitStructure = {0};
+    GPIO_InitTypeDef GPIO_InitStructure = {0};
     USART_InitTypeDef USART_InitStructure = {0};
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
@@ -16,6 +17,7 @@ void UART4_GPIO_Init(void)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_Init(GPIOB, &GPIO_InitStructure);
+
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOB, &GPIO_InitStructure);
@@ -30,4 +32,5 @@ void UART4_GPIO_Init(void)
     USART_Init(UART4, &USART_InitStructure);
     USART_Cmd(UART4, ENABLE);
 }
-#endif /* LDARC_DEVICE_UART4 */
+
+#endif // LDARC_DEVICE_UART4

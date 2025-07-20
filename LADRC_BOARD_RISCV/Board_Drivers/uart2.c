@@ -1,3 +1,4 @@
+
 #include "uart2.h"
 #ifdef LDARC_DEVICE_UART2
 
@@ -9,14 +10,15 @@ void USART2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
 void UART2_GPIO_Init(void)
 {
-    GPIO_InitTypeDef  GPIO_InitStructure = {0};
+    GPIO_InitTypeDef GPIO_InitStructure = {0};
     USART_InitTypeDef USART_InitStructure = {0};
-    NVIC_InitTypeDef  NVIC_InitStructure = {0};
+    NVIC_InitTypeDef NVIC_InitStructure = {0};
 
-    if (0 == chry_ringbuffer_init(&chry_rbuffer_tid, rbuffer_pool, 1024))
+    if (0 == chry_ringbuffer_init(&chry_rbuffer_tid, rbuffer_pool, 1024)) {
         printf("success\r\n");
-    else
+    } else {
         printf("error\r\n");
+    }
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
@@ -28,16 +30,17 @@ void UART2_GPIO_Init(void)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_Init(GPIOD, &GPIO_InitStructure);
+
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOD, &GPIO_InitStructure);
 
-    USART_InitStructure.USART_BaudRate            = 9600; // 板载蓝牙使用SPP透传模式 这里波特率建议《=9600
-    USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
-    USART_InitStructure.USART_StopBits            = USART_StopBits_1;
-    USART_InitStructure.USART_Parity              = USART_Parity_No;
+    USART_InitStructure.USART_BaudRate = 9600;
+    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+    USART_InitStructure.USART_StopBits = USART_StopBits_1;
+    USART_InitStructure.USART_Parity = USART_Parity_No;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
 
     USART_Init(USART2, &USART_InitStructure);
     USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
@@ -62,17 +65,14 @@ void USART2_IRQHandler(void)
     uint16_t Clear = Clear;
     uint8_t res;
 
-    if(USART_GetITStatus(USART2,USART_IT_RXNE)!= RESET)
-    {
+    if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) {
         res = USART_ReceiveData(USART2);
         chry_ringbuffer_write_byte(&chry_rbuffer_tid, res);
-    }
-
-    else if(USART_GetITStatus(USART2, USART_IT_IDLE)!= RESET)
-    {
+    } else if (USART_GetITStatus(USART2, USART_IT_IDLE) != RESET) {
         Clear = USART2->STATR;
         Clear = USART2->DATAR;
         g_recvFinshFlag = 1;
     }
 }
-#endif /* LDARC_DEVICE_UART2 */
+
+#endif // LDARC_DEVICE_UART2

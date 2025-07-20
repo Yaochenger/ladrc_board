@@ -1,3 +1,4 @@
+
 #include "spi3.h"
 #ifdef LDARC_DEVICE_SPI3
 
@@ -9,7 +10,7 @@ void SPI3_GPIO_Init(void)
     SPI_InitTypeDef SPI_InitStructure;
 
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOD, ENABLE);
-    RCC_APB1PeriphClockCmd( RCC_APB1Periph_SPI3, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -20,7 +21,7 @@ void SPI3_GPIO_Init(void)
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_5;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init( GPIOB, &GPIO_InitStructure);
+    GPIO_Init(GPIOB, &GPIO_InitStructure);
 
     SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
     SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
@@ -39,16 +40,16 @@ void SPI3_GPIO_Init(void)
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_14;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init( GPIOD, &GPIO_InitStructure);
+    GPIO_Init(GPIOD, &GPIO_InitStructure);
 }
 
 u8 SPI3_ReadWriteByte(u8 TxData)
 {
     Usr_TxData[0] = TxData;
     DMA2_Channel2->CNTR = 1;
-    DMA_Cmd(DMA2_Channel2,ENABLE);
-    while( DMA_GetFlagStatus(DMA2_FLAG_TC2) == RESET);
-    DMA_Cmd(DMA2_Channel2,DISABLE);
+    DMA_Cmd(DMA2_Channel2, ENABLE);
+    while (DMA_GetFlagStatus(DMA2_FLAG_TC2) == RESET);
+    DMA_Cmd(DMA2_Channel2, DISABLE);
     DMA_ClearFlag(DMA2_FLAG_TC2);
     return 0;
 }
@@ -58,7 +59,6 @@ void DMA_Tx_Init(DMA_Channel_TypeDef *DMA_CHx, u32 ppadr, u32 memadr, u16 bufsiz
     DMA_InitTypeDef DMA_InitStructure = {0};
 
     RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);
-
     DMA_DeInit(DMA_CHx);
 
     DMA_InitStructure.DMA_PeripheralBaseAddr = ppadr;
@@ -76,4 +76,5 @@ void DMA_Tx_Init(DMA_Channel_TypeDef *DMA_CHx, u32 ppadr, u32 memadr, u16 bufsiz
 
     DMA_ClearFlag(DMA2_FLAG_TC2);
 }
-#endif /* LDARC_DEVICE_SPI3 */
+
+#endif // LDARC_DEVICE_SPI3

@@ -1,27 +1,29 @@
+
 #include "timer6.h"
 #ifdef LDARC_DEVICE_TIM6
 
-void TIMER6_GPIO_Init(u16 arr,u16 psc)
+void TIMER6_GPIO_Init(u16 arr, u16 psc)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
 
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);        //使能TIM3时钟
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
 
-    TIM_TimeBaseStructure.TIM_Period = arr;                     //指定下次更新事件时要加载到活动自动重新加载寄存器中的周期值。
-    TIM_TimeBaseStructure.TIM_Prescaler = psc;                  //指定用于划分TIM时钟的预分频器值。
-    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;     //时钟分频因子
-    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; //TIM计数模式，向上计数模式
-    TIM_TimeBaseInit(TIM6, &TIM_TimeBaseStructure);             //根据指定的参数初始化TIMx的时间基数单位
+    TIM_TimeBaseStructure.TIM_Period = arr;
+    TIM_TimeBaseStructure.TIM_Prescaler = psc;
+    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_TimeBaseInit(TIM6, &TIM_TimeBaseStructure);
 
-    TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);                  //使能TIM6中断，允许更新中断
+    TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
 
-    NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;             //TIM6中断
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;   //设置抢占优先级0
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;          //设置响应优先级3
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;             //使能通道1中断
-    NVIC_Init(&NVIC_InitStructure);                             //初始化NVIC
+    NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
 
-    TIM_Cmd(TIM6, ENABLE);                                      //TIM6使能
+    TIM_Cmd(TIM6, ENABLE);
 }
-#endif /* LDARC_DEVICE_TIM6 */  
+
+#endif // LDARC_DEVICE_TIM6
