@@ -57,8 +57,9 @@ extern lv_obj_t *screen2_saved_focus_obj;
 extern lv_obj_t *screen3_saved_focus_obj;
 
 extern volatile bool g_is_editing;
-extern lv_ui guider_ui;
 extern lv_indev_t *indev_keypad;
+
+lv_ui guider_ui;
 
 /**********************
  *  STATIC UI CallBack

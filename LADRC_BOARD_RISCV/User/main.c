@@ -22,10 +22,6 @@
 * Return         : None
 *******************************************************************************/
 
-extern Command extended_commands[];
-extern void parse_command(Command* commands, int cmd_count);
-lv_ui guider_ui;
-
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
