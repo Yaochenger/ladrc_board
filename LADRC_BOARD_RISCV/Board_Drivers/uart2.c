@@ -3,10 +3,8 @@
 #ifdef LDARC_DEVICE_UART2
 
 chry_ringbuffer_t chry_rbuffer_tid;
+uint8_t g_recvFinshFlag = 0;
 static uint8_t rbuffer_pool[1024];
-static uint8_t g_recvFinshFlag = 0;
-
-void USART2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
 void UART2_GPIO_Init(void)
 {
@@ -58,21 +56,6 @@ void UART2_GPIO_Init(void)
 uint8_t *IsUsart1RecvFinsh(void)
 {
     return &g_recvFinshFlag;
-}
-
-void USART2_IRQHandler(void)
-{
-    uint16_t Clear = Clear;
-    uint8_t res;
-
-    if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) {
-        res = USART_ReceiveData(USART2);
-        chry_ringbuffer_write_byte(&chry_rbuffer_tid, res);
-    } else if (USART_GetITStatus(USART2, USART_IT_IDLE) != RESET) {
-        Clear = USART2->STATR;
-        Clear = USART2->DATAR;
-        g_recvFinshFlag = 1;
-    }
 }
 
 #endif // LDARC_DEVICE_UART2

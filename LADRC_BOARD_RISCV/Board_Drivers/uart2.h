@@ -4,6 +4,7 @@
 #include "chry_ringbuffer.h"
 
 extern chry_ringbuffer_t chry_rbuffer_tid;
+extern uint8_t g_recvFinshFlag;
 
 uint8_t *IsUsart1RecvFinsh(void);
 void UART2_GPIO_Init(void);

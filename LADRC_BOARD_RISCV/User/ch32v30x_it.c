@@ -1,75 +1,81 @@
-/********************************** (C) COPYRIGHT *******************************
-* File Name          : ch32v30x_it.c
-* Author             : WCH
-* Version            : V1.0.0
-* Date               : 2021/06/06
-* Description        : Main Interrupt Service Routines.
-*********************************************************************************
-* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* Attention: This software (modified or not) and binary are used for 
-* microcontroller manufactured by Nanjing Qinheng Microelectronics.
-*******************************************************************************/
 #include "ch32v30x_it.h"
 #include "lvgl.h"
 
+volatile uint32_t timer6_tick = 0;
+
 void NMI_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void HardFault_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void TIM2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void TIM6_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void TIM7_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void USART2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
-/*********************************************************************
- * @fn      NMI_Handler
- *
- * @brief   This function handles NMI exception.
- *
- * @return  none
- */
 void NMI_Handler(void)
 {
+    while (1)
+    {
+
+    }
 }
 
-/*********************************************************************
- * @fn      HardFault_Handler
- *
- * @brief   This function handles Hard Fault exception.
- *
- * @return  none
- */
 void HardFault_Handler(void)
 {
-  while (1)
-  {
-  }
+    while (1)
+    {
+
+    }
 }
 
-volatile uint32_t timer6_tick = 0;
-void TIM6_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
-void TIM6_IRQHandler(void) {
+void TIM2_IRQHandler(void)
+{
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
+    {
+        TIM_SetCounter(TIM3, 0);
+        TIM_SetCounter(TIM4, 0);
+        TIM_SetCounter(TIM5, 0);
+        TIM_SetCounter(TIM8, 0);
+        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+    }
+}
 
-    timer6_tick ++;
-    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET) {
+
+void TIM6_IRQHandler(void)
+{
+    timer6_tick++;
+    if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
+    {
         TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
     }
 }
 
-uint64_t getPlatformTicks() {
+
+uint64_t getPlatformTicks(void)
+{
     return (uint64_t)timer6_tick;
 }
 
-void TIM7_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+
 void TIM7_IRQHandler(void)
 {
-#if 0
-    llGuiTick(10);
-    if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET) {
-        TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
-        llGuiLoop();
-    }
-#endif
-#if 1
-    if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET) {
+    if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET)
+    {
         TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
         lv_tick_inc(1);
     }
-#endif
 }
 
 
+void USART2_IRQHandler(void)
+{
+    if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+    {
+        uint8_t res = USART_ReceiveData(USART2);
+        chry_ringbuffer_write_byte(&chry_rbuffer_tid, res);
+    }
+    else if (USART_GetITStatus(USART2, USART_IT_IDLE) != RESET)
+    {
+        volatile uint16_t temp = USART2->STATR;
+        temp = USART2->DATAR;
+        g_recvFinshFlag = 1;
+    }
+}

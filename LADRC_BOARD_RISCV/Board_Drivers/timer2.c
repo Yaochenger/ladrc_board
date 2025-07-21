@@ -27,17 +27,4 @@ void TIMER2_GPIO_Init(u16 arr, u16 psc)
     TIM_Cmd(TIM2, ENABLE);
 }
 
-void TIM2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
-void TIM2_IRQHandler(void)
-{
-    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
-    {
-        TIM_SetCounter(TIM3, 0);
-        TIM_SetCounter(TIM4, 0);
-        TIM_SetCounter(TIM5, 0);
-        TIM_SetCounter(TIM8, 0);
-    }
-    TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-}
-
 #endif // LDARC_DEVICE_TIM2
