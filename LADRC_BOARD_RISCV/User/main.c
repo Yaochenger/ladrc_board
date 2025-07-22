@@ -32,7 +32,6 @@ int main(void)
     UART2_INIT();
     Shell_INIT();
     BOARD_INFO();
-    LCD_OFF();
 
 #ifdef LDARC_COMPONENT_MULTITIMER
     multiTimerInstall(getPlatformTicks);
@@ -40,6 +39,10 @@ int main(void)
 
 #ifdef LDARC_COMPONENT_TFT
     LCD_INIT();
+#endif /* LDARC_COMPONENT_TFT */
+
+#ifdef LDARC_COMPONENT_TFT_OFF
+    LCD_OFF();
 #endif /* LDARC_COMPONENT_TFT */
 
 #ifdef LDARC_DEVICE_TIM6
