@@ -2,5 +2,5 @@
 #define USER_DRIVERS_KEY_H_
 #include "drv_config.h"
 
-void EXTI0_GPIO_Init(void);
+void GPIO_KEY_INIT(void);
 #endif

@@ -50,7 +50,7 @@ void USART1_IRQHandler(void)
   }
 }
 
-void userShellInit(void)
+void Shell_INIT(void)
 {
     shell.write = userShellWrite;
     shellInit(&shell, shellBuffer, 512);

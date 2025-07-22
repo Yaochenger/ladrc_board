@@ -10,7 +10,7 @@
 #include "debug.h"
 #include "drv_config.h"
 
-void board_info(void)
+void BOARD_INFO(void)
 {
     logInfo("BOARD NAME:%s",BOADR_INFO);
     logInfo("CPU:%s",BOADR_CPU);

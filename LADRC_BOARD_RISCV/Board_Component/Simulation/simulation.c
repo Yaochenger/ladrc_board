@@ -6,7 +6,7 @@ LADRC_NUM USR_Ladrc_Mode;
 static MultiTimer timer_td;
 static MultiTimer timer_loop;
 
-void Simulation_Init(void)
+void SIMULATION_INIT(void)
 {
     multiTimerStart(&timer_td, 50, Simulation_TD_Callback, NULL); // 50ms repeating
     multiTimerStart(&timer_loop, 50, Simulation_LOOP_Callback, NULL); // 50ms repeating

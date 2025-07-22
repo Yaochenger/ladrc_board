@@ -37,7 +37,7 @@ void cmd_run_callback(const char* data);
 void cmd_TD_callback(const char* data);
 void cmd_res_callback(const char* data);
 
-void USR_Sim_Para_DInit(Mode_Para * Usr_Mode_Para);
+void SIMULATION_DINIT(Mode_Para * Usr_Mode_Para);
 
 void parse_command(Command *commands, int cmd_count);
 #endif // VOFA_H

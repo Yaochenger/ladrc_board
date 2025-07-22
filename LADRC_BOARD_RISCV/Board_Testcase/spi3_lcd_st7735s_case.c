@@ -16,7 +16,7 @@ extern const unsigned char asc16[];
 int spi3_lcd_func(int mode)
 {
 
-    Lcd_Init();
+    LCD_INIT();
 
     switch (mode) {
         case 1:

@@ -112,7 +112,7 @@ static void second_scr_callback (lv_event_t *e) {
         } else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item3)  // Bluetoolh
         {
             gui_timer[1] = lv_timer_create (usr_timer_bluetooth, 50, NULL);
-            UART2_GPIO_Init();
+            UART2_INIT();
             load_screen_third (SCR_BLE_ID);
         } else if (screen1_saved_focus_obj == guider_ui.screen_1_list_1_item4)  // ADC
         {

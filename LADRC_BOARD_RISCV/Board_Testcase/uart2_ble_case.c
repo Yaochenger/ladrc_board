@@ -11,7 +11,7 @@
 int uart2_ble_func(int para) {
 
     uint16_t data = 0, cnt = 0;
-    UART2_GPIO_Init();
+    UART2_INIT();
 
     while (1)
     {

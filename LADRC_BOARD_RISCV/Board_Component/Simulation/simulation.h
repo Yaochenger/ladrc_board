@@ -12,7 +12,7 @@
 extern Mode_Para USR_Sim_Mode;
 extern LADRC_NUM USR_Ladrc_Mode;
 
-void Simulation_Init(void);
+void SIMULATION_INIT(void);
 void Simulation_TD_Callback(MultiTimer* timer, void* userData);
 void Simulation_LOOP_Callback(MultiTimer* timer, void* userData);
 

@@ -7,5 +7,5 @@ extern chry_ringbuffer_t chry_rbuffer_tid;
 extern uint8_t g_recvFinshFlag;
 
 uint8_t *IsUsart1RecvFinsh(void);
-void UART2_GPIO_Init(void);
+void UART2_INIT(void);
 #endif /* USER_DRIVERS_UART2_H_ */

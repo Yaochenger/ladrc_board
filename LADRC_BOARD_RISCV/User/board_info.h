@@ -10,6 +10,6 @@
 
 #define BOADR_INFO "LADRC BOARD"
 #define BOADR_CPU  "CH32V307VCT6"
-void board_info(void);
+void BOARD_INFO(void);
 
 #endif /* USER_BOARD_INFO_H_ */

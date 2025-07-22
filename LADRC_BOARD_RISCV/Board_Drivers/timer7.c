@@ -2,7 +2,7 @@
 #include "timer7.h"
 #ifdef LDARC_DEVICE_TIM7
 
-void TIMER7_GPIO_Init(u16 arr, u16 psc)
+void TIM7_INIT(u16 arr, u16 psc)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
     NVIC_InitTypeDef NVIC_InitStructure;

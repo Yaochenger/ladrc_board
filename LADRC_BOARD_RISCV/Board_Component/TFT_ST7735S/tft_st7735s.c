@@ -83,7 +83,7 @@ void Lcd_Reset(void) {
 }
 
 //LCD Init For 1.44Inch LCD Panel with ST7735R.
-void Lcd_Init(void) {
+void LCD_INIT(void) {
     LCD_GPIO_Init();
     Lcd_Reset(); //Reset before LCD Init.
 
@@ -196,6 +196,8 @@ void Lcd_Init(void) {
     Lcd_WriteData(0x05);
 
     Lcd_WriteIndex(0x29); //Display on
+
+    Lcd_Clear(WHITE); // clear lcd
 }
 
 /*************************************************

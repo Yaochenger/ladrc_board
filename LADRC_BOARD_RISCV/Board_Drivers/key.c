@@ -2,7 +2,7 @@
 #include "key.h"
 #ifdef LDARC_DEVICE_KEY
 
-void EXTI0_GPIO_Init(void)
+void GPIO_KEY_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
 

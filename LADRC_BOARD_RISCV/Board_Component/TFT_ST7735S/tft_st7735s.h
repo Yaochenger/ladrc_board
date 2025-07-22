@@ -44,7 +44,7 @@ void Lcd_WriteData(u8 Data);
 void Lcd_WriteReg(u8 Index, u8 Data);
 u16 Lcd_ReadReg(u8 LCD_Reg);
 void Lcd_Reset(void);
-void Lcd_Init(void);
+void LCD_INIT(void);
 void Lcd_Clear(u16 Color);
 void Lcd_SetXY(u16 x, u16 y);
 void Gui_DrawPoint(u16 x, u16 y, u16 Data);

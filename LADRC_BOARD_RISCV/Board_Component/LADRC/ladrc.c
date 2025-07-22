@@ -29,7 +29,7 @@ const double LADRC_Unit[5][5] =
 /**
   * @brief 初始化LADRC参数
   */
-void LADRC_Init(LADRC_NUM *LADRC_Para)
+void LADRC_INIT(LADRC_NUM *LADRC_Para)
 {
     LADRC_Para->h = LADRC_Unit[1][0];  // 采样时间
     LADRC_Para->r = LADRC_Unit[1][1];  // 跟踪微分器参数

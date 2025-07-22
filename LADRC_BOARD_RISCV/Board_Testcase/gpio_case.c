@@ -10,7 +10,7 @@
 
 int gpio_func(int cnt)
 {
-    LED_GPIO_Init();
+    GPIO_LED_INIT();
 
     for (int i = 0; i < cnt; i++)
     {

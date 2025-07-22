@@ -2,7 +2,7 @@
 #include "led.h"
 #ifdef LDARC_DEVICE_LED
 
-void LED_GPIO_Init(void)
+void GPIO_LED_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
 

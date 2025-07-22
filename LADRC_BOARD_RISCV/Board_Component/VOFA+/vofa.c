@@ -103,13 +103,13 @@ void cmd_res_callback(const char* data)
     int value = atoi(data);
     if (value)
     {
-        LADRC_Init(&USR_Ladrc_Mode);
-        USR_Sim_Para_DInit(&USR_Sim_Mode);
+        LADRC_INIT(&USR_Ladrc_Mode);
+        SIMULATION_DINIT(&USR_Sim_Mode);
     }
     printf("res command received, value: %d\r\n", value);
 }
 
-void USR_Sim_Para_DInit(Mode_Para * Usr_Mode_Para)
+void SIMULATION_DINIT(Mode_Para * Usr_Mode_Para)
 {
     Usr_Mode_Para->state = 1;
     Usr_Mode_Para->TD_state = 1;

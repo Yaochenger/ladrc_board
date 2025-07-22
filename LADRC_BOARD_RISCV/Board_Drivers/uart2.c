@@ -6,7 +6,7 @@ chry_ringbuffer_t chry_rbuffer_tid;
 uint8_t g_recvFinshFlag = 0;
 static uint8_t rbuffer_pool[1024];
 
-void UART2_GPIO_Init(void)
+void UART2_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
     USART_InitTypeDef USART_InitStructure = {0};

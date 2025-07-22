@@ -27,20 +27,39 @@ int main(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     Delay_Init();
     USART_Printf_Init(115200);
-    EXTI0_GPIO_Init();
-    LED_GPIO_Init();
-    UART2_GPIO_Init();
-    userShellInit();
-    board_info();
-    Lcd_Init();
-    Lcd_Clear(WHITE);
+    GPIO_KEY_INIT();
+    GPIO_LED_INIT();
+    UART2_INIT();
+    Shell_INIT();
+    BOARD_INFO();
+    LCD_OFF();
 
-    TIMER6_GPIO_Init(10 - 1, 9600 - 1);
-    TIMER7_GPIO_Init(10 - 1, 9600 - 1);
-
+#ifdef LDARC_COMPONENT_MULTITIMER
     multiTimerInstall(getPlatformTicks);
-    Simulation_Init();
+#endif /* LDARC_COMPONENT_MULTITIMER */
 
+#ifdef LDARC_COMPONENT_TFT
+    LCD_INIT();
+#endif /* LDARC_COMPONENT_TFT */
+
+#ifdef LDARC_DEVICE_TIM6
+    TIM6_INIT(10 - 1, 9600 - 1);
+#endif /* LDARC_DEVICE_TIM6 */
+
+#ifdef LDARC_DEVICE_TIM7
+    TIM7_INIT(10 - 1, 9600 - 1);
+#endif /* LDARC_DEVICE_TIM7 */
+
+#ifdef LDARC_COMPONENT_LADRC
+    LADRC_INIT(&USR_Ladrc_Mode);
+#endif /* LDARC_COMPONENT_LADRC */
+
+#ifdef LDARC_COMPONENT_SIMULATION
+    SIMULATION_INIT();
+    SIMULATION_DINIT(&USR_Sim_Mode);
+#endif /* LDARC_COMPONENT_SIMULATION */
+
+#if defined(LDARC_COMPONENT_LVGL) && defined(LDARC_COMPONENT_LVGL)
     lv_init();
     lv_port_disp_init();
     lv_port_indev_init();
@@ -49,14 +68,20 @@ int main(void)
     events_init(&guider_ui);
     extern void custom_init(lv_ui *ui);
     custom_init(&guider_ui);
-
-    LADRC_Init(&USR_Ladrc_Mode);
-    USR_Sim_Para_DInit(&USR_Sim_Mode);
+#endif /* LDARC_COMPONENT_LVGL */
 
     while(1)
     {
+#ifdef LDARC_COMPONENT_SIMULATION
         parse_command(extended_commands, vofa_cmd_cnt);
+#endif /* LDARC_COMPONENT_SIMULATION */
+
+#ifdef LDARC_COMPONENT_MULTITIMER
         multiTimerYield();
+#endif /* LDARC_COMPONENT_MULTITIMER */
+
+#if defined(LDARC_COMPONENT_LVGL) && defined(LDARC_COMPONENT_LVGL)
         lv_timer_handler();
+#endif /* LDARC_COMPONENT_LVGL */
     }
 }

@@ -37,7 +37,7 @@ extern LADRC_NUM Pitch_Sysparam;
 /**
   * @brief 以下为LADRC相关函数
   */
-void LADRC_Init(LADRC_NUM *LADRC_TYPE1);
+void LADRC_INIT(LADRC_NUM *LADRC_TYPE1);
 void LADRC_REST(LADRC_NUM *LADRC_TYPE1);
 void LADRC_TD(LADRC_NUM *LADRC_TYPE1, double Expect);
 void LADRC_ESO(LADRC_NUM *LADRC_TYPE1, double FeedBack);
