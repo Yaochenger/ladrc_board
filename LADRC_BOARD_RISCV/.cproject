@@ -600,14 +600,7 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="obj">
-			<resource resourceType="PROJECT" workspacePath="/LADRC_BOARD_RISCV"/>
-		</configuration>
-		<configuration configurationName="dbg">
-			<resource resourceType="PROJECT" workspacePath="/LADRC_BOARD_RISCV"/>
-		</configuration>
-	</storageModule>
+	
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="ilg.gnumcueclipse.managedbuild.cross.riscv.config.elf.debug.767917625;ilg.gnumcueclipse.managedbuild.cross.riscv.config.elf.debug.767917625.;ilg.gnumcueclipse.managedbuild.cross.riscv.tool.c.compiler.1375371130;ilg.gnumcueclipse.managedbuild.cross.riscv.tool.c.compiler.input.1473381709">
