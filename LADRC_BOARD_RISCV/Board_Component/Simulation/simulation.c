@@ -1,7 +1,7 @@
 #include "simulation.h"
 
 Mode_Para USR_Sim_Mode;
-LADRC_NUM USR_Ladrc_Mode;
+LADRC_TypeDef USR_Ladrc_Mode;
 
 static MultiTimer timer_td;
 static MultiTimer timer_loop;

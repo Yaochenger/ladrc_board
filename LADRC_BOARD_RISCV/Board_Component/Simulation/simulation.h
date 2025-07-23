@@ -10,7 +10,7 @@
 #define Simulation_Cycle 5
 
 extern Mode_Para USR_Sim_Mode;
-extern LADRC_NUM USR_Ladrc_Mode;
+extern LADRC_TypeDef USR_Ladrc_Mode;
 
 void SIMULATION_INIT(void);
 void Simulation_TD_Callback(MultiTimer* timer, void* userData);

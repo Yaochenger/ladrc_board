@@ -15,14 +15,6 @@ static void USART_SendChar(USART_TypeDef* USARTx, uint8_t ch)
     USART_SendData(USARTx, ch);
 }
 
-void USART_SendString(USART_TypeDef* USARTx, char *str)
-{
-    while(*str)
-    {
-        USART_SendChar(USARTx, *str++);
-    }
-}
-
 void ladrc_printf(USART_TypeDef* USARTx, const char *format, ...)
 {
     va_list args;
@@ -35,11 +27,13 @@ void ladrc_printf(USART_TypeDef* USARTx, const char *format, ...)
     if (length <= 0)
         return;
 
-    if (length >= sizeof(buffer)) {
+    if (length >= sizeof(buffer))
+    {
         length = sizeof(buffer) - 1;
     }
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++)
+    {
         USART_SendChar(USARTx, buffer[i]);
     }
 }

@@ -10,7 +10,7 @@
 static char cmd_buffer[CMD_BUFFER_SIZE];
 
 extern Mode_Para USR_Sim_Mode;
-extern LADRC_NUM USR_Ladrc_Mode;
+extern LADRC_TypeDef USR_Ladrc_Mode;
 
 Command extended_commands[] = {
     {"r", cmd_r_callback},
@@ -138,7 +138,7 @@ void parse_command(Command* commands, int cmd_count)
         // 开始解析
         if (cmd_buffer[0] == '#') {
             char cmd_type[MAX_TYPE_LEN] = {0};  // 存储命令类型 (# 和 : 之间的部分)
-            char cmd_data[16] = {0};           // 存储命令数据 (: 后面的部分)
+            char cmd_data[16] = {0};            // 存储命令数据 (: 后面的部分)
             int i = 1;
             int type_index = 0;
             int data_index = 0;

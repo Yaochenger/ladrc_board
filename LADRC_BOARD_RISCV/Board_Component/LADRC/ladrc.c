@@ -9,10 +9,10 @@
   * @brief 定义四个LADRC系统参数结构体变量
   */
 
-LADRC_NUM M1_Sysparam;
-LADRC_NUM M2_Sysparam;
-LADRC_NUM M3_Sysparam;
-LADRC_NUM M4_Sysparam;
+LADRC_TypeDef M1_Sysparam;
+LADRC_TypeDef M2_Sysparam;
+LADRC_TypeDef M3_Sysparam;
+LADRC_TypeDef M4_Sysparam;
 
 /**
   * @brief LADRC参数矩阵
@@ -29,7 +29,7 @@ const double LADRC_Unit[5][5] =
 /**
   * @brief 初始化LADRC参数
   */
-void LADRC_INIT(LADRC_NUM *LADRC_Para)
+void LADRC_INIT(LADRC_TypeDef *LADRC_Para)
 {
     LADRC_Para->h = LADRC_Unit[1][0];  // 采样时间
     LADRC_Para->r = LADRC_Unit[1][1];  // 跟踪微分器参数
@@ -41,7 +41,7 @@ void LADRC_INIT(LADRC_NUM *LADRC_Para)
 /**
   * @brief 重置LADRC参数
   */
-void LADRC_REST(LADRC_NUM *LADRC_Para)
+void LADRC_REST(LADRC_TypeDef *LADRC_Para)
 {
     LADRC_Para->r = 0;
     LADRC_Para->v1 = 0;
@@ -60,7 +60,7 @@ void LADRC_REST(LADRC_NUM *LADRC_Para)
   * @param[in] LADRC_Para LADRC参数
   * @param[in] Expect 期望值
   */
-void LADRC_TD(LADRC_NUM *LADRC_Para, double Expect)
+void LADRC_TD(LADRC_TypeDef *LADRC_Para, double Expect)
 {
     double fh = -LADRC_Para->r * LADRC_Para->r * (LADRC_Para->v1 - Expect) - 2 * LADRC_Para->r * LADRC_Para->v2;
     LADRC_Para->v1 += LADRC_Para->v2 * LADRC_Para->h;
@@ -72,7 +72,7 @@ void LADRC_TD(LADRC_NUM *LADRC_Para, double Expect)
   * @param[in] LADRC_Para LADRC参数
   * @param[in] FeedBack 反馈值
   */
-void LADRC_ESO(LADRC_NUM *LADRC_Para, double FeedBack)
+void LADRC_ESO(LADRC_TypeDef *LADRC_Para, double FeedBack)
 {
     double Beita_01 = 3 * LADRC_Para->w0;
     double Beita_02 = 3 * LADRC_Para->w0 * LADRC_Para->w0;
@@ -87,7 +87,7 @@ void LADRC_ESO(LADRC_NUM *LADRC_Para, double FeedBack)
 /**
   * @brief 线性反馈控制律
   */
-void LADRC_LF(LADRC_NUM *LADRC_Para)
+void LADRC_LF(LADRC_TypeDef *LADRC_Para)
 {
     LADRC_Para->wc = LADRC_Para->w0 / 4;
     double Kp = LADRC_Para->wc * LADRC_Para->wc;
@@ -112,7 +112,7 @@ void LADRC_LF(LADRC_NUM *LADRC_Para)
   * @brief LADRC控制循环
   * @note 该函数实现了LADRC控制的完整流程
   */
-void LADRC_Loop(LADRC_NUM *LADRC_Para, double* Expect, double* RealTimeOut)
+void LADRC_Loop(LADRC_TypeDef *LADRC_Para, double* Expect, double* RealTimeOut)
 {
     double Expect_Value = *Expect;
     double Measure = *RealTimeOut;
