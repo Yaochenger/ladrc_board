@@ -4,8 +4,10 @@ static char cmd_buffer[CMD_BUFFER_SIZE];
 
 static void process_command(const char* cmd_type, const char* cmd_data, const Command* commands, int cmd_count)
 {
-    for (int i = 0; i < cmd_count; i++) {
-        if (strcmp(cmd_type, commands[i].type) == 0 && commands[i].handler != NULL) {
+    for (int i = 0; i < cmd_count; i++)
+    {
+        if (strcmp(cmd_type, commands[i].type) == 0 && commands[i].handler != NULL)
+        {
             commands[i].handler(cmd_data);  // 调用对应的处理函数，传入数据
             return;
         }
@@ -15,7 +17,8 @@ static void process_command(const char* cmd_type, const char* cmd_data, const Co
 
 void parse_command(Command* commands, int cmd_count)
 {
-    if (*IsUsart1RecvFinsh()) {
+    if (*IsUsart1RecvFinsh())
+    {
         // 读取环形缓冲区数据到 cmd_buffer
         chry_ringbuffer_read(&chry_rbuffer_tid, cmd_buffer, chry_ringbuffer_get_used(&chry_rbuffer_tid));
 

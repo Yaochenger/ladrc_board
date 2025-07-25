@@ -53,13 +53,9 @@ int main(void)
     TIM7_INIT(10 - 1, 9600 - 1);
 #endif /* LDARC_DEVICE_TIM7 */
 
-#ifdef LDARC_COMPONENT_LADRC
-    LADRC_INIT(&USR_Ladrc_Mode);
-#endif /* LDARC_COMPONENT_LADRC */
-
 #ifdef LDARC_COMPONENT_SIMULATION
     SIMULATION_INIT();
-    SIMULATION_DINIT(&USR_Sim_Mode);
+    SIMULATION_DINIT();
 #endif /* LDARC_COMPONENT_SIMULATION */
 
 #if defined(LDARC_COMPONENT_LVGL) && defined(LDARC_COMPONENT_LVGL)
@@ -76,7 +72,7 @@ int main(void)
     while(1)
     {
 #ifdef LDARC_COMPONENT_SIMULATION
-        parse_command(extended_commands, vofa_cmd_cnt);
+        Simulation_parse_command();
 #endif /* LDARC_COMPONENT_SIMULATION */
 
 #ifdef LDARC_COMPONENT_MULTITIMER

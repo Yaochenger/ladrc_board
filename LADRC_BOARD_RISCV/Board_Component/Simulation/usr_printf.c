@@ -9,12 +9,6 @@
 #include "string.h"
 #include "stdarg.h"
 
-static void USART_SendChar(USART_TypeDef* USARTx, uint8_t ch)
-{
-    while(USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);
-    USART_SendData(USARTx, ch);
-}
-
 void ladrc_printf(USART_TypeDef* USARTx, const char *format, ...)
 {
     va_list args;
@@ -34,6 +28,7 @@ void ladrc_printf(USART_TypeDef* USARTx, const char *format, ...)
 
     for (int i = 0; i < length; i++)
     {
-        USART_SendChar(USARTx, buffer[i]);
+        while(USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);
+        USART_SendData(USARTx, buffer[i]);
     }
 }
