@@ -9,7 +9,7 @@ on_chip_peripherals:
     name: UART
     description: Universal Asynchronous Receiver-Transmitter
     instances:
-    - name: USART0
+    - name: USART2
       enabled: true
       pins:
       - name: TX
