@@ -1,7 +1,7 @@
-board: LADRC_BOARD
+board: RISCV
 chip_vendor: WCH
 chip_series: CH32
-chip_subseries: CH32V307
+chip_subseries: CH32V3
 chip: CH32V307VCT6
 prefix: SDK_USING_
 on_chip_peripherals:
@@ -9,13 +9,15 @@ on_chip_peripherals:
     name: UART
     description: Universal Asynchronous Receiver-Transmitter
     instances:
-    - name: USART2
+    - name: USART0
       enabled: true
       pins:
       - name: TX
         pin: PA9
       - name: RX
         pin: PA10
+      - name: speed
+        pin: 9600
     - name: USART2
       enabled: true
       pins:
@@ -118,6 +120,19 @@ on_chip_peripherals:
       enabled: true
     - name: GPIOD
       enabled: true
+      pins:
+      - name: KEY0
+        pin: PD0
+      - name: KEY1
+        pin: PD1
+      - name: KEY2
+        pin: PD3
+      - name: KEY3
+        pin: PD4
+      - name: LED5
+        pin: PD8
+      - name: LED6
+        pin: PD10
     - name: GPIOE
       enabled: true
     - name: GPIOF

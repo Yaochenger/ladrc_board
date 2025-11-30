@@ -10,7 +10,7 @@
 
 enum  SIMULATION_MODE_Type
 {
-    TD_MODE = 10,
+    TD_MODE,
     LOOP_MODE,
     NULL_MODE
 };

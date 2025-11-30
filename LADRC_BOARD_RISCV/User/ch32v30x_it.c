@@ -1,5 +1,4 @@
 #include "ch32v30x_it.h"
-#include "lvgl.h"
 
 volatile uint32_t timer6_tick = 0;
 
@@ -60,7 +59,6 @@ void TIM7_IRQHandler(void)
     if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET)
     {
         TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
-        lv_tick_inc(1);
     }
 }
 

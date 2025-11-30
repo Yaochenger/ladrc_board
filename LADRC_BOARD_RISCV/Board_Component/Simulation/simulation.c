@@ -40,7 +40,7 @@ void Simulation_TD_Callback(MultiTimer* timer, void* userData)
     {
         LADRC_TD(&USR_Ladrc_Mode, SIMULATION_MODE_InitStruct.expect_val);
 
-        ladrc_printf(USART2, "%.2f,%.2f,%.2f\n", SIMULATION_MODE_InitStruct.expect_val,USR_Ladrc_Mode.v1,
+        ladrc_printf(USART2, "%.2f,%.2f\n", USR_Ladrc_Mode.v1,
                 USR_Ladrc_Mode.v2);
     }
     multiTimerStart(timer, Simulation_Cycle, Simulation_TD_Callback, NULL);
@@ -117,13 +117,13 @@ void cmd_expe_callback(const char* data)
 
 void cmd_run_callback(const char* data)
 {
-    int mode = atoi(data);
+    int value = atoi(data);
 
-    if (mode == TD_MODE)
+    if (value == 0)
     {
         SIMULATION_MODE_InitStruct.mode = TD_MODE;
     }
-    else if (mode == LOOP_MODE)
+    else if (value == 1)
     {
         SIMULATION_MODE_InitStruct.mode = LOOP_MODE;
     }
@@ -132,14 +132,18 @@ void cmd_run_callback(const char* data)
         SIMULATION_MODE_InitStruct.mode = NULL_MODE;
     }
 
-    printf("run command received, value: %d\r\n", mode);
+    printf("run command received, value: %d\r\n", value);
 }
 
 void cmd_res_callback(const char* data)
 {
-    SIMULATION_DINIT();
-    LADRC_INIT(&USR_Ladrc_Mode);
-    printf("reset command received\r\n");
+    int value = atoi(data);
+    if (value)
+    {
+        LADRC_INIT(&USR_Ladrc_Mode);
+        SIMULATION_DINIT();
+    }
+    printf("res command received, value: %d\r\n", value);
 }
 
 void Simulation_parse_command(void)

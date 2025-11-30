@@ -6,13 +6,10 @@
 * Description        : Main program body.
 *******************************************************************************/
 
-#include <board_info.h>
+#include "sdkconfig.h"
 #include "debug.h"
 #include "drv_config.h"
 #include "user_peripheral_driver.h"
-#include "lvgl.h"
-#include "events_init.h"
-#include "gui_guider.h"
 #include "vofa.h"
 #include "LADRC.h"
 /*******************************************************************************
@@ -27,11 +24,10 @@ int main(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     Delay_Init();
     USART_Printf_Init(115200);
-    GPIO_KEY_INIT();
-    GPIO_LED_INIT();
+//    GPIO_KEY_INIT();
+//    GPIO_LED_INIT();
     UART2_INIT();
     Shell_INIT();
-    BOARD_INFO();
 
 #ifdef LDARC_COMPONENT_MULTITIMER
     multiTimerInstall(getPlatformTicks);
@@ -54,8 +50,8 @@ int main(void)
 #endif /* LDARC_DEVICE_TIM7 */
 
 #ifdef LDARC_COMPONENT_SIMULATION
-    SIMULATION_DINIT();
     SIMULATION_INIT();
+    SIMULATION_DINIT();
 #endif /* LDARC_COMPONENT_SIMULATION */
 
 #if defined(LDARC_COMPONENT_LVGL) && defined(LDARC_COMPONENT_LVGL)
@@ -68,7 +64,6 @@ int main(void)
     extern void custom_init(lv_ui *ui);
     custom_init(&guider_ui);
 #endif /* LDARC_COMPONENT_LVGL */
-
     while(1)
     {
 #ifdef LDARC_COMPONENT_SIMULATION
