@@ -11,7 +11,6 @@
 int uart6_rs485_func(int para) {
 
     uint16_t data = 0, cnt = 0;
-    UART6_GPIO_Init();
 
     while (1)
     {

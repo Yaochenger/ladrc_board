@@ -14,7 +14,10 @@ static void process_command(const char* cmd_type, const char* cmd_data, const Co
     }
     printf("Unknown command type: %s\r\n", cmd_type);
 }
-
+#include "chry_ringbuffer.h"
+extern chry_ringbuffer_t chry_rbuffer_tid;
+extern uint8_t g_recvFinshFlag;
+extern uint8_t *IsUsart1RecvFinsh(void);
 void parse_command(Command* commands, int cmd_count)
 {
     if (*IsUsart1RecvFinsh())

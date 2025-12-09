@@ -9,29 +9,61 @@ on_chip_peripherals:
     name: UART
     description: Universal Asynchronous Receiver-Transmitter
     instances:
-    - name: USART0
-      enabled: true
-      pins:
-      - name: TX
-        pin: PA9
-      - name: RX
-        pin: PA10
-      - name: speed
-        pin: 9600
     - name: USART2
       enabled: true
       pins:
       - name: TX
-        pin: PA11
+        pin: PD5
       - name: RX
-        pin: PA12
-    - name: USART3
+        pin: PD6
+      - name: BaudRate
+        pin: 9600
+      - name: ISR
+        pin: 1
+    - name: UART4
       enabled: true
       pins:
       - name: TX
-        pin: PA13
+        pin: PB0
       - name: RX
-        pin: PA14
+        pin: PB1
+      - name: BaudRate
+        pin: 9600
+      - name: ISR
+        pin: 0
+    - name: UART6
+      enabled: true
+      pins:
+      - name: TX
+        pin: PC0
+      - name: RX
+        pin: PC1
+      - name: BaudRate
+        pin: 9600
+      - name: ISR
+        pin: 0
+    - name: UART7
+      enabled: true
+      pins:
+      - name: TX
+        pin: PE12
+      - name: RX
+        pin: PE13
+      - name: BaudRate
+        pin: 115200
+      - name: ISR
+        pin: 0
+    - name: UART8
+      enabled: true
+      pins:
+      - name: TX
+        pin: PE14
+      - name: RX
+        pin: PE15
+      - name: BaudRate
+        pin: 115200
+      - name: ISR
+        pin: 0
 - device:
     name: SPI
     description: Serial Peripheral Interface
@@ -162,6 +194,10 @@ components:
     name: USR
     description: Command Line Shell
     enabled: true
+- pkg:
+    name: USRQ
+    description: Command Line Shell
+    enabled: true
 testcases:
 - case:
     name: UART
@@ -177,5 +213,9 @@ testcases:
     enabled: true
 - case:
     name: SHELL
+    description: null
+    enabled: true
+- case:
+    name: N6
     description: null
     enabled: true

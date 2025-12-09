@@ -4,7 +4,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include "uart2.h"
 #include "ladrc.h"
 
 #define CMD_BUFFER_SIZE 32

@@ -12,21 +12,35 @@
 #include "user_peripheral_driver.h"
 #include "vofa.h"
 #include "LADRC.h"
+#include "chry_ringbuffer.h"
 /*******************************************************************************
 * Function Name  : main
 * Description    : Main program.
 * Input          : None
 * Return         : None
 *******************************************************************************/
+chry_ringbuffer_t chry_rbuffer_tid;
+uint8_t g_recvFinshFlag = 0;
+static uint8_t rbuffer_pool[1024];
+
+uint8_t *IsUsart1RecvFinsh(void)
+{
+    return &g_recvFinshFlag;
+}
 
 int main(void)
 {
+    if (0 == chry_ringbuffer_init(&chry_rbuffer_tid, rbuffer_pool, 1024)) {
+        printf("success\r\n");
+    } else {
+        printf("error\r\n");
+    }
+
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     Delay_Init();
     USART_Printf_Init(115200);
 //    GPIO_KEY_INIT();
 //    GPIO_LED_INIT();
-    UART2_INIT();
     Shell_INIT();
 
 #ifdef LDARC_COMPONENT_MULTITIMER

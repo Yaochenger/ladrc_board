@@ -5,7 +5,6 @@
 #include "board_config.h"
 #include "adc.h"
 #include "i2c2.h"
-#include "key.h"
 #include "timer2.h"
 #include "timer3.h"
 #include "timer4.h"
@@ -16,11 +15,5 @@
 #include "timer9.h"
 #include "spi2.h"
 #include "spi3.h"
-#include "uart2.h"
-#include "uart4.h"
-#include "uart6.h"
-#include "uart7.h"
-#include "uart8.h"
-#include "led.h"
 
 #endif /* USER_DRIVERS_BOARD_CONFIG_H_ */

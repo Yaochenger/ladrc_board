@@ -63,17 +63,17 @@ void TIM7_IRQHandler(void)
 }
 
 
-void USART2_IRQHandler(void)
-{
-    if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
-    {
-        uint8_t res = USART_ReceiveData(USART2);
-        chry_ringbuffer_write_byte(&chry_rbuffer_tid, res);
-    }
-    else if (USART_GetITStatus(USART2, USART_IT_IDLE) != RESET)
-    {
-        volatile uint16_t temp = USART2->STATR;
-        temp = USART2->DATAR;
-        g_recvFinshFlag = 1;
-    }
-}
+//void USART2_IRQHandler(void)
+//{
+//    if (USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+//    {
+//        uint8_t res = USART_ReceiveData(USART2);
+//        chry_ringbuffer_write_byte(&chry_rbuffer_tid, res);
+//    }
+//    else if (USART_GetITStatus(USART2, USART_IT_IDLE) != RESET)
+//    {
+//        volatile uint16_t temp = USART2->STATR;
+//        temp = USART2->DATAR;
+//        g_recvFinshFlag = 1;
+//    }
+//}
