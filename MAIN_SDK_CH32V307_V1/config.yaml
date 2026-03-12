@@ -1,0 +1,221 @@
+board: RISCV
+chip_vendor: WCH
+chip_series: CH32
+chip_subseries: CH32V3
+chip: CH32V307VCT6
+prefix: SDK_USING_
+on_chip_peripherals:
+- device:
+    name: UART
+    description: Universal Asynchronous Receiver-Transmitter
+    instances:
+    - name: USART2
+      enabled: true
+      pins:
+      - name: TX
+        pin: PD5
+      - name: RX
+        pin: PD6
+      - name: BaudRate
+        pin: 9600
+      - name: ISR
+        pin: 1
+    - name: UART4
+      enabled: true
+      pins:
+      - name: TX
+        pin: PB0
+      - name: RX
+        pin: PB1
+      - name: BaudRate
+        pin: 9600
+      - name: ISR
+        pin: 0
+    - name: UART6
+      enabled: true
+      pins:
+      - name: TX
+        pin: PC0
+      - name: RX
+        pin: PC1
+      - name: BaudRate
+        pin: 9600
+      - name: ISR
+        pin: 0
+    - name: UART7
+      enabled: true
+      pins:
+      - name: TX
+        pin: PE12
+      - name: RX
+        pin: PE13
+      - name: BaudRate
+        pin: 115200
+      - name: ISR
+        pin: 0
+    - name: UART8
+      enabled: true
+      pins:
+      - name: TX
+        pin: PE14
+      - name: RX
+        pin: PE15
+      - name: BaudRate
+        pin: 115200
+      - name: ISR
+        pin: 0
+- device:
+    name: SPI
+    description: Serial Peripheral Interface
+    instances:
+    - name: SPI1
+      enabled: false
+      pins:
+      - name: SCK
+        pin: PB12
+      - name: MISO
+        pin: PB13
+      - name: MOSI
+        pin: PB14
+      - name: CS
+        pin: PB15
+    - name: SPI2
+      enabled: true
+      pins:
+      - name: SCK
+        pin: PB12
+      - name: MISO
+        pin: PC13
+      - name: MOSI
+        pin: PC14
+      - name: CS
+        pin: PB12
+    - name: SPI3
+      enabled: true
+      pins:
+      - name: SCK
+        pin: PD12
+      - name: MISO
+        pin: PD13
+      - name: MOSI
+        pin: PD14
+      - name: CS
+        pin: PA15
+- device:
+    name: I2C
+    description: Inter-Integrated Circuit
+    instances:
+    - name: I2C1
+      enabled: true
+      pins:
+      - name: SCL
+        pin: PB6
+      - name: SDA
+        pin: PB7
+    - name: I2C2
+      enabled: true
+      pins:
+      - name: SCL
+        pin: PB8
+      - name: SDA
+        pin: PB9
+    - name: I2C3
+      enabled: true
+      pins:
+      - name: SCL
+        pin: PA8
+      - name: SDA
+        pin: PC9
+- device:
+    name: ADC
+    description: Analog-to-Digital Converter
+    instances:
+    - name: ADC1
+      enabled: true
+      pins:
+      - name: IN0
+        pin: PA0
+    - name: ADC2
+      enabled: true
+      pins:
+      - name: IN0
+        pin: PA1
+- device:
+    name: GPIO
+    description: I/O
+    instances:
+    - name: GPIOA
+      enabled: true
+    - name: GPIOB
+      enabled: true
+    - name: GPIOC
+      enabled: true
+    - name: GPIOD
+      enabled: true
+      pins:
+      - name: KEY0
+        pin: PD0
+      - name: KEY1
+        pin: PD1
+      - name: KEY2
+        pin: PD3
+      - name: KEY3
+        pin: PD4
+      - name: LED5
+        pin: PD8
+      - name: LED6
+        pin: PD10
+    - name: GPIOE
+      enabled: true
+    - name: GPIOF
+      enabled: true
+    - name: GPIOG
+      enabled: true
+- device:
+    name: USR
+    description: USR
+    instances:
+    - name: USR1
+      enabled: true
+    - name: USR2
+      enabled: true
+    - name: USR3
+      enabled: true
+components:
+- pkg:
+    name: SFUD
+    description: SPI Flash File System
+    enabled: true
+- pkg:
+    name: SHELL
+    description: Command Line Shell
+    enabled: true
+- pkg:
+    name: USR
+    description: Command Line Shell
+    enabled: true
+- pkg:
+    name: USRQ
+    description: Command Line Shell
+    enabled: true
+testcases:
+- case:
+    name: UART
+    description: null
+    enabled: true
+- case:
+    name: LED
+    description: null
+    enabled: true
+- case:
+    name: GUI
+    description: null
+    enabled: true
+- case:
+    name: SHELL
+    description: null
+    enabled: true
+- case:
+    name: N6
+    description: null
+    enabled: true
