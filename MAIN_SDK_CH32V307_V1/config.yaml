@@ -9,6 +9,17 @@ on_chip_peripherals:
     name: UART
     description: Universal Asynchronous Receiver-Transmitter
     instances:
+    - name: USART1
+      enabled: true
+      pins:
+      - name: TX
+        pin: PA9
+      - name: RX
+        pin: PA10
+      - name: BaudRate
+        pin: 115200
+      - name: ISR
+        pin: 0
     - name: USART2
       enabled: true
       pins:
@@ -68,17 +79,6 @@ on_chip_peripherals:
     name: SPI
     description: Serial Peripheral Interface
     instances:
-    - name: SPI1
-      enabled: false
-      pins:
-      - name: SCK
-        pin: PB12
-      - name: MISO
-        pin: PB13
-      - name: MOSI
-        pin: PB14
-      - name: CS
-        pin: PB15
     - name: SPI2
       enabled: true
       pins:
@@ -94,11 +94,11 @@ on_chip_peripherals:
       enabled: true
       pins:
       - name: SCK
-        pin: PD12
+        pin: PB3
       - name: MISO
-        pin: PD13
+        pin: PDB4
       - name: MOSI
-        pin: PD14
+        pin: PB5
       - name: CS
         pin: PA15
 - device:
@@ -106,7 +106,7 @@ on_chip_peripherals:
     description: Inter-Integrated Circuit
     instances:
     - name: I2C1
-      enabled: true
+      enabled: false
       pins:
       - name: SCL
         pin: PB6
@@ -131,15 +131,20 @@ on_chip_peripherals:
     description: Analog-to-Digital Converter
     instances:
     - name: ADC1
-      enabled: true
+      enabled: false
       pins:
-      - name: IN0
-        pin: PA0
-    - name: ADC2
-      enabled: true
-      pins:
-      - name: IN0
-        pin: PA1
+      - name: IN4
+        pin: PA4
+      - name: IN5
+        pin: PA5
+      - name: IN12
+        pin: PC2
+      - name: IN13
+        pin: PC3
+      - name: IN14
+        pin: PC4
+      - name: IN15
+        pin: PC5
 - device:
     name: GPIO
     description: I/O
@@ -171,6 +176,110 @@ on_chip_peripherals:
       enabled: true
     - name: GPIOG
       enabled: true
+- device:
+    name: TIM
+    description: TIM2/6/7
+    instances:
+    - name: TIM2
+      enabled: true
+      pins:
+      - name: ARR
+        pin: 9
+      - name: PSC
+        pin: 9599
+    - name: TIM6
+      enabled: true
+      pins:
+      - name: ARR
+        pin: 9
+      - name: PSC
+        pin: 9599
+    - name: TIM7
+      enabled: true
+      pins:
+      - name: ARR
+        pin: 9
+      - name: PSC
+        pin: 9599
+- device:
+    name: TIM_Encoder
+    description: TIM Encoder MODE
+    instances:
+    - name: TIM3
+      enabled: true
+      pins:
+      - name: PIN_A
+        pin: PA6
+      - name: PIN_B
+        pin: PA7
+    - name: TIM4
+      enabled: true
+      pins:
+      - name: PIN_A
+        pin: PB6
+      - name: PIN_B
+        pin: PB7
+    - name: TIM5
+      enabled: true
+      pins:
+      - name: PIN_A
+        pin: PA0
+      - name: PIN_B
+        pin: PA1
+    - name: TIM8
+      enabled: true
+      pins:
+      - name: PIN_A
+        pin: PC6
+      - name: PIN_B
+        pin: PC7
+- device:
+    name: TIM_PWM
+    description: TIM PWM MODE
+    instances:
+    - name: TIM9
+      enabled: true
+      pins:
+      - name: PWM1
+        pin: PD9
+      - name: PWM2
+        pin: PD11
+      - name: PWM3
+        pin: PD13
+      - name: PWM4
+        pin: PD15
+- device:
+    name: MOTOR_DIR
+    description: MOTOR DIR PIN
+    instances:
+    - name: M1
+      enabled: true
+      pins:
+      - name: PIN1
+        pin: PE0
+      - name: PIN2
+        pin: PE1
+    - name: M2
+      enabled: true
+      pins:
+      - name: PIN1
+        pin: PE2
+      - name: PIN2
+        pin: PE3
+    - name: M3
+      enabled: true
+      pins:
+      - name: PIN1
+        pin: PE4
+      - name: PIN2
+        pin: PE5
+    - name: M4
+      enabled: true
+      pins:
+      - name: PIN1
+        pin: PE6
+      - name: PIN2
+        pin: PE7
 - device:
     name: USR
     description: USR

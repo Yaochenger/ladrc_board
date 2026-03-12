@@ -8,7 +8,7 @@
 #include "mpu6050_dmp.h"
 #include "debug.h"
 #include "inv_mpu.h"
-#include "i2c2.h"
+#include "i2c.h"
 
 MPU6050_para_t MPU6050_para =
 {
@@ -63,7 +63,7 @@ unsigned char MPU6050_Init()
 //=======================================================================
     u8 res = 0;
 
-    I2C2_GPIO_Init(400000, 0x00);
+    I2C_GPIO_Init(400000, 0x00);
     MPU6050_WriteByte(MPU6050_REG_PWR_MGMT1, 0x80);//¸´Î»
     Delay_Ms(100);
     MPU6050_WriteByte(MPU6050_REG_PWR_MGMT1, 0x00);//½â³ýÐÝÃß×´Ì¬

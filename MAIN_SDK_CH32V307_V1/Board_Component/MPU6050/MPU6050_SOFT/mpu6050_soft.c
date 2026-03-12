@@ -25,7 +25,7 @@ u8 MPU_Init(void)
 {
     u8 res;
 
-    I2C2_GPIO_Init(400000, 0x00);           // 初始化I2C总线，速率400kHz
+    I2C_GPIO_Init(400000, 0x00);           // 初始化I2C总线，速率400kHz
     MPU_Write_Byte(MPU_PWR_MGMT1_REG, 0x80); // 复位MPU6050
     Delay_Ms(100);                           // 延时100毫秒
     MPU_Write_Byte(MPU_PWR_MGMT1_REG, 0x00); // 唤醒MPU6050

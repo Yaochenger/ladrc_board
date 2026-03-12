@@ -1,23 +1,68 @@
 #include "adc.h"
-#ifdef LDARC_DEVICE_ADC
+#include "gpio_pin.h"
+#if defined(SDK_USING_ADC1) || defined(SDK_USING_ADC2)
 
+/**
+ * @brief Configure ADC1 and analog input pins.
+ */
 void ADC_GPIO_Init(void)
 {
     ADC_InitTypeDef ADC_InitStructure = {0};
     GPIO_InitTypeDef GPIO_InitStructure = {0};
 
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+    /* Enable GPIO clocks and configure analog input pins when macros exist. */
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+
+#ifdef SDK_USING_ADC1_IN0
+    RCC_APB2PeriphClockCmd(SDK_GetGPIORCC(SDK_USING_ADC1_IN0), ENABLE);
+    GPIO_InitStructure.GPIO_Pin = SDK_GetPin(SDK_USING_ADC1_IN0);
+    GPIO_Init(SDK_GetPort(SDK_USING_ADC1_IN0), &GPIO_InitStructure);
+#endif
+
+#ifdef SDK_USING_ADC1_IN4
+    RCC_APB2PeriphClockCmd(SDK_GetGPIORCC(SDK_USING_ADC1_IN4), ENABLE);
+    GPIO_InitStructure.GPIO_Pin = SDK_GetPin(SDK_USING_ADC1_IN4);
+    GPIO_Init(SDK_GetPort(SDK_USING_ADC1_IN4), &GPIO_InitStructure);
+#endif
+
+#ifdef SDK_USING_ADC1_IN5
+    RCC_APB2PeriphClockCmd(SDK_GetGPIORCC(SDK_USING_ADC1_IN5), ENABLE);
+    GPIO_InitStructure.GPIO_Pin = SDK_GetPin(SDK_USING_ADC1_IN5);
+    GPIO_Init(SDK_GetPort(SDK_USING_ADC1_IN5), &GPIO_InitStructure);
+#endif
+
+#ifdef SDK_USING_ADC1_IN12
+    RCC_APB2PeriphClockCmd(SDK_GetGPIORCC(SDK_USING_ADC1_IN12), ENABLE);
+    GPIO_InitStructure.GPIO_Pin = SDK_GetPin(SDK_USING_ADC1_IN12);
+    GPIO_Init(SDK_GetPort(SDK_USING_ADC1_IN12), &GPIO_InitStructure);
+#endif
+
+#ifdef SDK_USING_ADC1_IN13
+    RCC_APB2PeriphClockCmd(SDK_GetGPIORCC(SDK_USING_ADC1_IN13), ENABLE);
+    GPIO_InitStructure.GPIO_Pin = SDK_GetPin(SDK_USING_ADC1_IN13);
+    GPIO_Init(SDK_GetPort(SDK_USING_ADC1_IN13), &GPIO_InitStructure);
+#endif
+
+#ifdef SDK_USING_ADC1_IN14
+    RCC_APB2PeriphClockCmd(SDK_GetGPIORCC(SDK_USING_ADC1_IN14), ENABLE);
+    GPIO_InitStructure.GPIO_Pin = SDK_GetPin(SDK_USING_ADC1_IN14);
+    GPIO_Init(SDK_GetPort(SDK_USING_ADC1_IN14), &GPIO_InitStructure);
+#endif
+
+#ifdef SDK_USING_ADC1_IN15
+    RCC_APB2PeriphClockCmd(SDK_GetGPIORCC(SDK_USING_ADC1_IN15), ENABLE);
+    GPIO_InitStructure.GPIO_Pin = SDK_GetPin(SDK_USING_ADC1_IN15);
+    GPIO_Init(SDK_GetPort(SDK_USING_ADC1_IN15), &GPIO_InitStructure);
+#endif
+
+#ifdef SDK_USING_ADC2_IN0
+    RCC_APB2PeriphClockCmd(SDK_GetGPIORCC(SDK_USING_ADC2_IN0), ENABLE);
+    GPIO_InitStructure.GPIO_Pin = SDK_GetPin(SDK_USING_ADC2_IN0);
+    GPIO_Init(SDK_GetPort(SDK_USING_ADC2_IN0), &GPIO_InitStructure);
+#endif
+
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
     RCC_ADCCLKConfig(RCC_PCLK2_Div8);
-
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
-    GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
-    GPIO_Init(GPIOA, &GPIO_InitStructure);
 
     ADC_DeInit(ADC1);
     ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
@@ -38,6 +83,11 @@ void ADC_GPIO_Init(void)
         ;
 }
 
+/**
+ * @brief Trigger one conversion on selected ADC channel.
+ * @param ch ADC channel index.
+ * @return Raw ADC conversion result.
+ */
 u16 Get_ADC_Val(u8 ch)
 {
     u16 val;
@@ -50,6 +100,11 @@ u16 Get_ADC_Val(u8 ch)
     return val;
 }
 
+/**
+ * @brief Convert raw value with calibration offset and saturation.
+ * @param val Raw ADC value.
+ * @return Calibrated value limited to 0..4095.
+ */
 u16 Get_ConversionVal(s16 val)
 {
     int Calibrattion_Val = Get_CalibrationValue(ADC1);
@@ -60,4 +115,5 @@ u16 Get_ConversionVal(s16 val)
     return (val + Calibrattion_Val);
 }
 
-#endif /* LDARC_DEVICE_ADC */
+#endif /* SDK_USING_ADC1 || SDK_USING_ADC2 */
+

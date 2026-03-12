@@ -8,7 +8,7 @@
 #ifndef USER_PERIPHERAL_DRIVER_FLASH_W25Q16_FLASH_W25Q16_H_
 #define USER_PERIPHERAL_DRIVER_FLASH_W25Q16_FLASH_W25Q16_H_
 
-#include "spi2.h"
+#include "spi.h"
 #include "string.h"
 
 /* Winbond SPIFalsh ID */
@@ -54,3 +54,4 @@ void SPI_Flash_Erase_Chip(void);
 void SPI_Flash_PowerDown(void);
 void SPI_Flash_WAKEUP(void);
 #endif /* USER_PERIPHERAL_DRIVER_FLASH_W25Q16_FLASH_W25Q16_H_ */
+

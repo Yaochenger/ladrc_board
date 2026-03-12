@@ -7,11 +7,8 @@
 
 #ifndef USER_PERIPHERAL_DRIVER_ENCODER_SPEED_ENCODER_SPEED_H_
 #define USER_PERIPHERAL_DRIVER_ENCODER_SPEED_ENCODER_SPEED_H_
-#include "timer3.h"
-#include "timer4.h"
-#include "timer5.h"
-#include "timer8.h"
-#include "timer6.h"
+#include "timer_encoder.h"
+#include "timer.h"
 
 typedef struct EncoderType
 {
@@ -26,3 +23,5 @@ void TIM8_EnCoder_CNT(void);
 
 
 #endif /* USER_PERIPHERAL_DRIVER_ENCODER_SPEED_ENCODER_SPEED_H_ */
+
+

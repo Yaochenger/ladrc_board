@@ -20,5 +20,6 @@
 #include "vofa.h"
 #include "simulation.h"
 #include "log.h"
+#include "gpio.h"
 
 #endif /* USER_PERIPHERAL_DRIVER_USER_PERIPHERAL_DRIVER_H_ */

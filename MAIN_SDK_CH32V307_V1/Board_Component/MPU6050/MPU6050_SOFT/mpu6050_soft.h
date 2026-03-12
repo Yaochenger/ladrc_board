@@ -8,7 +8,7 @@
 #ifndef USER_PERIPHERAL_DRIVER_MPU6050_MPU6050_SOFT_MPU6050_SOFT_H_
 #define USER_PERIPHERAL_DRIVER_MPU6050_MPU6050_SOFT_MPU6050_SOFT_H_
 
-#include "i2c2.h"
+#include "i2c.h"
 #include "mpu6050_filter.h"
 
 #define MPU_AD0_H               GPIO_SetBits(GPIOA,GPIO_Pin_15)

@@ -8,7 +8,7 @@
 #include "stdlib.h"
 #include "oledfont.h"
 #include "oled_spi.h"
-#include "spi3.h"
+#include "spi.h"
 
 u8 OLED_GRAM[144][8];
 
@@ -423,3 +423,4 @@ void OLED_Init(void) {
     OLED_Clear();
     OLED_WR_Byte(0xAF, OLED_CMD);
 }
+

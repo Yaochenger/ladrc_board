@@ -39,8 +39,6 @@ int main(void)
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     Delay_Init();
     USART_Printf_Init(115200);
-//    GPIO_KEY_INIT();
-//    GPIO_LED_INIT();
     Shell_INIT();
 
 #ifdef LDARC_COMPONENT_MULTITIMER
@@ -55,13 +53,9 @@ int main(void)
     LCD_OFF();
 #endif /* LDARC_COMPONENT_TFT */
 
-#ifdef LDARC_DEVICE_TIM6
-    TIM6_INIT(10 - 1, 9600 - 1);
-#endif /* LDARC_DEVICE_TIM6 */
-
-#ifdef LDARC_DEVICE_TIM7
-    TIM7_INIT(10 - 1, 9600 - 1);
-#endif /* LDARC_DEVICE_TIM7 */
+#if defined(SDK_USING_TIM2) || defined(SDK_USING_TIM6) || defined(SDK_USING_TIM7)
+    TIM_GPIO_Init();
+#endif /* SDK_USING_TIM2 || SDK_USING_TIM6 || SDK_USING_TIM7 */
 
 #ifdef LDARC_COMPONENT_SIMULATION
     SIMULATION_INIT();

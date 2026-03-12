@@ -8,7 +8,7 @@
 #ifndef USER_PERIPHERAL_DRIVER_TFT_ST7735S_TFT_ST7735S_H_
 #define USER_PERIPHERAL_DRIVER_TFT_ST7735S_TFT_ST7735S_H_
 
-#include "spi3.h"
+#include "spi.h"
 
 #define X_MAX_PIXEL         128
 #define Y_MAX_PIXEL         128
@@ -53,3 +53,4 @@ unsigned int Lcd_ReadPoint(u16 x, u16 y);
 void Lcd_SetRegion(u16 x_start, u16 y_start, u16 x_end, u16 y_end);
 void LCD_WriteData_16Bit(u16 Data);
 #endif /* USER_PERIPHERAL_DRIVER_TFT_ST7735S_TFT_ST7735S_H_ */
+
