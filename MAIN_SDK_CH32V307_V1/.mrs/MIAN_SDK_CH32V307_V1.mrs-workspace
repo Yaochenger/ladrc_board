@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "MAIN_SDK_CH32V307_V1",
+			"path": "E:\\ladrc_board\\MAIN_SDK_CH32V307_V1"
+		}
+	],
+	"settings": {
+		"mrs.workspace.type": "project",
+		"mrs.init.arg": "",
+		"files.associations": {
+			"*.c": "c",
+			"*.h": "cpp",
+			"*.hxx": "cpp",
+			"*.hpp": "cpp",
+			"*.c++": "cpp",
+			"*.cpp": "cpp",
+			"*.cxx": "cpp",
+			"*.cc": "cpp",
+			"*.hh": "cpp",
+			"*.h++": "cpp"
+		}
+	}
+}

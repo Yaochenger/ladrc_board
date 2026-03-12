@@ -1,0 +1,33 @@
+#ifndef USER_DRIVERS_TIMER_ENCODER_H_
+#define USER_DRIVERS_TIMER_ENCODER_H_
+
+#include "ch32v30x.h"
+#include "sdkconfig.h"
+
+#ifdef SDK_USING_TIM3
+#define TIMER3_ENCODER_COUNTING_DIR()    (((SDK_USING_TIM3_DEVICE->CTLR1) & TIM_DIR) == TIM_DIR)
+#else
+#define TIMER3_ENCODER_COUNTING_DIR()    (0)
+#endif
+
+#ifdef SDK_USING_TIM4
+#define TIMER4_ENCODER_COUNTING_DIR()    (((SDK_USING_TIM4_DEVICE->CTLR1) & TIM_DIR) == TIM_DIR)
+#else
+#define TIMER4_ENCODER_COUNTING_DIR()    (0)
+#endif
+
+#ifdef SDK_USING_TIM5
+#define TIMER5_ENCODER_COUNTING_DIR()    (((SDK_USING_TIM5_DEVICE->CTLR1) & TIM_DIR) == TIM_DIR)
+#else
+#define TIMER5_ENCODER_COUNTING_DIR()    (0)
+#endif
+
+#ifdef SDK_USING_TIM8
+#define TIMER8_ENCODER_COUNTING_DIR()    (((SDK_USING_TIM8_DEVICE->CTLR1) & TIM_DIR) == TIM_DIR)
+#else
+#define TIMER8_ENCODER_COUNTING_DIR()    (0)
+#endif
+
+void TIMER_ENCODER_GPIO_Init(void);
+
+#endif /* USER_DRIVERS_TIMER_ENCODER_H_ */
