@@ -1,1 +1,0 @@
-{"type":"cmds","vnumber":100,"ctx":{"name":"group","intro_on":true,"intro":"","hex_on":false,"loop_on":true,"loop_ms":100,"loop_count":1,"cmd_hex":"","is_group":true,"down":true,"subCmds":[{"name":"#td","intro_on":true,"intro":"","hex_on":false,"loop_on":true,"loop_ms":100,"loop_count":1,"cmd_hex":"23 72 75 6E 3A 31 30","is_group":false,"down":false,"subCmds":[]}]}}
