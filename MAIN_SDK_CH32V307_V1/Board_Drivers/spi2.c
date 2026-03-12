@@ -1,8 +1,5 @@
-
-
-
 #include "spi2.h"
-#include "sdk_pin_parser.h"
+#include "sdk_pin.h"
 
 #ifdef SDK_USING_SPI2
 void SPI2_GPIO_Init(void)

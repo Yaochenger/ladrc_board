@@ -2,7 +2,7 @@
 
 
 #include "spi3.h"
-#include "sdk_pin_parser.h"
+#include "sdk_pin.h"
 
 #ifdef SDK_USING_SPI3
 
