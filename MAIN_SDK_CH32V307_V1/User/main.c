@@ -30,17 +30,17 @@ uint8_t *IsUsart1RecvFinsh(void)
 
 int main(void)
 {
-    if (0 == chry_ringbuffer_init(&chry_rbuffer_tid, rbuffer_pool, 1024)) {
-        printf("success\r\n");
-    } else {
-        printf("error\r\n");
-    }
 
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     Delay_Init();
     USART_Printf_Init(115200);
     Shell_INIT();
 
+    if (0 == chry_ringbuffer_init(&chry_rbuffer_tid, rbuffer_pool, 1024)) {
+        printf("success\r\n");
+    } else {
+        printf("error\r\n");
+    }
 #ifdef LDARC_COMPONENT_MULTITIMER
     multiTimerInstall(getPlatformTicks);
 #endif /* LDARC_COMPONENT_MULTITIMER */

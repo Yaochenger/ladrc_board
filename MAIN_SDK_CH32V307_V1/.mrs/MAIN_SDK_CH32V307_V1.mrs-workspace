@@ -1,16 +1,16 @@
 {
 	"folders": [
 		{
+			"name": ".mrs",
 			"path": "."
 		},
 		{
 			"name": "MAIN_SDK_CH32V307_V1",
-			"path": "E:\\ladrc_board\\MAIN_SDK_CH32V307_V1"
+			"path": ".."
 		}
 	],
 	"settings": {
 		"mrs.workspace.type": "project",
-		"mrs.init.arg": "",
 		"files.associations": {
 			"*.c": "c",
 			"*.h": "cpp",
