@@ -9,7 +9,10 @@
 #include "ch32v30x.h"
 #include "sdkconfig.h"
 #include "debug.h"
-#include "user_peripheral_driver.h"
+#include "lshell_port.h"
+#include "MultiTimer.h"
+#include "tft_st7735s.h"
+#include "simulation.h"
 #include "vofa.h"
 #include "LADRC.h"
 #include "chry_ringbuffer.h"
@@ -62,16 +65,6 @@ int main(void)
     SIMULATION_DINIT();
 #endif /* LDARC_COMPONENT_SIMULATION */
 
-#if defined(LDARC_COMPONENT_LVGL) && defined(LDARC_COMPONENT_LVGL)
-    lv_init();
-    lv_port_disp_init();
-    lv_port_indev_init();
-
-    setup_ui(&guider_ui);
-    events_init(&guider_ui);
-    extern void custom_init(lv_ui *ui);
-    custom_init(&guider_ui);
-#endif /* LDARC_COMPONENT_LVGL */
     while(1)
     {
 #ifdef LDARC_COMPONENT_SIMULATION
@@ -87,3 +80,4 @@ int main(void)
 #endif /* LDARC_COMPONENT_LVGL */
     }
 }
+

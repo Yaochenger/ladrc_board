@@ -2,7 +2,7 @@
 #define SIMULATION_H
 
 #include "debug.h"
-#include "user_peripheral_driver.h"
+#include "MultiTimer.h"
 #include "LADRC.h"
 #include "vofa.h"
 
@@ -38,3 +38,4 @@ void Simulation_TD_Callback(MultiTimer* timer, void* userData);
 void Simulation_LOOP_Callback(MultiTimer* timer, void* userData);
 void Simulation_parse_command(void);
 #endif // SIMULATION_H
+
