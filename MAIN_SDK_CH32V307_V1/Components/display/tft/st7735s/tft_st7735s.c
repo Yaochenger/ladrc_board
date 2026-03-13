@@ -5,9 +5,9 @@
 
 #include "tft_st7735s.h"
 
-#define USE_DMA
-#define SPI_WriteData(data)  SPI_ReadWriteByte(SDK_USING_SPI3_DEVICE, (data))
-
+/**
+ * @brief Initialize the TFT control GPIOs and SPI pins.
+ */
 void LCD_GPIO_Init(void) {
     GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -20,59 +20,54 @@ void LCD_GPIO_Init(void) {
     GPIO_Init(GPIOE, &GPIO_InitStructure);
     GPIO_SetBits(GPIOE, GPIO_Pin_10);
 }
-#ifndef USE_DMA
-u8 SPI_WriteData(u8 TxData) {
-    u8 i = 0;
 
-    while (SPI_I2S_GetFlagStatus(SPI3, SPI_I2S_FLAG_TXE) == RESET) // cleaned legacy comment
-    {
-        i++;
-        if(i>200)return 0;
-    }
-
-    SPI_I2S_SendData(SPI3, TxData); // cleaned legacy comment
-    i = 0;
-
-    while (SPI_I2S_GetFlagStatus(SPI3, SPI_I2S_FLAG_RXNE) == RESET) // cleaned legacy comment
-    {
-        i++;
-        if(i>200)return 0;
-    }
-
-    return SPI_I2S_ReceiveData(SPI3); // cleaned legacy comment
-}
-#endif /* USE_DMA */
-
-// cleaned legacy comment
+/**
+ * @brief Write an LCD command.
+ * @param Index Command byte.
+ */
 void Lcd_WriteIndex(u8 Index) {
-// cleaned legacy comment
     LCD_CS_CLR;
     LCD_RS_CLR;
-    SPI_WriteData(Index);
+    SPI_ReadWriteByte(SDK_USING_SPI3_DEVICE, Index);
     LCD_CS_SET;
 }
 
-// cleaned legacy comment
+/**
+ * @brief Write one byte of LCD data.
+ * @param Data Data byte.
+ */
 void Lcd_WriteData(u8 Data) {
     LCD_CS_CLR;
     LCD_RS_SET;
-    SPI_WriteData(Data);
-    LCD_CS_SET;
-}
-// cleaned legacy comment
-void LCD_WriteData_16Bit(u16 Data) {
-    LCD_CS_CLR;
-    LCD_RS_SET;
-    SPI_WriteData(Data >> 8); // cleaned legacy comment
-    SPI_WriteData(Data); // cleaned legacy comment
+    SPI_ReadWriteByte(SDK_USING_SPI3_DEVICE, Data);
     LCD_CS_SET;
 }
 
+/**
+ * @brief Write one 16-bit pixel value in RGB565 format.
+ * @param Data Pixel data.
+ */
+void LCD_WriteData_16Bit(u16 Data) {
+    LCD_CS_CLR;
+    LCD_RS_SET;
+    SPI_ReadWriteByte(SDK_USING_SPI3_DEVICE, Data >> 8);
+    SPI_ReadWriteByte(SDK_USING_SPI3_DEVICE, Data);
+    LCD_CS_SET;
+}
+
+/**
+ * @brief Write one LCD register.
+ * @param Index Register address.
+ * @param Data Register value.
+ */
 void Lcd_WriteReg(u8 Index, u8 Data) {
     Lcd_WriteIndex(Index);
     Lcd_WriteData(Data);
 }
 
+/**
+ * @brief Reset the LCD hardware.
+ */
 void Lcd_Reset(void) {
     LCD_RST_CLR;
     Delay_Ms(100);
@@ -80,16 +75,18 @@ void Lcd_Reset(void) {
     Delay_Ms(50);
 }
 
-//LCD Init For 1.44Inch LCD Panel with ST7735R.
+/**
+ * @brief Initialize the ST7735S controller.
+ */
 void LCD_INIT(void) {
     LCD_GPIO_Init();
-    Lcd_Reset(); //Reset before LCD Init.
+    Lcd_Reset();
 
-    //LCD Init For 1.44Inch LCD Panel with ST7735R.
-    Lcd_WriteIndex(0x11); //Sleep exit
+    /* Exit sleep mode. */
+    Lcd_WriteIndex(0x11);
     Delay_Ms(120);
 
-    //ST7735R Frame Rate
+    /* Frame rate control. */
     Lcd_WriteIndex(0xB1);
     Lcd_WriteData(0x01);
     Lcd_WriteData(0x2C);
@@ -108,10 +105,11 @@ void LCD_INIT(void) {
     Lcd_WriteData(0x2C);
     Lcd_WriteData(0x2D);
 
-    Lcd_WriteIndex(0xB4); //Column inversion
+    /* Column inversion. */
+    Lcd_WriteIndex(0xB4);
     Lcd_WriteData(0x07);
 
-    //ST7735R Power Sequence
+    /* Power sequence configuration. */
     Lcd_WriteIndex(0xC0);
     Lcd_WriteData(0xA2);
     Lcd_WriteData(0x02);
@@ -130,13 +128,15 @@ void LCD_INIT(void) {
     Lcd_WriteData(0x8A);
     Lcd_WriteData(0xEE);
 
-    Lcd_WriteIndex(0xC5); //VCOM
+    /* VCOM configuration. */
+    Lcd_WriteIndex(0xC5);
     Lcd_WriteData(0x0E);
 
-    Lcd_WriteIndex(0x36); //MX, MY, RGB mode
+    /* Memory data access control: MX, MY, RGB mode. */
+    Lcd_WriteIndex(0x36);
     Lcd_WriteData(0xC8);
 
-    //ST7735R Gamma Sequence
+    /* Positive gamma correction. */
     Lcd_WriteIndex(0xe0);
     Lcd_WriteData(0x0f);
     Lcd_WriteData(0x1a);
@@ -155,6 +155,7 @@ void LCD_INIT(void) {
     Lcd_WriteData(0x02);
     Lcd_WriteData(0x10);
 
+    /* Negative gamma correction. */
     Lcd_WriteIndex(0xe1);
     Lcd_WriteData(0x0f);
     Lcd_WriteData(0x1b);
@@ -185,25 +186,29 @@ void LCD_INIT(void) {
     Lcd_WriteData(0x00);
     Lcd_WriteData(0x9f);
 
-    Lcd_WriteIndex(0xF0); //Enable test command
+    /* Enable test command set and disable RAM power save mode. */
+    Lcd_WriteIndex(0xF0);
     Lcd_WriteData(0x01);
-    Lcd_WriteIndex(0xF6); //Disable ram power save mode
+    Lcd_WriteIndex(0xF6);
     Lcd_WriteData(0x00);
 
-    Lcd_WriteIndex(0x3A); //65k mode
+    /* 16-bit RGB565 color mode. */
+    Lcd_WriteIndex(0x3A);
     Lcd_WriteData(0x05);
 
-    Lcd_WriteIndex(0x29); //Display on
+    /* Turn display on and clear the screen. */
+    Lcd_WriteIndex(0x29);
 
-    Lcd_Clear(WHITE); // clear lcd
+    Lcd_Clear(WHITE);
 }
 
-/*************************************************
-// cleaned legacy comment
-// cleaned legacy comment
-// cleaned legacy comment
-// cleaned legacy comment
- *************************************************/
+/**
+ * @brief Set the active drawing region.
+ * @param x_start Start X coordinate.
+ * @param y_start Start Y coordinate.
+ * @param x_end End X coordinate.
+ * @param y_end End Y coordinate.
+ */
 void Lcd_SetRegion(u16 x_start, u16 y_start, u16 x_end, u16 y_end) {
     Lcd_WriteIndex(0x2a);
     Lcd_WriteData(0x00);
@@ -218,34 +223,37 @@ void Lcd_SetRegion(u16 x_start, u16 y_start, u16 x_end, u16 y_end) {
     Lcd_WriteData(y_end + 3);
 
     Lcd_WriteIndex(0x2c);
-
 }
 
-/*************************************************
-// cleaned legacy comment
-// cleaned legacy comment
-// cleaned legacy comment
-// cleaned legacy comment
- *************************************************/
+/**
+ * @brief Set the current drawing position.
+ * @param x X coordinate.
+ * @param y Y coordinate.
+ */
 void Lcd_SetXY(u16 x, u16 y) {
     Lcd_SetRegion(x, y, x, y);
 }
 
-/*************************************************
-// cleaned legacy comment
-// cleaned legacy comment
-// cleaned legacy comment
-// cleaned legacy comment
- *************************************************/
+/**
+ * @brief Draw a single pixel.
+ * @param x X coordinate.
+ * @param y Y coordinate.
+ * @param Data Pixel color in RGB565 format.
+ */
 void Gui_DrawPoint(u16 x, u16 y, u16 Data) {
     Lcd_SetRegion(x, y, x + 1, y + 1);
     LCD_WriteData_16Bit(Data);
-
 }
 
-void Gui_FillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u16 color)
-{
-// cleaned legacy comment
+/**
+ * @brief Fill a rectangle with a solid color.
+ * @param x1 First corner X coordinate.
+ * @param y1 First corner Y coordinate.
+ * @param x2 Opposite corner X coordinate.
+ * @param y2 Opposite corner Y coordinate.
+ * @param color Fill color in RGB565 format.
+ */
+void Gui_FillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u16 color) {
     if (x1 > x2) {
         u16 temp = x1;
         x1 = x2;
@@ -257,7 +265,6 @@ void Gui_FillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u16 color)
         y2 = temp;
     }
 
-// cleaned legacy comment
     for (u16 x = x1; x <= x2; x++) {
         for (u16 y = y1; y <= y2; y++) {
             Gui_DrawPoint(x, y, color);
@@ -265,38 +272,45 @@ void Gui_FillRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u16 color)
     }
 }
 
-/*****************************************
-// cleaned legacy comment
-// cleaned legacy comment
- ******************************************/
+/**
+ * @brief Read the pixel color at the specified coordinate.
+ * @note Readback is not implemented for this driver.
+ * @param x X coordinate.
+ * @param y Y coordinate.
+ * @return Always returns 0.
+ */
 unsigned int Lcd_ReadPoint(u16 x, u16 y) {
     return 0;
 }
-/*************************************************
-// cleaned legacy comment
-// cleaned legacy comment
-// cleaned legacy comment
-// cleaned legacy comment
- *************************************************/
+
+/**
+ * @brief Clear the full screen with a solid color.
+ * @param Color Fill color in RGB565 format.
+ */
 void Lcd_Clear(u16 Color) {
     unsigned int i, m;
+
     Lcd_SetRegion(0, 0, X_MAX_PIXEL - 1, Y_MAX_PIXEL - 1);
     Lcd_WriteIndex(0x2C);
-    for (i = 0; i < X_MAX_PIXEL; i++)
+
+    for (i = 0; i < X_MAX_PIXEL; i++) {
         for (m = 0; m < Y_MAX_PIXEL; m++) {
             LCD_WriteData_16Bit(Color);
         }
+    }
 }
 
-
-void LCD_ON(void)
-{
+/**
+ * @brief Turn on the LCD backlight.
+ */
+void LCD_ON(void) {
     GPIO_SetBits(GPIOE, GPIO_Pin_10);
 }
 
-
-void LCD_OFF(void)
-{
+/**
+ * @brief Turn off the LCD backlight.
+ */
+void LCD_OFF(void) {
     GPIO_ResetBits(GPIOE, GPIO_Pin_10);
 }
 

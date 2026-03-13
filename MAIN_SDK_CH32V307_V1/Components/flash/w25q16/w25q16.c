@@ -3,41 +3,23 @@
  * @brief W25Q16/W25Qxx SPI flash driver implementation.
  */
 
-/*
- *@Note
- SPI interface operation flash peripheral routine:
- Master:SPI1_SCK(PA5)��SPI1_MISO(PA6)��SPI1_MOSI(PA7).
- This example demonstrates SPI operation Winbond W25Qxx SPIFLASH.
- pins:
-    CS  -- PA2
-    DO  -- PA6(SPI1_MISO)
-    WP   -- 3.3V
-    DI   -- PA7(SPI1_MOSI)
-    CLK  -- PA5(SPI1_SCK)
-    HOLD -- 3.3V
-
-*/
 #include "w25q16.h"
 
-/* Global define */
-u8       SPI_FLASH_BUF[4096];
+/* Temporary sector buffer used by erase-before-write logic. */
+u8 SPI_FLASH_BUF[4096];
 
-/*********************************************************************
- * @fn      SPI_Flash_ReadSR
- *
- * @brief   Read W25Qxx status register.
- *          BIT7  6   5   4   3   2   1   0
- *          SPR   RV  TB  BP2 BP1 BP0 WEL BUSY
- *
- * @return  byte - status register value.
+/**
+ * @brief Initialize the SPI flash interface.
  */
-void SPI_Flash_Init(void)
-{
+void SPI_Flash_Init(void) {
     SPI_GPIO_Init(SDK_USING_SPI2_DEVICE);
 }
 
-u8 SPI_Flash_ReadSR(void) // cleaned legacy comment
-{
+/**
+ * @brief Read the flash status register.
+ * @return Status register value.
+ */
+u8 SPI_Flash_ReadSR(void) {
     u8 byte = 0;
 
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
@@ -48,73 +30,48 @@ u8 SPI_Flash_ReadSR(void) // cleaned legacy comment
     return byte;
 }
 
-/*********************************************************************
- * @fn      SPI_FLASH_Write_SR
- *
- * @brief   Write W25Qxx status register.
- *
- * @param   sr - status register value.
- *
- * @return  none
+/**
+ * @brief Write the flash status register.
+ * @param sr Status register value.
  */
-void SPI_FLASH_Write_SR(u8 sr)
-{
+void SPI_FLASH_Write_SR(u8 sr) {
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, W25X_WriteStatusReg);
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, sr);
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 1);
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_Wait_Busy
- *
- * @brief   Wait flash free.
- *
- * @return  none
+/**
+ * @brief Wait until the flash is no longer busy.
  */
-void SPI_Flash_Wait_Busy(void) // cleaned legacy comment
-{
-    while((SPI_Flash_ReadSR() & 0x01) == 0x01)
+void SPI_Flash_Wait_Busy(void) {
+    while ((SPI_Flash_ReadSR() & 0x01) == 0x01)
         ;
 }
 
-/*********************************************************************
- * @fn      SPI_FLASH_Write_Enable
- *
- * @brief   Enable flash write.
- *
- * @return  none
+/**
+ * @brief Enable flash write operations.
  */
-void SPI_FLASH_Write_Enable(void)
-{
+void SPI_FLASH_Write_Enable(void) {
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, W25X_WriteEnable);
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 1);
 }
 
-/*********************************************************************
- * @fn      SPI_FLASH_Write_Disable
- *
- * @brief   Disable flash write.
- *
- * @return  none
+/**
+ * @brief Disable flash write operations.
  */
-void SPI_FLASH_Write_Disable(void)
-{
+void SPI_FLASH_Write_Disable(void) {
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, W25X_WriteDisable);
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 1);
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_ReadID
- *
- * @brief   Read flash ID.
- *
- * @return  Temp - FLASH ID.
+/**
+ * @brief Read the manufacturer/device ID.
+ * @return Device ID value.
  */
-u16 SPI_Flash_ReadID(void)
-{
+u16 SPI_Flash_ReadID(void) {
     u16 Temp = 0;
 
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
@@ -129,15 +86,11 @@ u16 SPI_Flash_ReadID(void)
     return Temp;
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_Read_JEDEC_ID
- *
- * @brief   Read flash JEDEC ID.
- *
- * @return  Temp - FLASH JEDEC ID.
+/**
+ * @brief Read the JEDEC ID.
+ * @return JEDEC ID value.
  */
-u32 SPI_Flash_Read_JEDEC_ID(void)
-{
+u32 SPI_Flash_Read_JEDEC_ID(void) {
     u32 Temp = 0;
 
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
@@ -150,17 +103,11 @@ u32 SPI_Flash_Read_JEDEC_ID(void)
     return Temp;
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_Erase_Sector
- *
- * @brief   Erase one sector(4Kbyte).
- *
- * @param   Dst_Addr - 0 ���� 2047
- *
- * @return  none
+/**
+ * @brief Erase one 4 KB sector.
+ * @param Dst_Addr Sector index.
  */
-void SPI_Flash_Erase_Sector(u32 Dst_Addr)
-{
+void SPI_Flash_Erase_Sector(u32 Dst_Addr) {
     Dst_Addr *= 4096;
     SPI_FLASH_Write_Enable();
     SPI_Flash_Wait_Busy();
@@ -173,19 +120,13 @@ void SPI_Flash_Erase_Sector(u32 Dst_Addr)
     SPI_Flash_Wait_Busy();
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_Read
- *
- * @brief   Read data from flash.
- *
- * @param   pBuffer -
- *          ReadAddr -Initial address(24bit).
- *          size - Data length.
- *
- * @return  none
+/**
+ * @brief Read data from flash.
+ * @param pBuffer Destination buffer.
+ * @param ReadAddr Start address.
+ * @param size Number of bytes to read.
  */
-void SPI_Flash_Read(u8 *pBuffer, u32 ReadAddr, u16 size)
-{
+void SPI_Flash_Read(u8 *pBuffer, u32 ReadAddr, u16 size) {
     u16 i;
 
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
@@ -194,27 +135,20 @@ void SPI_Flash_Read(u8 *pBuffer, u32 ReadAddr, u16 size)
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, (u8)((ReadAddr) >> 8));
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, (u8)ReadAddr);
 
-    for(i = 0; i < size; i++)
-    {
+    for (i = 0; i < size; i++) {
         pBuffer[i] = SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, 0XFF);
     }
 
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 1);
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_Write_Page
- *
- * @brief   Write data by one page.
- *
- * @param   pBuffer -
- *          WriteAddr - Initial address(24bit).
- *          size - Data length.
- *
- * @return  none
+/**
+ * @brief Program up to one page of flash.
+ * @param pBuffer Source buffer.
+ * @param WriteAddr Start address.
+ * @param size Number of bytes to write.
  */
-void SPI_Flash_Write_Page(u8 *pBuffer, u32 WriteAddr, u16 size)
-{
+void SPI_Flash_Write_Page(u8 *pBuffer, u32 WriteAddr, u16 size) {
     u16 i;
 
     SPI_FLASH_Write_Enable();
@@ -224,8 +158,7 @@ void SPI_Flash_Write_Page(u8 *pBuffer, u32 WriteAddr, u16 size)
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, (u8)((WriteAddr) >> 8));
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, (u8)WriteAddr);
 
-    for(i = 0; i < size; i++)
-    {
+    for (i = 0; i < size; i++) {
         SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, pBuffer[i]);
     }
 
@@ -233,42 +166,32 @@ void SPI_Flash_Write_Page(u8 *pBuffer, u32 WriteAddr, u16 size)
     SPI_Flash_Wait_Busy();
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_Write_NoCheck
- *
- * @brief   Write data to flash.(need Erase)
- *          All data in address rang is 0xFF.
- *
- * @param   pBuffer -
- *          WriteAddr - Initial address(24bit).
- *          size - Data length.
- *
- * @return  none
+/**
+ * @brief Write data without checking whether erase is required.
+ * @param pBuffer Source buffer.
+ * @param WriteAddr Start address.
+ * @param size Number of bytes to write.
+ * @note This function assumes the target area is already erased.
  */
-void SPI_Flash_Write_NoCheck(u8 *pBuffer, u32 WriteAddr, u16 size)
-{
+void SPI_Flash_Write_NoCheck(u8 *pBuffer, u32 WriteAddr, u16 size) {
     u16 pageremain;
 
-    pageremain = 256 - WriteAddr % 256; // cleaned legacy comment
+    pageremain = 256 - WriteAddr % 256;
 
-    if(size <= pageremain) // cleaned legacy comment
-        pageremain = size; // cleaned legacy comment
+    if (size <= pageremain)
+        pageremain = size;
 
-    while(1)
-    {
-        SPI_Flash_Write_Page(pBuffer, WriteAddr, pageremain); // cleaned legacy comment
+    while (1) {
+        SPI_Flash_Write_Page(pBuffer, WriteAddr, pageremain);
 
-        if(size == pageremain) // cleaned legacy comment
-        {
+        if (size == pageremain) {
             break;
-        }
-        else
-        {
-            pBuffer += pageremain; // cleaned legacy comment
+        } else {
+            pBuffer += pageremain;
             WriteAddr += pageremain;
-            size -= pageremain; // cleaned legacy comment
+            size -= pageremain;
 
-            if(size > 256)
+            if (size > 256)
                 pageremain = 256;
             else
                 pageremain = size;
@@ -276,100 +199,76 @@ void SPI_Flash_Write_NoCheck(u8 *pBuffer, u32 WriteAddr, u16 size)
     }
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_Write
- *
- * @brief   Write data to flash.(no need Erase)
- *
- * @param   pBuffer -
- *          WriteAddr - Initial address(24bit).
- *          size - Data length.
- *
- * @return  none
+/**
+ * @brief Write data with automatic sector erase handling.
+ * @param pBuffer Source buffer.
+ * @param WriteAddr Start address.
+ * @param size Number of bytes to write.
  */
-void SPI_Flash_Write(u8 *pBuffer, u32 WriteAddr, u16 size)
-{
+void SPI_Flash_Write(u8 *pBuffer, u32 WriteAddr, u16 size) {
     u32 secpos;
     u16 secoff;
     u16 secremain;
     u16 i;
 
-    secpos = WriteAddr / 4096; // cleaned legacy comment
-    secoff = WriteAddr % 4096; // cleaned legacy comment
-    secremain = 4096 - secoff; // cleaned legacy comment
+    secpos = WriteAddr / 4096;
+    secoff = WriteAddr % 4096;
+    secremain = 4096 - secoff;
 
-    if(size <= secremain) // cleaned legacy comment
-        secremain = size; // cleaned legacy comment
+    if (size <= secremain)
+        secremain = size;
 
-    while(1)
-    {
-        SPI_Flash_Read(SPI_FLASH_BUF, secpos * 4096, 4096); // cleaned legacy comment
+    while (1) {
+        SPI_Flash_Read(SPI_FLASH_BUF, secpos * 4096, 4096);
 
-        for(i = 0; i < secremain; i++)
-        {
-            if(SPI_FLASH_BUF[secoff + i] != 0XFF) // cleaned legacy comment
+        for (i = 0; i < secremain; i++) {
+            if (SPI_FLASH_BUF[secoff + i] != 0XFF)
                 break;
         }
 
-        if(i < secremain) // cleaned legacy comment
-        {
-            SPI_Flash_Erase_Sector(secpos); // cleaned legacy comment
+        if (i < secremain) {
+            SPI_Flash_Erase_Sector(secpos);
 
-            SPI_Flash_Read(SPI_FLASH_BUF, secpos * 4096, 4096); // cleaned legacy comment
+            SPI_Flash_Read(SPI_FLASH_BUF, secpos * 4096, 4096);
 
-            for(i = 0; i < 4096; i++)
-            {
+            for (i = 0; i < 4096; i++) {
                 printf("start \r\n ");
                 printf("%d ", SPI_FLASH_BUF[i]);
                 printf("end \r\n ");
             }
 
-            for(i = 0; i < secremain; i++)
-            {
-                SPI_FLASH_BUF[i + secoff] = pBuffer[i]; // cleaned legacy comment
+            for (i = 0; i < secremain; i++) {
+                SPI_FLASH_BUF[i + secoff] = pBuffer[i];
             }
 
-            SPI_Flash_Write_NoCheck(SPI_FLASH_BUF, secpos * 4096, 4096); // cleaned legacy comment
-        }
-        else
-        {
-            SPI_Flash_Write_NoCheck(pBuffer, WriteAddr, secremain); // cleaned legacy comment
+            SPI_Flash_Write_NoCheck(SPI_FLASH_BUF, secpos * 4096, 4096);
+        } else {
+            SPI_Flash_Write_NoCheck(pBuffer, WriteAddr, secremain);
         }
 
-        if(size == secremain) // cleaned legacy comment
-        {
+        if (size == secremain) {
             break;
-        }
-        else
-        {
-            secpos++; // cleaned legacy comment
+        } else {
+            secpos++;
             secoff = 0;
 
-            pBuffer += secremain; // cleaned legacy comment
-            WriteAddr += secremain; // cleaned legacy comment
-            size -= secremain; // cleaned legacy comment
+            pBuffer += secremain;
+            WriteAddr += secremain;
+            size -= secremain;
 
-            if(size > 4096) // cleaned legacy comment
-            {
-                secremain = 4096; // cleaned legacy comment
-            }
-            else
-            {
-                secremain = size; // cleaned legacy comment
+            if (size > 4096) {
+                secremain = 4096;
+            } else {
+                secremain = size;
             }
         }
     }
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_Erase_Chip
- *
- * @brief   Erase all FLASH pages.
- *
- * @return  none
+/**
+ * @brief Erase the entire flash chip.
  */
-void SPI_Flash_Erase_Chip(void)
-{
+void SPI_Flash_Erase_Chip(void) {
     SPI_FLASH_Write_Enable();
     SPI_Flash_Wait_Busy();
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
@@ -378,33 +277,22 @@ void SPI_Flash_Erase_Chip(void)
     SPI_Flash_Wait_Busy();
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_PowerDown
- *
- * @brief   Enter power down mode.
- *
- * @return  none
+/**
+ * @brief Enter flash power-down mode.
  */
-void SPI_Flash_PowerDown(void)
-{
+void SPI_Flash_PowerDown(void) {
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, W25X_PowerDown);
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 1);
     Delay_Us(3);
 }
 
-/*********************************************************************
- * @fn      SPI_Flash_WAKEUP
- *
- * @brief   Power down wake up.
- *
- * @return  none
+/**
+ * @brief Wake the flash from power-down mode.
  */
-void SPI_Flash_WAKEUP(void)
-{
+void SPI_Flash_WAKEUP(void) {
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 0);
     SPI_ReadWriteByte(SDK_USING_SPI2_DEVICE, W25X_ReleasePowerDown);
     GPIO_WriteBit(GPIOB, GPIO_Pin_12, 1);
     Delay_Us(3);
 }
-

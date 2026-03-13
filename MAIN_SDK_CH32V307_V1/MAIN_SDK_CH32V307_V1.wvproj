@@ -165,7 +165,8 @@
 							"${project}/Components/Encoder_Speed",
 							"${project}/Components/utilities/multitimer",
 							"${project}/Components/algorithm/ladrc",
-							"${project}/Drivers"
+							"${project}/Drivers",
+							"${project}/Components/utilities/auto_init"
 						],
 						"include_system_paths": [],
 						"include_files": []
