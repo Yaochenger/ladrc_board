@@ -1,6 +1,6 @@
 /**
  * @file    i2c.c
- * @brief   I2C driver implementation (I2C2-based by sdkconfig).
+ * @brief   I2C driver implementation by sdkconfig.
  * @author  LADRC Board
  * @date    2026-03-12
  */
@@ -49,15 +49,4 @@ void I2C_GPIO_Init(u32 bound, u16 address)
     Delay_Ms(50);
 }
 
-/**
- * @brief Backward-compatible wrapper to the generic I2C initializer.
- * @param bound I2C bus clock in Hz.
- * @param address Local own address.
- */
-void I2C2_GPIO_Init(u32 bound, u16 address)
-{
-    I2C_GPIO_Init(bound, address);
-}
-
 #endif // SDK_USING_I2C2
-

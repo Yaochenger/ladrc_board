@@ -157,19 +157,6 @@ on_chip_peripherals:
       enabled: true
     - name: GPIOD
       enabled: true
-      pins:
-      - name: KEY0
-        pin: PD0
-      - name: KEY1
-        pin: PD1
-      - name: KEY2
-        pin: PD3
-      - name: KEY3
-        pin: PD4
-      - name: LED5
-        pin: PD8
-      - name: LED6
-        pin: PD10
     - name: GPIOE
       enabled: true
     - name: GPIOF
@@ -280,6 +267,32 @@ on_chip_peripherals:
         pin: PE6
       - name: PIN2
         pin: PE7
+- device:
+    name: LED
+    description: LED
+    instances:
+    - name: LED
+      enabled: true
+      pins:
+      - name: LED1
+        pin: PD8
+      - name: LED2
+        pin: PD10
+- device:
+    name: KEY
+    description: KEY
+    instances:
+    - name: KEY
+      enabled: true
+      pins:
+      - name: KEY0
+        pin: PD0
+      - name: KEY1
+        pin: PD1
+      - name: KEY2
+        pin: PD3
+      - name: KEY3
+        pin: PD4
 - device:
     name: USR
     description: USR
